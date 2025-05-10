@@ -14,7 +14,15 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
       <QueryProvider>
         <LocalContextProvider>
           {children}
-          <Toaster />
+          <Toaster
+            position="bottom-center"
+            toastOptions={{
+              style: {
+                background: "#171717",
+                color: "#fff",
+              },
+            }}
+          />
         </LocalContextProvider>
       </QueryProvider>
     </SolanaProvider>

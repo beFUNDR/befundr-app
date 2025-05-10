@@ -1,0 +1,73 @@
+import { NextRequest, NextResponse } from "next/server";
+import admin from "@/lib/firebase/firebaseAdmin";
+
+export async function POST(req: NextRequest) {
+  try {
+    const { wallet } = await req.json();
+    if (!wallet) {
+      return NextResponse.json(
+        { error: "Wallet is required" },
+        { status: 400 }
+      );
+    }
+    const apiKey = process.env.HELIUS_API_KEY;
+    if (!apiKey) {
+      return NextResponse.json(
+        { error: "Helius API key missing" },
+        { status: 500 }
+      );
+    }
+    const heliusUrl = `https://mainnet.helius-rpc.com/?api-key=${apiKey}`;
+    const body = {
+      jsonrpc: "2.0",
+      id: "1",
+      method: "getAssetsByOwner",
+      params: {
+        ownerAddress: /*wallet*/ "5FALSVLRjuRZHSmQVdT2RUZC6KadCuDmxY7gaQFWFBxf",
+        page: 1,
+        limit: 50,
+        sortBy: { sortBy: "created", sortDirection: "asc" },
+        options: {
+          showUnverifiedCollections: false,
+          showCollectionMetadata: false,
+          showGrandTotal: false,
+          showFungible: false,
+          showNativeBalance: false,
+          showInscription: false,
+          showZeroBalance: false,
+        },
+      },
+    };
+    const heliusRes = await fetch(heliusUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const data = await heliusRes.json();
+
+    // Récupérer les collections autorisées depuis Firestore
+    const allowedSnap = await admin
+      .firestore()
+      .collection("allowedCollections")
+      .get();
+    const allowedCollections = allowedSnap.docs.map((doc) => doc.id);
+    console.log(allowedCollections);
+
+    const filteredItems = data.result.items.filter((item) =>
+      allowedCollections.includes(item.id)
+    );
+
+    console.log("filteredItems", filteredItems);
+
+    return NextResponse.json(
+      { ...data, result: { ...data.result, items: filteredItems } },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}

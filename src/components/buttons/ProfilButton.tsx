@@ -11,13 +11,17 @@ import {
 } from "lucide-react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Image from "next/image";
-import { user } from "@/data/localData";
 import { concatAddress } from "@/utils/utilsFunctions";
+import { useUser } from "@/hooks/dbData/useUser";
+import { createAvatar } from "@dicebear/core";
+import { glass } from "@dicebear/collection";
+import Link from "next/link";
 
 const ProfilButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
-  const { disconnect } = useWallet();
+  const { disconnect, publicKey } = useWallet();
+  const { data: userData } = useUser(publicKey?.toString());
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -26,6 +30,10 @@ const ProfilButton = () => {
   const closeMenu = () => {
     setIsOpen(false);
   };
+
+  const svg = createAvatar(glass, {
+    seed: publicKey?.toString(),
+  });
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -43,42 +51,62 @@ const ProfilButton = () => {
   return (
     <div className="relative" ref={menuRef} onClick={toggleMenu}>
       <button className="flex items-center space-x-2">
-        <Image
-          src={user.avatar}
-          alt="Avatar"
-          className="rounded-full"
-          width={40}
-          height={40}
-        />
-        <span>{user.name}</span>
+        {userData?.avatar ? (
+          <Image
+            src={userData?.avatar}
+            alt="Avatar"
+            className="rounded-full"
+            width={40}
+            height={40}
+          />
+        ) : (
+          <div
+            className="w-10 h-10 rounded-full overflow-hidden"
+            dangerouslySetInnerHTML={{ __html: svg.toString() }}
+          />
+        )}
+        <span>
+          {userData?.name
+            ? userData?.name
+            : concatAddress(publicKey?.toString())}
+        </span>
       </button>
       {isOpen && (
         <div
-          className="absolute right-0 mt-2 w-48 bg-custom-gray-800 text-white rounded-lg shadow-lg"
+          className="absolute right-0 mt-2 w-48 bg-custom-gray-800 text-white rounded-2xl shadow-lg"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="p-4 border-b border-gray-700">
             <div className="flex items-center space-x-2">
-              <Image
-                src={user.avatar}
-                alt="Avatar"
-                className="rounded-full"
-                width={40}
-                height={40}
-              />
+              {userData?.avatar ? (
+                <Image
+                  src={userData?.avatar}
+                  alt="Avatar"
+                  className="rounded-full"
+                  width={40}
+                  height={40}
+                />
+              ) : (
+                <div
+                  className="w-10 h-10 rounded-full overflow-hidden"
+                  dangerouslySetInnerHTML={{ __html: svg.toString() }}
+                />
+              )}
               <div>
-                <div>{user.name}</div>
+                <div>{userData?.name}</div>
                 <div className=" text-gray-400">
-                  {concatAddress(user.address)}
+                  {concatAddress(publicKey?.toString())}
                 </div>
               </div>
             </div>
           </div>
           <ul className="py-2">
-            <li className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2">
-              <User size={16} color="gray" />
-              <span>My profile</span>
-            </li>
+            <Link href="/myprofile">
+              <li className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2">
+                <User size={16} color="gray" />
+                <span>My profile</span>
+              </li>
+            </Link>
             <li className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2">
               <FileText size={16} color="gray" />
               <span>My projects</span>

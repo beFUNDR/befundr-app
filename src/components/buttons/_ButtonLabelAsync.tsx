@@ -1,18 +1,25 @@
-import LoaderSmall from "../LoaderSmall";
+import LoaderSmall from "../displayElements/LoaderSmall";
+import React from "react";
+
+// On reprend la structure et le style de ButtonLabel
+const baseClass =
+  "flex justify-center items-center bg-accent text-black font-bold rounded-full px-2 py-3 text-lg min-w-48 min-h-12 hover:opacity-50 transition-all ease-in-out duration-300 cursor-pointer";
 
 type Props = {
   label: string;
   isLoading: boolean;
+  children?: React.ReactNode;
 };
 
 const ButtonLabelAsync = (props: Props) => {
-  return props.isLoading ? (
-    <div className="bg-white rounded-xl px-4 py-2 w-full transition-all duration-300 min-w-48 min-h-10 flex items-center justify-center">
-      <LoaderSmall />
-    </div>
-  ) : (
-    <div className="bg-white hover:bg-black text-black hover:text-white  rounded-xl px-4 py-2 w-full transition-all duration-300 min-w-48 min-h-10">
-      {props.label}
+  return (
+    <div className={baseClass}>
+      {props.isLoading ? (
+        <LoaderSmall />
+      ) : (
+        <span className="ml-2">{props.label}</span>
+      )}
+      {props.children}
     </div>
   );
 };

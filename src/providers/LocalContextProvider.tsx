@@ -7,14 +7,14 @@ import { createContext, useContext, useState } from "react";
 
 // Context type
 type LocalContextProviderType = {
-  isGameOngoing: boolean;
-  setIsGameOngoing: (isGameOngoing: boolean) => void;
+  user: User | null;
+  setUser: (user: User) => void;
 };
 
 // Create the default context
 const LocalContext = createContext<LocalContextProviderType>({
-  isGameOngoing: false,
-  setIsGameOngoing: () => {},
+  user: null,
+  setUser: () => {},
 });
 
 // Create a provider for the context
@@ -23,10 +23,10 @@ export const LocalContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [isGameOngoing, setIsGameOngoing] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
 
   return (
-    <LocalContext.Provider value={{ isGameOngoing, setIsGameOngoing }}>
+    <LocalContext.Provider value={{ user, setUser }}>
       {children}
     </LocalContext.Provider>
   );

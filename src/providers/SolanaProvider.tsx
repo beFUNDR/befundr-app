@@ -25,6 +25,9 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
     console.error(error);
   }, []);
 
+  // use wallet connection hook to retrieve user data in db
+  // useWalletConnection();
+
   return (
     <ConnectionProvider endpoint={rpcUrl}>
       <WalletProvider wallets={[]} onError={onError} autoConnect={true}>
