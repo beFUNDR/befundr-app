@@ -1,7 +1,7 @@
 import { TrendingUp, Users, Shield, Code2 } from "lucide-react";
-import ButtonLabel from "../buttons/_ButtonLabel";
-import ButtonLabelSecondary from "../buttons/_ButtonLabelSecondary";
 import { AnimatedBlock } from "../displayElements/AnimatedBlock";
+import ExploreProjectButton from "../buttons/ExploreProjectButton";
+import ApplyButton from "../buttons/ApplyButton";
 
 const features = [
   {
@@ -48,8 +48,8 @@ const ProcessSection = () => {
           ))}
         </div>
         <div className="flex gap-4">
-          <ButtonLabel label="Start a campaign" />
-          <ButtonLabelSecondary label="Explore projects" />
+          <ExploreProjectButton />
+          <ApplyButton />
         </div>
       </div>
     </AnimatedBlock>

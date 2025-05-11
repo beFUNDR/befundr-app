@@ -1,16 +1,33 @@
 // Type Project (mocké pour les besoins de la démo)
 type Project = {
-  id: string;
+  userId: string;
   name: string;
-  description: string;
-  image: string;
+  category: string;
+  mainImage: string;
   logo: string;
-  fundingStatus?: string;
-  fundingPercent?: number;
-  daysLeft?: number;
-  backers?: number;
+  headLine: string;
+  description: string;
+  website?: string;
+  twitter?: string;
+  discord?: string;
+  telegram?: string;
+  status: string;
   supportedBy?: Community["name"];
-  tags?: string[];
+};
+
+type ProjectToCreate = {
+  userId: string;
+  name: string;
+  category: string;
+  mainImage: string;
+  logo: string;
+  headLine: string;
+  description: string;
+  website?: string;
+  twitter?: string;
+  discord?: string;
+  telegram?: string;
+  status: string;
 };
 
 type Community = {

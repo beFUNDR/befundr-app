@@ -1,7 +1,6 @@
-import ButtonLabel from "../buttons/_ButtonLabel";
-import ButtonLabelSecondary from "../buttons/_ButtonLabelSecondary";
-import Link from "next/link";
 import { AnimatedBlock } from "../displayElements/AnimatedBlock";
+import ExploreProjectButton from "../buttons/ExploreProjectButton";
+import ApplyButton from "../buttons/ApplyButton";
 
 const BottomLabel = () => {
   return (
@@ -15,12 +14,8 @@ const BottomLabel = () => {
           </p>
         </div>
         <div className="flex gap-4">
-          <Link href="/projects">
-            <ButtonLabelSecondary label="Explore projects" />
-          </Link>
-          <Link href="/campaign">
-            <ButtonLabel label="Start a campaign" />
-          </Link>
+          <ExploreProjectButton />
+          <ApplyButton />
         </div>
       </div>
     </AnimatedBlock>

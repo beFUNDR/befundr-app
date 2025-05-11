@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import WelcomeModal from "../modals/WelcomeModal";
 import { useUser } from "@/hooks/dbData/useUser";
 import { useQueryClient } from "@tanstack/react-query";
+import ApplyButton from "../buttons/ApplyButton";
 
 const MenuDesktop = () => {
   //* GLOBAL STATE
@@ -69,7 +70,7 @@ const MenuDesktop = () => {
 
   return (
     <>
-      <div className="fixed inset-0 flex justify-start items-center w-full h-18 gap-6 px-10 pt-2 drop-shadow-lg  bg-black  z-20 ">
+      <div className="fixed inset-0 flex justify-start items-center w-full h-20 gap-6 px-10 pt-2 drop-shadow-lg  bg-black  z-20 ">
         <Link href={"/"}>
           <Image src={"/images/logo.png"} alt="logo" width={200} height={100} />
         </Link>
@@ -89,6 +90,7 @@ const MenuDesktop = () => {
             </Link>
           ))}
         </div>
+        <ApplyButton />
         {connected ? <ProfilButton /> : <WalletButton />}
       </div>
 

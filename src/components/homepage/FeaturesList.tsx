@@ -1,8 +1,8 @@
-import { Search, Users, DollarSign } from "lucide-react";
+import { Users, DollarSign, Laptop } from "lucide-react";
 
 const features = [
   {
-    icon: <Search className=" w-5 h-5 mr-3 text-secondary" />,
+    icon: <Laptop className=" w-5 h-5 mr-3 text-secondary" />,
     text: (
       <p className="bodyStyle">
         Builders, kickstart your project with a seamless launch experience.
@@ -21,7 +21,7 @@ const features = [
     icon: <Users className="text-secondary w-5 h-5 mr-3" />,
     text: (
       <p className="bodyStyle">
-        Partners, cut the noise. Focus on builders that matter..
+        Partners, cut the noise. Focus on builders that matter.
       </p>
     ),
   },

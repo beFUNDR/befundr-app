@@ -6,7 +6,7 @@ type Props = {
 };
 
 const NftCard = (props: Props) => {
-  // Découpe le nom en deux parties : collection et numéro
+  // split the name into collection and number
   let collection = props.name;
   let numero = "";
   if (props.name.includes("#")) {

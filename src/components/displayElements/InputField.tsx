@@ -10,6 +10,7 @@ type Props = {
   type?: string;
   textarea?: boolean;
   required?: boolean;
+  placeholder?: string;
 };
 
 export default function InputField({
@@ -19,6 +20,7 @@ export default function InputField({
   type = "text",
   textarea = false,
   required = false,
+  placeholder = "",
 }: Props) {
   return (
     <div className="mb-4">
@@ -31,6 +33,7 @@ export default function InputField({
           value={value}
           onChange={onChange}
           rows={3}
+          placeholder={placeholder}
         />
       ) : (
         <input

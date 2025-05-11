@@ -1,11 +1,15 @@
-import { projects } from "@/data/localData";
-import ProjectCard from "../cards/ProjectCard";
+"use client";
+
 import "@/app/customStyles.css";
-import ButtonLabel from "../buttons/_ButtonLabel";
-import Link from "next/link";
 import { AnimatedBlock } from "../displayElements/AnimatedBlock";
+import ExploreProjectButton from "../buttons/ExploreProjectButton";
+import { useProject } from "@/hooks/dbData/useProject";
+import ProjectCard from "../cards/ProjectCard";
+import Link from "next/link";
 
 const ProjectSection = () => {
+  const { projects, isLoadingProjects, projectsError } = useProject();
+
   return (
     <AnimatedBlock className="flex flex-col w-full mt-8">
       <div className="container mx-auto flex flex-col gap-12 py-16 px-4">
@@ -18,15 +22,20 @@ const ProjectSection = () => {
             in the Solana ecosystem.
           </p>
           <div className="flex flex-row gap-4 overflow-x-auto scrollbar-thin scrollbar-thumb-[#222] scrollbar-track-transparent py-2">
-            {projects.slice(0, 6).map((project, index) => (
-              <div key={index} className="min-w-[340px] max-w-xs flex-shrink-0">
-                <ProjectCard project={project} />
-              </div>
-            ))}
+            {projects &&
+              projects.slice(0, 6).map((project, index) => (
+                <Link
+                  key={index}
+                  href={`/project/${project.id}`}
+                  className="min-w-[340px] max-w-xs flex-shrink-0"
+                >
+                  <ProjectCard project={project.data} />
+                </Link>
+              ))}
           </div>
-          <Link href="/projects" className="text-body-text w-48">
-            <ButtonLabel label="Explore projects" />
-          </Link>
+          <div className="w-48">
+            <ExploreProjectButton />
+          </div>
         </div>
       </div>
     </AnimatedBlock>

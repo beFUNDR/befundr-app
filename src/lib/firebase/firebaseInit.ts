@@ -5,7 +5,6 @@ import { getApps, initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Initialize Firebase
-// Initialize Firebase
 const firebase_app =
   getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 

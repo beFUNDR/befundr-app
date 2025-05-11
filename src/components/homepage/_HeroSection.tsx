@@ -1,10 +1,10 @@
 "use client";
 import StatsGrid from "./StatsGrid";
-import ButtonLabel from "../buttons/_ButtonLabel";
-import ButtonLabelSecondary from "../buttons/_ButtonLabelSecondary";
 import FeaturesList from "./FeaturesList";
 import { AnimatedBlock } from "../displayElements/AnimatedBlock";
 import { useEffect, useState } from "react";
+import ExploreProjectButton from "../buttons/ExploreProjectButton";
+import ApplyButton from "../buttons/ApplyButton";
 
 const HeroSection = () => {
   const [videoVisible, setVideoVisible] = useState(false);
@@ -44,9 +44,8 @@ const HeroSection = () => {
             led by trusted builders, backed by real communities.
           </p>
           <p className="bodyStyle max-w-xl">
-            beFUNDR is created for builders and backed by communities. We
-            handpick the most promising projects from the top builders, endorsed
-            by Solana&apos;s OG communities
+            We handpick the most promising projects from the top builders,
+            endorsed by Solana&apos;s OG
           </p>
           <p className="bodyStyle max-w-xl mb-6">
             Our mission: help the next wave of killer apps emerge. In doing so,
@@ -55,8 +54,8 @@ const HeroSection = () => {
           </p>
           <FeaturesList />
           <div className="flex gap-4 mt-8">
-            <ButtonLabel label="Explore projects" />
-            <ButtonLabelSecondary label="Start a campaign" />
+            <ExploreProjectButton />
+            <ApplyButton />
           </div>
         </div>
         <div className="flex-1 flex items-center justify-center">

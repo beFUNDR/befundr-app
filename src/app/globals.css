@@ -63,6 +63,10 @@ button {
   @apply text-2xl font-bold;
 }
 
+.h4Style {
+  @apply text-xl font-bold;
+}
+
 .bodyStyle {
   @apply text-base font-normal text-body-text;
 }
