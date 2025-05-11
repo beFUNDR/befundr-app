@@ -1,0 +1,142 @@
+"use client";
+import { useState } from "react";
+import Application1 from "@/components/apply/Application1";
+import ProgressBar from "@/components/apply/ProgressBar";
+import ButtonLabel from "@/components/buttons/_ButtonLabel";
+import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
+import Application2 from "@/components/apply/Application2";
+import Application3 from "@/components/apply/Application3";
+import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { WalletButton } from "@/providers/SolanaProvider";
+import toast from "react-hot-toast";
+import ApplicationValidationModal from "@/components/modals/ApplicationValidationModal";
+import { useProject } from "@/hooks/dbData/useProject";
+
+export default function ApplyPage() {
+  const { publicKey } = useWallet();
+  const { createProject, isCreating, error } = useProject();
+  const [currentStep, setCurrentStep] = useState(1);
+  const totalSteps = 3;
+  const [project, setProject] = useState<ProjectToCreate>({
+    userId: publicKey?.toString() || "",
+    name: "",
+    category: "Community",
+    mainImage: "",
+    logo: "",
+    headLine: "",
+    description: "",
+    website: "",
+    twitter: "",
+    discord: "",
+    telegram: "",
+    status: "In review",
+  });
+  const [mainImageFile, setMainImageFile] = useState<File | null>(null);
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [isApplicationValidated, setIsApplicationValidated] = useState(false);
+
+  const handleApply = async () => {
+    try {
+      if (!publicKey) {
+        throw new Error("Connect your wallet");
+      }
+      if (!mainImageFile) {
+        throw new Error("Select a main image");
+      }
+      if (!logoFile) {
+        throw new Error("Select a logo");
+      }
+      if (!project.name) {
+        throw new Error("Enter a name");
+      }
+      if (!project.category) {
+        throw new Error("Select a category");
+      }
+      if (!project.headLine) {
+        throw new Error("Enter a headLine");
+      }
+      if (!project.description) {
+        throw new Error("Enter a description");
+      }
+
+      await createProject({
+        project,
+        mainImageFile,
+        logoFile,
+      });
+
+      setIsApplicationValidated(true);
+    } catch (e) {
+      if (e instanceof Error) {
+        toast.error(e.message);
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
+  };
+
+  // return if no public key
+  if (!publicKey) {
+    return (
+      <div className="max-w-3xl mx-auto py-10 flex flex-col items-center justify-center h-[500px]">
+        <h1 className="h2Style mb-4 ">Apply for your project 🚀</h1>
+        <p className="bodyStyle mb-4">Connect your wallet to apply</p>
+        <WalletButton />
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-3xl mx-auto py-10">
+      <h1 className="h2Style mb-4 ">Apply for your project 🚀</h1>
+      <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
+      {/* Application steps */}
+      {currentStep === 1 && (
+        <Application1
+          project={project}
+          setProject={setProject}
+          setMainImageFile={setMainImageFile}
+          setLogoFile={setLogoFile}
+        />
+      )}
+      {currentStep === 2 && (
+        <Application2 project={project} setProject={setProject} />
+      )}
+      {currentStep === 3 && <Application3 project={project} />}
+      <div className="flex justify-start mt-4 gap-4">
+        {currentStep > 1 && (
+          <button
+            type="button"
+            onClick={() => setCurrentStep((s) => Math.max(s - 1, 1))}
+          >
+            <ButtonLabelSecondary label="Back" />
+          </button>
+        )}
+        {currentStep < totalSteps && (
+          <button
+            type="button"
+            onClick={() => {
+              setCurrentStep((s) => Math.min(s + 1, totalSteps));
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          >
+            <ButtonLabel label="Next" />
+          </button>
+        )}
+        {currentStep === totalSteps && (
+          <button type="button" onClick={handleApply} disabled={isCreating}>
+            <ButtonLabelAsync label="Apply" isLoading={isCreating} />
+          </button>
+        )}
+      </div>
+      {isApplicationValidated && project.logo && project.name && (
+        <ApplicationValidationModal
+          image={project.logo}
+          projectName={project.name}
+          onClose={() => setIsApplicationValidated(false)}
+        />
+      )}
+    </div>
+  );
+}
