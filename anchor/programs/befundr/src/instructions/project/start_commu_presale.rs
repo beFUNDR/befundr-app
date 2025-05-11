@@ -5,9 +5,13 @@ use crate::{
     Globals, Project, ProjectStatus, GLOBALS_SEED, PROJECT_SEED,
 };
 
-pub fn approve_project(ctx: Context<ApproveProject>) -> Result<()> {
+pub fn start_commu_presale(
+    ctx: Context<StartCommuPresale>,
+    round_2_max_supply: u64,
+    round_2_usdc_price: u64,
+) -> Result<()> {
     let project = &mut ctx.accounts.project;
-    let globals = &ctx.accounts.globals;
+    let globals = &mut ctx.accounts.globals;
 
     require!(
         globals.admins.contains(&ctx.accounts.authority.key()),
@@ -15,16 +19,20 @@ pub fn approve_project(ctx: Context<ApproveProject>) -> Result<()> {
     );
 
     require!(
-        project.status == ProjectStatus::WaitingForApproval,
+        project.status == ProjectStatus::NftPresale,
         ProjectError::WrongStatus
     );
 
-    project.status = ProjectStatus::Published;
+    project.round_2_max_supply = round_2_max_supply;
+    project.round_2_remaining_supply = round_2_max_supply;
+    project.round_2_usdc_price = round_2_usdc_price;
+
+    project.status = ProjectStatus::CommuPresale;
     Ok(())
 }
 
 #[derive(Accounts)]
-pub struct ApproveProject<'info> {
+pub struct StartCommuPresale<'info> {
     #[account(
         seeds = [PROJECT_SEED, &project.project_counter.to_le_bytes()],
         bump,

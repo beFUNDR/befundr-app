@@ -5,10 +5,10 @@ use crate::{
     Globals, Project, ProjectStatus, GLOBALS_SEED, PROJECT_SEED,
 };
 
-pub fn start_nft_presale(
-    ctx: Context<StartNftPresale>,
-    round_1_max_supply: u64,
-    round_1_usdc_price: u64,
+pub fn start_public_sale(
+    ctx: Context<StartPublicSale>,
+    round_3_max_supply: u64,
+    round_3_usdc_price: u64,
 ) -> Result<()> {
     let project = &mut ctx.accounts.project;
     let globals = &mut ctx.accounts.globals;
@@ -19,20 +19,20 @@ pub fn start_nft_presale(
     );
 
     require!(
-        project.status == ProjectStatus::NftMintRound,
+        project.status == ProjectStatus::CommuPresale,
         ProjectError::WrongStatus
     );
 
-    project.round_1_max_supply = round_1_max_supply;
-    project.round_1_remaining_supply = round_1_max_supply;
-    project.round_1_usdc_price = round_1_usdc_price;
+    project.round_3_max_supply = round_3_max_supply;
+    project.round_3_remaining_supply = round_3_max_supply;
+    project.round_3_usdc_price = round_3_usdc_price;
 
-    project.status = ProjectStatus::NftMintRound;
+    project.status = ProjectStatus::PublicSale;
     Ok(())
 }
 
 #[derive(Accounts)]
-pub struct StartNftPresale<'info> {
+pub struct StartPublicSale<'info> {
     #[account(
         seeds = [PROJECT_SEED, &project.project_counter.to_le_bytes()],
         bump,

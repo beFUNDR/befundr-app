@@ -9,6 +9,7 @@ pub struct Project {
     pub minted_nft: u64,
     pub nft_usdc_price: u64,
     pub nft_collection: Pubkey,
+    pub token_mint: Pubkey,
 
     // Round 1
     pub round_1_max_supply: u64,

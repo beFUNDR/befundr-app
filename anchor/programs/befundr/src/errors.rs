@@ -12,6 +12,30 @@ pub enum AdminError {
 pub enum NftError {
     #[msg("Invalid authority for the given collection")]
     WrongCollectionAuthority,
+    #[msg("Invalid collection for the mint")]
+    WrongCollection,
+    #[msg("Mint limit reached for the given authority")]
+    UserMintLimitReached,
+}
+
+#[error_code]
+pub enum ContributionError {
+    #[msg("The project is not in a sale status")]
+    InvalidStatus,
+    #[msg("The project token supply is insufficient")]
+    NotEnoughSupply,
+}
+
+#[error_code]
+pub enum TokenError {
+    #[msg("Invalid authority for the given token mint")]
+    WrongTokenAuthority,
+    #[msg("The token authority is not revoked")]
+    AuthorityActive,
+    #[msg("The token freeze authority is not revoked")]
+    FreezeAuthorityActive,
+    #[msg("The supply is not complete")]
+    NotAllSupply,
 }
 
 #[error_code]

@@ -6,3 +6,9 @@ pub use referral::*;
 
 pub mod globals;
 pub use globals::*;
+
+pub mod nft;
+pub use nft::*;
+
+pub mod community;
+pub use community::*;
