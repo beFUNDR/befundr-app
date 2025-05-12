@@ -34,6 +34,41 @@ pub mod befundr {
         instructions::start_nft_mint_round(ctx, nft_max_supply, nft_usdc_price, nft_collection_name)
     }
 
+    pub fn mint_nft(ctx: Context<MintNft>, quantity: u16) -> Result<()> {
+        instructions::mint_nft(ctx, quantity)
+    }
+
+    pub fn start_incubation(ctx: Context<StartIncubation>) -> Result<()> {
+        instructions::start_incubation(ctx)
+    }
+
+    pub fn start_nft_presale(
+        ctx: Context<StartNftPresale>,
+        round_1_max_supply: u64,
+        round_1_usdc_price: u64,
+    ) -> Result<()> {
+        instructions::start_nft_presale(ctx, round_1_max_supply, round_1_usdc_price)
+    }
+
+    pub fn start_commu_presale(
+        ctx: Context<StartCommuPresale>,
+        round_2_max_supply: u64,
+        round_2_usdc_price: u64,
+    ) -> Result<()> {
+        instructions::start_commu_presale(ctx, round_2_max_supply, round_2_usdc_price)
+    }
+    pub fn start_public_sale(
+        ctx: Context<StartPublicSale>,
+        round_3_max_supply: u64,
+        round_3_usdc_price: u64,
+    ) -> Result<()> {
+        instructions::start_public_sale(ctx, round_3_max_supply, round_3_usdc_price)
+    }
+
+    pub fn buy_token(ctx: Context<BuyToken>, amount: u64) -> Result<()> {
+        instructions::buy_token(ctx, amount)
+    }
+
     pub fn update_usdc_mint(ctx: Context<UpdateUsdcMint>, new_usdc_mint: Pubkey) -> Result<()> {
         instructions::update_usdc_mint(ctx, new_usdc_mint)
     }

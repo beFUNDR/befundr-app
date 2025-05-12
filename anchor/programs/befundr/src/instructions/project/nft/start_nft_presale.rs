@@ -21,11 +21,6 @@ pub fn start_nft_presale(
     );
 
     require!(
-        mint.mint_authority == None.into(),
-        TokenError::AuthorityActive
-    );
-
-    require!(
         project.status == ProjectStatus::Incubation,
         ProjectError::WrongStatus
     );
@@ -42,6 +37,8 @@ pub fn start_nft_presale(
     project.round_1_usdc_price = round_1_usdc_price;
 
     project.status = ProjectStatus::NftPresale;
+    project.token_mint = mint.key();
+
     Ok(())
 }
 

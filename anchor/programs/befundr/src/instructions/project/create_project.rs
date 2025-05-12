@@ -24,7 +24,7 @@ pub struct CreateProject<'info> {
         init,
         seeds = [PROJECT_SEED.as_ref(), &globals.created_project_counter.to_le_bytes()],
         bump,
-        payer = authority,
+        payer = payer,
         space = 8 + Project::INIT_SPACE 
     )]
     pub project: Account<'info, Project>,
@@ -37,6 +37,9 @@ pub struct CreateProject<'info> {
 
     #[account(mut)]
     pub authority: Signer<'info>,
+
+    #[account(mut)]
+    pub payer: Signer<'info>,
 
     pub system_program: Program<'info, System>,
 }

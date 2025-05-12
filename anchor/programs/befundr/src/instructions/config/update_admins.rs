@@ -6,7 +6,7 @@ pub fn update_admins(ctx: Context<UpdateAdmins>, admins: Vec<Pubkey>) -> Result<
     let config = &mut ctx.accounts.config;
 
     require!(
-        config.admins.contains(&ctx.accounts.authority.key()),
+        config.admins.len() == 0 || config.admins.contains(&ctx.accounts.authority.key()),
         AdminError::NotAllowed
     );
 
@@ -17,7 +17,10 @@ pub fn update_admins(ctx: Context<UpdateAdmins>, admins: Vec<Pubkey>) -> Result<
 
 #[derive(Accounts)]
 pub struct UpdateAdmins<'info> {
-    #[account(mut, seeds = [GLOBALS_SEED], bump)]
+    #[account(init_if_needed,
+        payer = payer,
+        space = 8 + Globals::INIT_SPACE,
+         seeds = [GLOBALS_SEED], bump)]
     pub config: Account<'info, Globals>,
 
     #[account(mut)]

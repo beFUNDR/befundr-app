@@ -16,6 +16,10 @@ pub enum NftError {
     WrongCollection,
     #[msg("Mint limit reached for the given authority")]
     UserMintLimitReached,
+    #[msg("Not enough NFTs remaining")]
+    NotEnoughSupply,
+    #[msg("NFT collection is sold out")]
+    NftSoldOut,
 }
 
 #[error_code]

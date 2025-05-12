@@ -37,7 +37,7 @@ pub struct ApproveProject<'info> {
     )]
     pub globals: Account<'info, Globals>,
 
-    #[account(mut)]
+    #[account()]
     pub authority: Signer<'info>,
 
     pub system_program: Program<'info, System>,

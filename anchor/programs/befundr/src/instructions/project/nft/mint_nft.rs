@@ -23,6 +23,8 @@ pub fn mint_nft(
         ProjectError::WrongStatus
     );
 
+    require!(project.minted_nft < project.nft_max_supply, NftError::NftSoldOut);
+    require!(project.minted_nft + (quantity as u64) < project.nft_max_supply, NftError::NotEnoughSupply);
     require!(quantity + nft_allocation.purchased_nft_amount <= MAX_NFT_PER_KEY, NftError::UserMintLimitReached);
 
     let cpi_accounts = Transfer {
@@ -49,6 +51,8 @@ pub fn mint_nft(
         .uri(collection.uri.to_string())
         .invoke_signed(signer_seeds)?;
 
+    nft_allocation.purchased_nft_amount += quantity;
+    project.minted_nft = project.minted_nft.checked_add(quantity.into()).unwrap();
 
     Ok(())
 }
