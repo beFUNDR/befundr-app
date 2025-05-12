@@ -8,7 +8,7 @@ type Community = {
 
 const CommunityCard = ({ community }: { community: Community }) => {
   return (
-    <div className="aspect-square bg-custom-gray-800 rounded-3xl flex flex-col items-center justify-center p-6 min-h-[260px] max-w-xs w-full shadow-md">
+    <div className="aspect-square bg-custom-gray-900 border border-custom-gray-800 rounded-3xl flex flex-col items-center justify-center p-6 min-h-[260px] max-w-xs w-full shadow-md">
       <Image
         src={community.logo}
         alt={community.name + " logo"}

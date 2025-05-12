@@ -52,3 +52,21 @@ type User = {
   website: string;
   discord: string;
 };
+
+type Update = {
+  id: string;
+  title: string;
+  authorId: string;
+  date: string; // format: YYYY-MM-DD
+  message: string;
+  commentsCount: number;
+  likesCount: number;
+};
+
+type Mission = {
+  id: string;
+  title: string;
+  category: string;
+  description: string;
+  isPaid: boolean;
+};

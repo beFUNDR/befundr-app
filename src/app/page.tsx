@@ -1,9 +1,9 @@
-import HeroSection from "@/components/homepage/_HeroSection";
-import ProcessSection from "@/components/homepage/_ProcessSection";
-import ProjectSection from "@/components/homepage/_ProjectSection";
-import PartnerSection from "@/components/homepage/_PartnerSection";
-import FaqSection from "@/components/homepage/_FaqSection";
-import BottomLabel from "@/components/homepage/BottomLabel";
+import HeroSection from "@/components/_homepage/_HeroSection";
+import ProcessSection from "@/components/_homepage/_ProcessSection";
+import ProjectSection from "@/components/_homepage/_ProjectSection";
+import PartnerSection from "@/components/_homepage/_PartnerSection";
+import FaqSection from "@/components/_homepage/_FaqSection";
+import BottomLabel from "@/components/_homepage/BottomLabel";
 
 export default function Home() {
   return (

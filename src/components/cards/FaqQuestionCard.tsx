@@ -8,7 +8,7 @@ interface FaqQuestionProps {
   children: React.ReactNode;
 }
 
-const FaqQuestion = ({ question, children }: FaqQuestionProps) => {
+const FaqQuestionCard = ({ question, children }: FaqQuestionProps) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -42,4 +42,4 @@ const FaqQuestion = ({ question, children }: FaqQuestionProps) => {
   );
 };
 
-export default FaqQuestion;
+export default FaqQuestionCard;
