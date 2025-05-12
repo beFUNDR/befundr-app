@@ -51,6 +51,7 @@ type User = {
   twitter: string;
   website: string;
   discord: string;
+  skills: string[];
 };
 
 type Update = {

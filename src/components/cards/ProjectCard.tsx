@@ -5,7 +5,7 @@ import StatusTag from "../displayElements/StatusTag";
 
 const ProjectCard = ({ project }: { project: Project }) => {
   return (
-    <div className="relative bg-black rounded-3xl border hover:border-custom-gray-400 border-custom-gray-800 shadow-lg overflow-hidden max-w-md w-full h-[500px] transition-all duration-300">
+    <div className="relative  rounded-3xl border bg-custom-gray-900 hover:border-custom-gray-400 border-custom-gray-800 shadow-lg overflow-hidden max-w-md w-[300px] h-[500px] transition-all duration-300">
       {/* Dashboard image */}
       <div className="w-full h-48 relative">
         <Image

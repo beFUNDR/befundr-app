@@ -11,13 +11,14 @@ const links: { label: string; href: string }[] = [
     href: "/projects",
   },
   {
-    label: "DAOs",
-    href: "/daos",
+    label: "Skills hub",
+    href: "/skillshub",
   },
   {
-    label: "About",
-    href: "/about",
+    label: "Communities",
+    href: "/communities",
   },
+
   {
     label: "FAQ",
     href: "/faq",

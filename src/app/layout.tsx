@@ -32,7 +32,7 @@ export default function RootLayout({
             <MobileWarning />
           </div>
           {/* Affichage desktop */}
-          <div className="hidden md:flex flex-col justify-start min-h-screen bg-black text-textColor-main">
+          <div className="hidden md:flex flex-col justify-start min-h-screen  text-textColor-main">
             <MenuDesktop />
             <main className="flex-grow mt-20 w-full">
               <div className="relativeflex flex-col justify-center items-center w-full">
@@ -42,10 +42,10 @@ export default function RootLayout({
                     src={background}
                     alt="background"
                     fill
-                    className="object-cover opacity-20"
+                    className="object-cover opacity-5"
                     priority
                   />
-                  <div className="absolute inset-0 bg-black/20" />
+                  <div className="absolute inset-0 bg-black opacity-50"></div>
                 </div>
                 {children}
               </div>

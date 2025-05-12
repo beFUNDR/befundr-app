@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useProject } from "@/hooks/dbData/useProject";
 import ProjectCard from "@/components/cards/ProjectCard";
 import Loader from "@/components/displayElements/Loader";
+import Link from "next/link";
+import BackButton from "@/components/buttons/BackButton";
 
 // On suppose que le type Project est global
 
@@ -25,9 +27,12 @@ const ProjectsPage = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold text-white mb-6">
-        Discover and fund projects
-      </h1>
+      <BackButton />
+      <h1 className="h1Style mb-6">Discover and fund projects</h1>
+      <p className="bodyStyle max-w-xl mb-10">
+        Discover hand-picked projects from the best builders from the OG Solana
+        community.
+      </p>
       {/* Filtres catégories */}
       <div className="flex gap-2 mb-8 flex-wrap">
         <button
@@ -62,9 +67,21 @@ const ProjectsPage = () => {
       ) : projectsError ? (
         <div className="text-red-500">Error loading projects</div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div
+          className="grid gap-8  w-full justify-center"
+          style={{
+            gridTemplateColumns:
+              "repeat(auto-fit,minmax(min(300px, 100%), 300px))",
+          }} // handle automatic number of column in responsive
+        >
           {filteredProjects.map((project: any, idx: number) => (
-            <ProjectCard key={project.id || idx} project={project.data} />
+            <Link
+              key={idx}
+              href={`/project/${project.id}`}
+              className="min-w-[300px] max-w-xs flex-shrink-0"
+            >
+              <ProjectCard project={project.data} />
+            </Link>
           ))}
         </div>
       )}

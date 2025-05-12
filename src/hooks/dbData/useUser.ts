@@ -5,9 +5,56 @@ import {
   useQuery as rqUseQuery,
 } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import {
+  getAllDocumentsFromCollection,
+  getDocument,
+} from "@/utils/firebaseClient";
 
 export const useUser = (wallet: string | undefined) => {
   const queryClient = useQueryClient();
+
+  const getAllUsers = async () => {
+    try {
+      const { results, error } = await getAllDocumentsFromCollection<User>(
+        "users"
+      );
+      if (error) {
+        throw error;
+      }
+      return results;
+    } catch (error) {
+      console.error("Erreur lors de la récupération des utilisateurs:", error);
+      throw error;
+    }
+  };
+
+  const usersQuery = useQuery({
+    queryKey: ["users"],
+    queryFn: getAllUsers,
+  });
+
+  const getUser = async (userId: string) => {
+    try {
+      const { result, error } = await getDocument<User>("users", userId);
+      if (error) {
+        throw error;
+      }
+      if (!result) {
+        throw new Error("Utilisateur non trouvé");
+      }
+      return result;
+    } catch (error) {
+      console.error("Erreur lors de la récupération de l'utilisateur:", error);
+      throw error;
+    }
+  };
+
+  const userQuery = (userId: string) =>
+    useQuery({
+      queryKey: ["user", userId],
+      queryFn: () => getUser(userId),
+      enabled: !!userId,
+    });
 
   const query = useQuery({
     queryKey: ["user", wallet],
@@ -49,6 +96,10 @@ export const useUser = (wallet: string | undefined) => {
     ...query,
     updateUser: mutation.mutateAsync,
     isUpdating: mutation.isPending,
+    users: usersQuery.data,
+    isLoadingUsers: usersQuery.isLoading,
+    usersError: usersQuery.error,
+    getUser: userQuery,
   };
 };
 

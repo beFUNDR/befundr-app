@@ -25,6 +25,34 @@ interface CreateProjectParams {
   logoFile: File;
 }
 
+// Fonction utilitaire pure
+export const getProjectsByUserId = async (userId: string) => {
+  try {
+    const { results, error } = await getAllDocumentsFromCollection<Project>(
+      "projects"
+    );
+    if (error) {
+      throw error;
+    }
+    // On filtre les projets par userId
+    return results.filter((p) => p.data.userId === userId);
+  } catch (error) {
+    console.error(
+      "Erreur lors de la récupération des projets de l'utilisateur:",
+      error
+    );
+    throw error;
+  }
+};
+
+// Hook react-query
+export const useProjectsByUserId = (userId: string) =>
+  useQuery({
+    queryKey: ["projectsByUser", userId],
+    queryFn: () => getProjectsByUserId(userId),
+    enabled: !!userId,
+  });
+
 export const useProject = () => {
   const { publicKey } = useWallet();
   const queryClient = useQueryClient();
