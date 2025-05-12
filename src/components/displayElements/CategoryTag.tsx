@@ -4,7 +4,7 @@ type Props = {
 
 const CategoryTag = ({ category }: Props) => {
   return (
-    <span className="bg-gray-800 text-white px-3 py-1 rounded-full text-xs">
+    <span className="bg-custom-gray-800 text-white px-3 py-1 rounded-full text-xs">
       {category}
     </span>
   );

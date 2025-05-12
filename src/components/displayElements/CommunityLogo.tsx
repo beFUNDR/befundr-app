@@ -9,7 +9,12 @@ const CommunityLogo = ({ community }: Props) => {
   const src = `/images/communities/${fileName}`;
 
   return (
-    <Image src={src} alt={community + " logo"} fill className="rounded-full" />
+    <Image
+      src={src}
+      alt={community + " logo"}
+      fill
+      className="rounded-full aspect-square"
+    />
   );
 };
 

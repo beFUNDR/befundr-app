@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { BadgeCheck } from "lucide-react";
 import CommunityLogo from "../displayElements/CommunityLogo";
+import StatusTag from "../displayElements/StatusTag";
 
 const ProjectCard = ({ project }: { project: Project }) => {
   return (
@@ -28,9 +29,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
       <div className="pt-10 pb-6 px-6 flex flex-col  gap-2">
         <div className="flex justify-between items-center gap-2 mb-1">
           <h2 className="text-2xl font-bold text-white">{project.name}</h2>
-          <span className="ml-2 px-3 py-1 rounded-full border border-[#3a4a5a] text-[#b6f7f7] text-sm flex items-center gap-1">
-            {project.status}
-          </span>
+          <StatusTag status={project.status} />
         </div>
         <p className="bodyStyle text-[#b6f7f7] mb-2">{project.headLine}</p>
 
@@ -40,8 +39,15 @@ const ProjectCard = ({ project }: { project: Project }) => {
             <div className="flex justify-start items-center gap-2">
               <BadgeCheck className="w-5 h-5 text-green-400" />
               <span className="text-body-text text-base">Supported by</span>
-              <div className="w-10 h-10 relative">
-                <CommunityLogo community={project.supportedBy} />
+              <div className="flex justify-end gap-2">
+                {project.supportedBy.map((community, index) => (
+                  <div
+                    key={index}
+                    className="relative flex items-center justify-center w-10 h-10"
+                  >
+                    <CommunityLogo community={community} />
+                  </div>
+                ))}
               </div>
             </div>
           )}
