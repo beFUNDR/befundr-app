@@ -37,7 +37,7 @@ const UserPage = () => {
       case "projects":
         return <UserProjectsContent userId={userId} />;
       case "missions":
-        return <UserMissionsContent />;
+        return <UserMissionsContent userId={userId} />;
       case "communities":
         return <UserCommunitiesContent />;
       default:

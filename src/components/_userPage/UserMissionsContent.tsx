@@ -1,3 +1,7 @@
+import { useMission } from "@/hooks/dbData/useMission";
+import MissionCard from "../cards/MissionCard";
+import LoaderSmall from "../displayElements/LoaderSmall";
+
 const mockContributions = [
   {
     title: "Helped launch the MonkeDAO website",
@@ -16,20 +20,23 @@ const mockContributions = [
   },
 ];
 
-const UserMissionsContent = () => {
+const UserMissionsContent = ({ userId }: { userId: string }) => {
+  const { useMissionsByDoneByUserId } = useMission();
+  const {
+    data: missions,
+    isLoading,
+    error,
+  } = useMissionsByDoneByUserId(userId);
+
+  console.log(missions);
+
+  if (isLoading) return <LoaderSmall />;
+  if (error) return <div>Error: {error.message}</div>;
+
   return (
     <div className="flex flex-col gap-6 mt-4">
-      {mockContributions.map((contrib, idx) => (
-        <div
-          key={idx}
-          className="bg-custom-gray-900 rounded-2xl p-6 border border-custom-gray-700 shadow-lg"
-        >
-          <div className="flex justify-between items-center mb-2">
-            <div className="text-lg font-bold text-white">{contrib.title}</div>
-            <div className="text-xs text-gray-400">{contrib.date}</div>
-          </div>
-          <div className="text-gray-300 text-sm">{contrib.description}</div>
-        </div>
+      {missions?.map((mission, idx) => (
+        <MissionCard key={idx} mission={mission.data} />
       ))}
     </div>
   );

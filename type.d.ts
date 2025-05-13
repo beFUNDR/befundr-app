@@ -55,7 +55,6 @@ type User = {
 };
 
 type Update = {
-  id: string;
   title: string;
   authorId: string;
   date: string; // format: YYYY-MM-DD
@@ -65,12 +64,24 @@ type Update = {
 };
 
 type Mission = {
-  id: string;
   title: string;
-  category: string;
+  skill: string;
+  projectId: string;
   description: string;
   isPaid: boolean;
+  status: "open" | "onGoing" | "done" | "cancelled";
+  createdAt: Date;
+  doneBy?: string;
 };
+
+interface MissionToCreate {
+  projectId: string;
+  title: string;
+  skill: string;
+  description: string;
+  isPaid: boolean;
+  doneByUserId?: string;
+}
 
 type GameProgram = {
   points: number;

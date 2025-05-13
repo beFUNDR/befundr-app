@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { skills as allSkills } from "@/data/localData";
 import ProfilContent from "@/components/_myProfile.tsx/ProfilContent";
 import UserProjectsContent from "@/components/_userPage/UserProjectsContent";
+import UserMissionsContent from "@/components/_userPage/UserMissionsContent";
 
 export default function MyProfilePage() {
   //* GLOBAL STATE
@@ -125,9 +126,7 @@ export default function MyProfilePage() {
         <UserProjectsContent userId={publicKey?.toString() ?? ""} />
       )}
       {activeSection === "My missions" && (
-        <div className="text-white mt-8">
-          Section &quot;My missions&quot; (à compléter)
-        </div>
+        <UserMissionsContent userId={publicKey?.toString() ?? ""} />
       )}
       {activeSection === "My investments" && (
         <div className="text-white mt-8">

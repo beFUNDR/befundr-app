@@ -8,7 +8,6 @@ type Props = {
 const UpdateContent = (props: Props) => {
   // Mock d'un update
   const update: Update = {
-    id: "1",
     title: "Starting the journey",
     authorId: "3zT4f1LdkoUF4aBALgTc6bzeTqxgPe2cAKkEayLAF1Kr",
     date: "2025-01-15",

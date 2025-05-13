@@ -60,7 +60,7 @@ const ProjectPage = () => {
       case "updates":
         return <UpdateContent isOwner={isOwner} />;
       case "missionHub":
-        return <MissionContent isOwner={isOwner} />;
+        return <MissionContent isOwner={isOwner} projectId={projectId} />;
       case "faq":
         return <FaqContent />;
       case "vote":
