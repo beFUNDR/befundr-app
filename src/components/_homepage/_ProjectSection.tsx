@@ -3,9 +3,9 @@
 import "@/app/customStyles.css";
 import { AnimatedBlock } from "../displayElements/AnimatedBlock";
 import ExploreProjectButton from "../buttons/ExploreProjectButton";
-import { useProject } from "@/hooks/dbData/useProject";
 import ProjectCard from "../cards/ProjectCard";
 import Link from "next/link";
+import { useProject } from "@/hooks/dbData/project/useProject";
 
 const ProjectSection = () => {
   const { projects, isLoadingProjects, projectsError } = useProject();

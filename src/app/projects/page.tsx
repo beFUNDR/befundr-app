@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useProject } from "@/hooks/dbData/useProject";
 import ProjectCard from "@/components/cards/ProjectCard";
 import Loader from "@/components/displayElements/Loader";
 import Link from "next/link";
 import BackButton from "@/components/buttons/BackButton";
+import { useProject } from "@/hooks/dbData/project/useProject";
 
 // On suppose que le type Project est global
 
