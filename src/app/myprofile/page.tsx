@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import ProfileMenu from "@/components/profile/ProfileMenu";
+import ProfileMenu from "@/components/_profile/ProfileMenu";
 import { useUser } from "@/hooks/dbData/useUser";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Loader from "@/components/displayElements/Loader";
@@ -109,8 +109,6 @@ export default function MyProfilePage() {
       </div>
     );
   }
-
-  console.log(user);
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12">

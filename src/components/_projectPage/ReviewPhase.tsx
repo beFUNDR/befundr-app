@@ -6,6 +6,7 @@ import CommunityLogo from "@/components/displayElements/CommunityLogo";
 import Divider from "@/components/displayElements/Divider";
 import StatusTag from "@/components/tags/StatusTag";
 import Image from "next/image";
+import Link from "next/link";
 
 type Props = { project: Project; owner: User };
 
@@ -23,7 +24,10 @@ const ReviewPhase = (props: Props) => {
       <p className="h4Style mt-4">Builder</p>
       {/* Owner & stats */}
       <div className="flex justify-between items-stretch gap-4">
-        <div className="flex justify-start items-center gap-4 ">
+        <Link
+          href={`/skillshub/${props.owner.wallet}`}
+          className="flex justify-start items-center gap-4 "
+        >
           {props.owner.avatar && (
             <Image
               src={props.owner.avatar}
@@ -37,7 +41,7 @@ const ReviewPhase = (props: Props) => {
             <div className="font-bold text-white">{props.owner.name}</div>
             <div className="text-xs text-gray-400">Project owner</div>
           </div>
-        </div>
+        </Link>
         {props.project.supportedBy && (
           <div className="flex flex-col items-end justify-end gap-2">
             <p className="font-bold text-white">Supported by</p>

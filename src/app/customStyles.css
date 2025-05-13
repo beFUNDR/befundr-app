@@ -1,11 +1,10 @@
 .wallet-adapter-button {
   border: 2px solid black !important;
-  color: white !important;
+  color: black !important;
   border-radius: 1000px !important;
   background-color: #30f7e7 !important;
   font-size: 16px !important;
   font-weight: 600 !important;
-  color: #cee7e7 !important;
 }
 
 button.wallet-button:hover {

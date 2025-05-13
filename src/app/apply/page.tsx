@@ -1,17 +1,19 @@
 "use client";
 import { useState } from "react";
-import Application1 from "@/components/apply/Application1";
-import ProgressBar from "@/components/apply/ProgressBar";
+import Application1 from "@/components/_apply/Application1";
+import ProgressBar from "@/components/_apply/ProgressBar";
 import ButtonLabel from "@/components/buttons/_ButtonLabel";
 import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
-import Application2 from "@/components/apply/Application2";
-import Application3 from "@/components/apply/Application3";
+import Application2 from "@/components/_apply/Application2";
+import Application3 from "@/components/_apply/Application3";
 import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletButton } from "@/providers/SolanaProvider";
 import toast from "react-hot-toast";
 import ApplicationValidationModal from "@/components/modals/ApplicationValidationModal";
 import { useProject } from "@/hooks/dbData/useProject";
+import { useUser } from "@/hooks/dbData/useUser";
+import Loader from "@/components/displayElements/Loader";
 
 export default function ApplyPage() {
   const { publicKey } = useWallet();
@@ -35,6 +37,21 @@ export default function ApplyPage() {
   const [mainImageFile, setMainImageFile] = useState<File | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [isApplicationValidated, setIsApplicationValidated] = useState(false);
+  const { data: user, isLoading: isUserLoading } = useUser(
+    publicKey?.toString() || ""
+  );
+
+  if (isUserLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader />
+      </div>
+    );
+  }
+
+  // const isUserDataSetted = useMemo(() => {
+  //   return true;
+  // }, []);
 
   const handleApply = async () => {
     try {
@@ -87,9 +104,25 @@ export default function ApplyPage() {
     );
   }
 
+  // return if no user
+  if (!user) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <h1 className="h2Style mb-4 ">Apply for your project 🚀</h1>
+        <p className="bodyStyle mb-4">Connect your wallet to apply</p>
+        <WalletButton />
+      </div>
+    );
+  }
+
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
       <h1 className="h2Style mb-4 ">Apply for your project 🚀</h1>
+      {(!user.name || !user.avatar) && (
+        <p className="bodyStyle !text-red-600 mb-6">
+          Your profile is not set. Please set it before applying.
+        </p>
+      )}
       <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
       {/* Application steps */}
       {currentStep === 1 && (
@@ -103,7 +136,7 @@ export default function ApplyPage() {
       {currentStep === 2 && (
         <Application2 project={project} setProject={setProject} />
       )}
-      {currentStep === 3 && <Application3 project={project} />}
+      {currentStep === 3 && <Application3 project={project} user={user} />}
       <div className="flex justify-start mt-4 gap-4">
         {currentStep > 1 && (
           <button

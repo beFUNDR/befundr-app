@@ -1,24 +1,30 @@
 import Image from "next/image";
+import Link from "next/link";
 
-type Community = {
+type Collection = {
   name: string;
   description: string;
-  logo: string;
+  image: string;
 };
 
-const CommunityCard = ({ community }: { community: Community }) => {
+const CommunityCard = ({ collection }: { collection: Collection }) => {
   return (
-    <div className="aspect-square bg-custom-gray-900 border border-custom-gray-800 rounded-3xl flex flex-col items-center justify-center p-6 min-h-[260px] max-w-xs w-full shadow-md">
+    <Link
+      href={`/communities/${collection.name}`}
+      className="aspect-square bg-custom-gray-900 border border-custom-gray-800 rounded-3xl flex flex-col items-center justify-center p-6 min-h-[200px] max-w-xs w-full shadow-md hover:border-custom-gray-600"
+    >
       <Image
-        src={community.logo}
-        alt={community.name + " logo"}
+        src={collection.image}
+        alt={collection.name + " logo"}
         width={100}
         height={100}
         className="rounded-full mb-4"
       />
-      <h3 className="h3Style mb-2">{community.name}</h3>
-      <p className="bodyStyle  text-center">{community.description}</p>
-    </div>
+      <h3 className="h3Style mb-2">{collection.name}</h3>
+      <p className="bodyStyle  text-center line-clamp-2">
+        {collection.description}
+      </p>
+    </Link>
   );
 };
 

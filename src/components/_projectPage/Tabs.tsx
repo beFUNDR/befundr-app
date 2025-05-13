@@ -1,9 +1,9 @@
 const TABS = [
-  { id: "about", label: "About", count: 0 },
-  { id: "updates", label: "Updates", count: 0 },
-  { id: "missionHub", label: "Mission Hub", count: 2 },
-  { id: "vote", label: "Vote", count: 0 },
-  { id: "faq", label: "FAQ", count: 0 },
+  { id: "about", label: "About" },
+  { id: "updates", label: "Updates" },
+  { id: "missionHub", label: "Mission Hub" },
+  { id: "vote", label: "Vote" },
+  { id: "faq", label: "FAQ" },
 ];
 
 type Props = {
@@ -23,11 +23,6 @@ const Tabs = ({ activeTab, onTabChange }: Props) => {
           }`}
         >
           {tab.label}
-          {tab.count > 0 && (
-            <span className="ml-1 text-xs bg-custom-gray-800 px-2 py-0.5 rounded-full">
-              {tab.count}
-            </span>
-          )}
         </div>
       ))}
     </div>

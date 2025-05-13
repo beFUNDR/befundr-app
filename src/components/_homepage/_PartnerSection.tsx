@@ -1,9 +1,15 @@
-import { communities, partners } from "@/data/localData";
+"use client";
+import { partners } from "@/data/localData";
 import CommunityCard from "../cards/CommunityCard";
 import PartnerCard from "../cards/PartnerCard";
 import { AnimatedBlock } from "../displayElements/AnimatedBlock";
+import { useGetAllCollections } from "@/hooks/dbData/useCollection";
 
 const PartnerSection = () => {
+  const { data: collections } = useGetAllCollections();
+
+  if (!collections) return null;
+
   return (
     <AnimatedBlock className="relative flex flex-col w-full mt-8 overflow-hidden">
       <div className="container mx-auto flex flex-col gap-12 py-16 px-4 relative z-10">
@@ -16,8 +22,8 @@ const PartnerSection = () => {
         </p>
         <h2 className="h2Style">Communities</h2>
         <div className="flex flex-row gap-4 overflow-x-auto  py-2">
-          {communities.map((community, idx) => (
-            <CommunityCard key={idx} community={community} />
+          {collections.map((collection, idx) => (
+            <CommunityCard key={idx} collection={collection.data} />
           ))}
         </div>
         <h2 className="h2Style">Partners</h2>

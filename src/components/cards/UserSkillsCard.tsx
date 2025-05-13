@@ -43,7 +43,7 @@ const UserSkillCard = ({ user }: Props) => {
               <SkillTag key={idx} skill={skill} />
             ))}
           {extraSkills && extraSkills > 0 && (
-            <span className="flex items-center justify-center px-3 py-1 rounded-full border border-custom-gray-700 bg-custom-gray-800 text-custom-gray-300 text-sm font-semibold">
+            <span className="flex items-center justify-center px-3 py-1 rounded-full border border-custom-gray-200 bg-custom-gray-800 text-custom-gray-200 text-sm font-semibold">
               +{extraSkills}
             </span>
           )}

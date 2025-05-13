@@ -40,7 +40,7 @@ export const useUser = (wallet: string | undefined) => {
         throw error;
       }
       if (!result) {
-        throw new Error("Utilisateur non trouvé");
+        return null;
       }
       return result;
     } catch (error) {

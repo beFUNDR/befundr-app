@@ -4,7 +4,7 @@ type Props = {
   href: string;
 };
 
-const InternetButton = ({ href }: Props) => {
+const TensorButton = ({ href }: Props) => {
   return (
     <a
       href={href}
@@ -13,14 +13,14 @@ const InternetButton = ({ href }: Props) => {
       className="flex justify-center items-center border-2 border-accent  text-accent font-bold rounded-full px-2 text-lg min-w-20 max-w-30 min-h-10 hover:opacity-50 transition-all ease-in-out duration-300 cursor-pointer"
     >
       <Image
-        src="/images/icons/internet.svg"
-        alt="website"
-        width={25}
-        height={25}
+        src="/images/icons/dollar.svg"
+        alt="Tensor"
+        width={40}
+        height={40}
         className="text-accent"
       />
     </a>
   );
 };
 
-export default InternetButton;
+export default TensorButton;

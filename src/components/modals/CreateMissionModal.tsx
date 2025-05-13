@@ -4,6 +4,8 @@ import { skills } from "@/data/localData";
 import { useMission } from "@/hooks/dbData/useMission";
 import ButtonLabelAsync from "../buttons/_ButtonLabelAsync";
 import toast from "react-hot-toast";
+import InputField from "../displayElements/InputField";
+import Selector from "../displayElements/Selector";
 
 interface CreateMissionModalProps {
   open: boolean;
@@ -55,39 +57,30 @@ const CreateMissionModal = ({
     <ModalLayout justify="center" item="center" onClose={onClose} dark>
       <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit}>
         <h2 className="h3Style mb-2">Create a new mission</h2>
-        <label className="bodyStyle">
-          Title
-          <input
-            className="w-full mt-1 px-3 py-2 rounded bg-custom-gray-800 border border-custom-gray-600 text-white"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-        </label>
-        <label className="bodyStyle">
-          Category
-          <select
-            className="w-full mt-1 px-3 py-2 rounded bg-custom-gray-800 border border-custom-gray-600 text-white"
-            value={skill}
-            onChange={(e) => setSkill(e.target.value)}
-          >
-            {skills.map((skill) => (
-              <option key={skill} value={skill}>
-                {skill}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="bodyStyle">
-          Description
-          <textarea
-            className="w-full mt-1 px-3 py-2 rounded bg-custom-gray-800 border border-custom-gray-600 text-white"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-            rows={4}
-          />
-        </label>
+
+        <InputField
+          label="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+
+        <Selector
+          label="Category"
+          value={skill}
+          onChange={(e) => setSkill(e.target.value)}
+          options={skills}
+          required
+        />
+
+        <InputField
+          label="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          textarea
+          required
+        />
+
         <label className="flex items-center gap-2 bodyStyle">
           <input
             type="checkbox"
@@ -96,7 +89,9 @@ const CreateMissionModal = ({
           />
           Paid mission
         </label>
+
         {error && <div className="text-red-500 text-sm">{error}</div>}
+
         <button type="submit">
           <ButtonLabelAsync label="Create mission" isLoading={isCreating} />
         </button>

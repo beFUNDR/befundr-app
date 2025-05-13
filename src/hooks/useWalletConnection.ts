@@ -11,7 +11,6 @@ export const useWalletConnection = () => {
     const fetchUserData = async () => {
       if (connected && publicKey) {
         try {
-          console.log("fetching user data");
           const response = await fetch(
             `/api/user?wallet=${publicKey.toString()}`
           );
@@ -38,6 +37,12 @@ export const useWalletConnection = () => {
           wallet: "",
           name: "",
           avatar: "",
+          bio: "",
+          telegram: "",
+          twitter: "",
+          website: "",
+          discord: "",
+          skills: [],
         });
       }
     };

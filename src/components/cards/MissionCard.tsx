@@ -2,14 +2,12 @@ import { Ban, RefreshCcw } from "lucide-react";
 import ButtonLabelSecondarySmall from "../buttons/_ButtonLabelSecondarySmall";
 import { useUser } from "@/hooks/dbData/useUser";
 import Image from "next/image";
-
+import Link from "next/link";
 type Props = {
   mission: Mission;
 };
 
 const MissionCard = ({ mission }: Props) => {
-  console.log(mission);
-
   const { data: user } = useUser(mission.doneBy);
 
   return (
@@ -46,7 +44,10 @@ const MissionCard = ({ mission }: Props) => {
         </div>
       )}
       {mission.status === "done" && (
-        <div className="flex justify-start items-center gap-4 ">
+        <Link
+          href={`/skillshub/${user?.wallet}`}
+          className="flex justify-start items-center gap-4 "
+        >
           {user?.avatar && (
             <Image
               src={user.avatar}
@@ -60,7 +61,7 @@ const MissionCard = ({ mission }: Props) => {
             <div className="text-xs text-gray-400">Done by</div>
             <div className="font-bold text-white">{user.name}</div>
           </div>
-        </div>
+        </Link>
       )}
       {mission.status === "cancelled" && (
         <div className="flex flex-col justify-center items-center gap-2">

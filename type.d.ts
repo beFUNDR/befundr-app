@@ -30,10 +30,15 @@ type ProjectToCreate = {
   status: string;
 };
 
-type Community = {
+type Collection = {
   name: string;
-  logo: string;
+  image: string;
   description: string;
+  address: string;
+  tensorLink: string;
+  website: string;
+  twitter: string;
+  discord: string;
 };
 
 type Partner = {

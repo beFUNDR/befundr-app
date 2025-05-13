@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
       id: "1",
       method: "getAssetsByOwner",
       params: {
-        ownerAddress: /*wallet*/ "5FALSVLRjuRZHSmQVdT2RUZC6KadCuDmxY7gaQFWFBxf",
+        ownerAddress: /*wallet*/ "5FALSVLRjuRZHSmQVdT2RUZC6KadCuDmxY7gaQFWFBxf", //TODO: remove after testing
         page: 1,
         limit: 50,
         sortBy: { sortBy: "created", sortDirection: "asc" },
@@ -46,16 +46,13 @@ export async function POST(req: NextRequest) {
     const data = await heliusRes.json();
 
     // Récupérer les collections autorisées depuis Firestore
-    const allowedSnap = await admin
-      .firestore()
-      .collection("allowedCollections")
-      .get();
+    const allowedSnap = await admin.firestore().collection("collections").get();
     const allowedCollections = allowedSnap.docs.map((doc) => doc.id);
     console.log(allowedCollections);
 
-    const filteredItems = data.result.items.filter((item) =>
-      allowedCollections.includes(item.id)
-    );
+    const filteredItems = data.result.items.filter((item) => {
+      return allowedCollections.includes(item.grouping?.[0]?.group_value);
+    });
 
     console.log("filteredItems", filteredItems);
 

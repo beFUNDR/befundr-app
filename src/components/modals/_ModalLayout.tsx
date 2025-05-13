@@ -19,7 +19,7 @@ const ModalLayout = (props: Props) => {
           props.item
         } gap-4 
           p-8 rounded-md ${
-            props.dark ? "bg-custom-gray-800" : "bg-custom-gray-800"
+            props.dark ? "bg-custom-gray-900" : "bg-custom-gray-900"
           }
         border border-custom-gray-600
         min-h-30 max-h-full overflow-auto mt-20 md:mt-0

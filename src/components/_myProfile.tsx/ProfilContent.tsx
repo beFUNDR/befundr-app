@@ -1,6 +1,6 @@
 import ButtonLabelAsync from "../buttons/_ButtonLabelAsync";
 import InputField from "../displayElements/InputField";
-import ProfileImageUpload from "../profile/ProfileImageUpload";
+import ProfileImageUpload from "../_profile/ProfileImageUpload";
 
 type ProfilContentProps = {
   profilePic: string;
