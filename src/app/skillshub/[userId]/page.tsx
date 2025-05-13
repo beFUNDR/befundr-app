@@ -41,7 +41,7 @@ const UserPage = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12 w-full">
+    <div className="w-full max-w-6xl mx-auto px-4 py-12">
       <UserProfileHeader user={user} />
       <UserTabs activeTab={activeTab} onTabChange={setActiveTab} />
       {renderTabContent()}

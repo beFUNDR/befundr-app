@@ -47,7 +47,7 @@ export default function RootLayout({
             </div>
             <MenuDesktop />
             <main className="flex-grow mt-20 w-full">
-              <div className="relative flex flex-col justify-center items-center w-full">
+              <div className="relative flex flex-col justify-center items-center w-full ">
                 {children}
               </div>
             </main>

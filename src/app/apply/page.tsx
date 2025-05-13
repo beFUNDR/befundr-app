@@ -88,7 +88,7 @@ export default function ApplyPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto py-10">
+    <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
       <h1 className="h2Style mb-4 ">Apply for your project 🚀</h1>
       <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
       {/* Application steps */}

@@ -26,7 +26,7 @@ const ProjectsPage = () => {
     : [];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
+    <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12 ">
       <BackButton />
       <h1 className="h1Style mb-6">Discover and fund projects</h1>
       <p className="bodyStyle max-w-xl mb-10">
@@ -68,7 +68,7 @@ const ProjectsPage = () => {
         <div className="text-red-500">Error loading projects</div>
       ) : (
         <div
-          className="grid gap-8  w-full justify-center"
+          className="grid gap-8  w-full justify-center "
           style={{
             gridTemplateColumns:
               "repeat(auto-fit,minmax(min(300px, 100%), 300px))",

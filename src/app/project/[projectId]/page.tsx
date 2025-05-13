@@ -59,7 +59,7 @@ const ProjectPage = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
+    <div className="w-full max-w-6xl mx-auto px-4 py-12">
       <BackButton />
       {/* Header */}
       <div className="flex gap-2 items-center mb-2">

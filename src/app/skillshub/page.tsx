@@ -12,7 +12,7 @@ const SkillHubPage = () => {
   const testUsers = users ? Array(20).fill({ data: users[0].data }) : [];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
+    <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
       <BackButton />
       <h1 className="h1Style mb-6">Discover the community's skills</h1>
       <p className="bodyStyle max-w-xl mb-10">
