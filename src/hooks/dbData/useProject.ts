@@ -143,7 +143,7 @@ export const useProject = () => {
   });
 
   return {
-    createProject: createProjectMutation.mutate,
+    createProject: createProjectMutation.mutateAsync,
     isCreating: createProjectMutation.isPending,
     error: createProjectMutation.error,
     projects: projectsQuery.data,
