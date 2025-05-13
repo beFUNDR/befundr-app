@@ -30,6 +30,7 @@ pub struct CreateProject<'info> {
     pub project: Account<'info, Project>,
 
     #[account(
+        mut,
         seeds = [GLOBALS_SEED],
         bump,
     )]

@@ -5,6 +5,10 @@ import {
   getDocument,
 } from "@/utils/firebaseClient";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { BEFUNDR_PROGRAM_ID, getBefundrProgram } from "../../../anchor/src";
+import { useAnchorProvider } from "@/providers/SolanaProvider";
+import { PublicKey, SystemProgram } from "@solana/web3.js";
+import { confirmTransaction } from "@/utils/solanaUtils";
 
 interface ProjectToCreate {
   userId: string;
@@ -54,8 +58,11 @@ export const useProjectsByUserId = (userId: string) =>
   });
 
 export const useProject = () => {
-  const { publicKey } = useWallet();
+  const { publicKey, wallet } = useWallet();
   const queryClient = useQueryClient();
+
+  const provider = useAnchorProvider();
+  const befundrProgram = getBefundrProgram(provider);
 
   //* QUERY
   const getAllProjects = async () => {
@@ -109,7 +116,7 @@ export const useProject = () => {
     project,
     mainImageFile,
     logoFile,
-  }: CreateProjectParams) => {
+  }: CreateProjectParams): Promise<any> => {
     if (!publicKey) {
       throw new Error("Connect your wallet");
     }
@@ -131,8 +138,61 @@ export const useProject = () => {
     if (!response.ok) {
       throw new Error("Erreur lors de la création du projet");
     }
+    if (process.env.SKIP_SOLANA) {
+      return {}
+    }
 
-    return response.json();
+    const [configPda] = PublicKey.findProgramAddressSync(
+      [Buffer.from("globals")],
+      BEFUNDR_PROGRAM_ID
+    );
+
+    let config;
+    try {
+      config = await befundrProgram.account.globals.fetch(configPda);
+      console.log("CONFIG = ", config)
+      console.log("Created project counter = ", config.createdProjectCounter.toString())
+    } catch (error) {
+      console.log("CONFIG NOT EXISTING, CREATING...")
+
+      //Admin not initialized yet, then we create it with the current user for test purposes
+      const tx = await befundrProgram.methods
+        .updateAdmin([publicKey])
+        .accountsPartial({
+          config: configPda,
+          payer: publicKey,
+          authority: publicKey,
+          systemProgram: SystemProgram.programId,
+        })
+        .rpc({ skipPreflight: true });
+      console.log("TX create admin= ", tx);
+
+      await confirmTransaction(befundrProgram, tx);
+      config = await befundrProgram.account.globals.fetch(configPda);
+    }
+
+
+    const [projectPda] = PublicKey.findProgramAddressSync(
+      [Buffer.from("project"), config.createdProjectCounter.toArrayLike(Buffer, 'le', 8)],
+      befundrProgram.programId
+    );
+
+    const createProjectTx = await befundrProgram.methods
+      .createProject("")
+      .accountsPartial({
+        globals: configPda,
+        project: projectPda,
+        payer: publicKey,
+        authority: publicKey,
+        systemProgram: SystemProgram.programId,
+      })
+      .signers([])
+      .rpc({ skipPreflight: true });
+    await confirmTransaction(befundrProgram, createProjectTx);
+
+    console.log("Project created !!!!", await befundrProgram.account.project.fetch(projectPda));
+
+    return {};
   };
 
   const createProjectMutation = useMutation({

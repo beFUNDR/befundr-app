@@ -11,7 +11,7 @@ pub use constants::*;
 use instructions::*;
 pub use state::*;
 
-declare_id!("4j8u5cBA8adyNphcDWnUWdK3kiSFez7qg25Js3oaRaCX");
+declare_id!("CnsYxMKDv3DzGvLn1Z7iuzA6MYQAxcMTYgN743SMRWzu");
 
 #[program]
 pub mod befundr {
