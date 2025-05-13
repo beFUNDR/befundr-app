@@ -1,3 +1,5 @@
+import { PublicKey } from "@solana/web3.js";
+
 // Type Project (mocké pour les besoins de la démo)
 type Project = {
   userId: string;
@@ -13,6 +15,7 @@ type Project = {
   telegram?: string;
   status: string;
   supportedBy?: Community["name"][];
+  id: PublicKey;
 };
 
 type ProjectToCreate = {
@@ -28,7 +31,25 @@ type ProjectToCreate = {
   discord?: string;
   telegram?: string;
   status: string;
+  project_counter?: BN;
 };
+
+type UpdateProjectParams = {
+  userId: string;
+  name: string;
+  category: string;
+  mainImage: string;
+  logo: string;
+  headLine: string;
+  description: string;
+  website: string;
+  twitter: string;
+  discord: string;
+  telegram: string;
+  status: string;
+  project_counter: BN;
+  id: PublicKey;
+}
 
 type Collection = {
   name: string;

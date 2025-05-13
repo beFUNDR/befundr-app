@@ -32,7 +32,8 @@ export async function POST(request: NextRequest) {
     const docRef = await admin
       .firestore()
       .collection("projects")
-      .add({
+      .doc(project.projectPda)
+      .set({
         ...project,
         mainImage: mainImageUrl,
         logo: logoUrl,
@@ -40,11 +41,28 @@ export async function POST(request: NextRequest) {
         owner: publicKey,
       });
 
-    return NextResponse.json({ projectId: docRef.id });
+    return NextResponse.json({});
   } catch (error) {
     console.error("Error creating project:", error);
     return NextResponse.json(
       { error: "Failed to create project" },
+      { status: 500 }
+    );
+  }
+}
+
+export const PATCH = async (request: NextRequest) => {
+  try {
+    const { project } = await request.json();
+
+    const userRef = admin.firestore().collection("projects").doc(project.projectPda);
+    await userRef.update({ status: project.status });
+
+    return NextResponse.json({ projectId: project.projectPda });
+  } catch (error) {
+    console.error("Error updating project status:", error);
+    return NextResponse.json(
+      { error: "Failed to update project" },
       { status: 500 }
     );
   }

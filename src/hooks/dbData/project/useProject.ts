@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  fileToBase64,
   getAllDocumentsFromCollection,
   getDocument,
 } from "@/utils/firebaseClient";
@@ -9,6 +8,8 @@ import { useAnchorProvider } from "@/providers/SolanaProvider";
 import { createProject } from "./createProject";
 import { getBefundrProgram } from "../../../../anchor/src";
 import { CreateProjectParams } from "./type";
+import { PublicKey } from "@solana/web3.js";
+import { Project } from "../../../../type";
 
 // Fonction utilitaire pure
 export const getProjectsByUserId = async (userId: string) => {
@@ -73,7 +74,7 @@ export const useProject = () => {
       if (!result) {
         throw new Error("Projet non trouvé");
       }
-      return result;
+      return { ...result, id: new PublicKey(projectId) };
     } catch (error) {
       console.error("Erreur lors de la récupération du projet:", error);
       throw error;

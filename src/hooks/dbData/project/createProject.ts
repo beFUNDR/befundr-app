@@ -15,27 +15,6 @@ export const createProject = async ({
         throw new Error("Connect your wallet");
     }
 
-    const mainImageBase64 = await fileToBase64(mainImageFile);
-    const logoBase64 = await fileToBase64(logoFile);
-
-    const response = await fetch("/api/project", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            project,
-            mainImageBase64,
-            logoBase64,
-            publicKey: userPublicKey.toString(),
-        }),
-    });
-
-    if (!response.ok) {
-        throw new Error("Erreur lors de la création du projet");
-    }
-    if (process.env.SKIP_SOLANA) {
-        return {}
-    }
-
     const [configPda] = PublicKey.findProgramAddressSync(
         [Buffer.from("globals")],
         BEFUNDR_PROGRAM_ID
@@ -81,6 +60,22 @@ export const createProject = async ({
     await confirmTransaction(program, createProjectTx);
 
     console.log("Project created", await program.account.project.fetch(projectPda));
+    const mainImageBase64 = await fileToBase64(mainImageFile);
+    const logoBase64 = await fileToBase64(logoFile);
 
+    const response = await fetch("/api/project", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            project: { ...project, projectPda: projectPda },
+            mainImageBase64,
+            logoBase64,
+            publicKey: userPublicKey.toString(),
+        }),
+    });
+
+    if (!response.ok) {
+        throw new Error("Erreur lors de la création du projet");
+    }
     return {};
 };
