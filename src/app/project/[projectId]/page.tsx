@@ -16,6 +16,8 @@ import FaqContent from "@/components/_projectPage/FaqContent";
 import BackButton from "@/components/buttons/BackButton";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useProject } from "@/hooks/dbData/project/useProject";
+import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
+import AdminModal from "@/components/modals/AdminModal";
 
 const ProjectPage = () => {
   const [activeTab, setActiveTab] = useState("about");
@@ -27,10 +29,18 @@ const ProjectPage = () => {
   const { data: owner, isLoading: isOwnerLoading } = useUser(
     project?.userId ?? ""
   );
+  const [isShowManageModal, setIsShowManageModal] = useState(false);
 
   const isOwner = useMemo(() => {
     return publicKey?.toString() === project?.userId;
   }, [owner, project]);
+
+  const isAdmin = useMemo(() => {
+    return (
+      publicKey?.toString() === process.env.NEXT_PUBLIC_ADMIN_1 ||
+      publicKey?.toString() === process.env.NEXT_PUBLIC_ADMIN_2
+    );
+  }, [publicKey]);
 
   if (isLoading)
     return (
@@ -85,6 +95,12 @@ const ProjectPage = () => {
         {/* Tags */}
         <CategoryTagBig category={project.category} />
         {/* Ajouter d'autres tags si besoin */}
+        <div className="flex-grow" />
+        {isAdmin && (
+          <button onClick={() => setIsShowManageModal(true)}>
+            <ButtonLabelSecondary label="Manage" />
+          </button>
+        )}
       </div>
       <p className="text-lg text-gray-300 mb-6">
         {project.headLine || project.description}
@@ -115,6 +131,10 @@ const ProjectPage = () => {
 
       {/* Tab Content */}
       {renderTabContent()}
+
+      {isShowManageModal && (
+        <AdminModal onClose={() => setIsShowManageModal(false)} />
+      )}
     </div>
   );
 };
