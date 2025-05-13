@@ -32,21 +32,22 @@ export default function RootLayout({
             <MobileWarning />
           </div>
           {/* Affichage desktop */}
-          <div className="hidden md:flex flex-col justify-start min-h-screen  text-textColor-main">
+          <div className="hidden md:flex flex-col justify-start min-h-screen text-textColor-main relative">
+            {/* Fond noir */}
+            <div className="fixed inset-0 -z-20 bg-black" />
+            {/* SVG */}
+            <div className="fixed inset-0 -z-10 pointer-events-none">
+              <Image
+                src={background}
+                alt="background"
+                fill
+                className="object-cover opacity-10"
+                priority
+              />
+            </div>
             <MenuDesktop />
             <main className="flex-grow mt-20 w-full">
-              <div className="relativeflex flex-col justify-center items-center w-full">
-                {/* Background Image */}
-                <div className="fixed inset-0 -z-10">
-                  <Image
-                    src={background}
-                    alt="background"
-                    fill
-                    className="object-cover opacity-5"
-                    priority
-                  />
-                  <div className="absolute inset-0 bg-black opacity-50"></div>
-                </div>
+              <div className="relative flex flex-col justify-center items-center w-full">
                 {children}
               </div>
             </main>

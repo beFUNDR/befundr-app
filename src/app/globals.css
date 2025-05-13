@@ -11,6 +11,7 @@
   --custom-gray-600: #525252;
   --custom-gray-400: #808080;
   --custom-gray-200: #b3b3b3;
+  --body-header: #eaeaea;
   --body-text: #cee7e7;
 
   /* Font weights */
@@ -30,6 +31,7 @@
   --color-custom-gray-600: var(--custom-gray-600);
   --color-custom-gray-400: var(--custom-gray-400);
   --color-custom-gray-200: var(--custom-gray-200);
+  --color-body-header: var(--body-header);
   --color-body-text: var(--body-text);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -44,7 +46,7 @@
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: var(--body-text);
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -54,19 +56,19 @@ button {
 
 /* TEXT STYLES */
 .h1Style {
-  @apply text-5xl font-bold;
+  @apply text-5xl font-bold text-body-header;
 }
 
 .h2Style {
-  @apply text-3xl font-bold;
+  @apply text-3xl font-bold text-body-header;
 }
 
 .h3Style {
-  @apply text-2xl font-bold;
+  @apply text-2xl font-bold text-body-header;
 }
 
 .h4Style {
-  @apply text-xl font-bold;
+  @apply text-xl font-bold text-body-header;
 }
 
 .bodyStyle {
