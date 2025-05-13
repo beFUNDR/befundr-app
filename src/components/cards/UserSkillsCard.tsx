@@ -27,13 +27,15 @@ const UserSkillCard = ({ user }: Props) => {
   return (
     <div className="bg-custom-gray-900 rounded-2xl p-2 flex flex-col items-center justify-between gap-3 border border-custom-gray-800 hover:border-custom-gray-400 max-w-xs mx-auto shadow-lg w-[200px] h-[300px] transition-all duration-300">
       <div className="w-24 h-24 rounded-full border-4 border-custom-gray-800 overflow-hidden mb-2">
-        <Image
-          src={user.avatar}
-          alt={user.name}
-          width={96}
-          height={96}
-          className="object-cover"
-        />
+        {user.avatar && (
+          <Image
+            src={user.avatar}
+            alt={user.name}
+            width={96}
+            height={96}
+            className="object-cover"
+          />
+        )}
       </div>
       <div className="text-2xl font-bold text-white mb-1">{user.name}</div>
       <div className="flex flex-col items-center gap-2 w-full">

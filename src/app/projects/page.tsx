@@ -4,7 +4,6 @@ import { useState } from "react";
 import ProjectCard from "@/components/cards/ProjectCard";
 import Loader from "@/components/displayElements/Loader";
 import Link from "next/link";
-import BackButton from "@/components/buttons/BackButton";
 import { useProject } from "@/hooks/dbData/project/useProject";
 
 // On suppose que le type Project est global
@@ -27,8 +26,7 @@ const ProjectsPage = () => {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12 ">
-      <BackButton />
-      <h1 className="h1Style mb-6">Discover and fund projects</h1>
+      <h1 className="h1Style my-6">Discover and fund projects</h1>
       <p className="bodyStyle max-w-xl mb-10">
         Discover hand-picked projects from the best builders from the OG Solana
         community.

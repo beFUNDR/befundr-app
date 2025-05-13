@@ -3,7 +3,6 @@
 import { useUser } from "@/hooks/dbData/useUser";
 import UserSkillCard from "@/components/cards/UserSkillsCard";
 import Loader from "@/components/displayElements/Loader";
-import BackButton from "@/components/buttons/BackButton";
 import Link from "next/link";
 
 const SkillHubPage = () => {
@@ -13,8 +12,7 @@ const SkillHubPage = () => {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
-      <BackButton />
-      <h1 className="h1Style mb-6">Discover the community's skills</h1>
+      <h1 className="h1Style my-6">Discover the community's skills</h1>
       <p className="bodyStyle max-w-xl mb-10">
         BeFUNDR is a community of builders, investors, and enthusiasts. We
         believe in the power of collaboration and the importance of building
@@ -38,11 +36,15 @@ const SkillHubPage = () => {
           }} // handle automatic number of column in responsive
         >
           {users &&
-            users.map((user, idx) => (
-              <Link key={idx} href={`/skillshub/${user.id}`}>
-                <UserSkillCard user={user.data} />
-              </Link>
-            ))}
+            users.map((user, idx) => {
+              if (user.data.avatar && user.data.name) {
+                return (
+                  <Link key={idx} href={`/skillshub/${user.id}`}>
+                    <UserSkillCard user={user.data} />
+                  </Link>
+                );
+              }
+            })}
         </div>
       )}
     </div>

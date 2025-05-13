@@ -112,9 +112,7 @@ export default function MyProfilePage() {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
-      <h1 className="text-3xl font-bold mb-2 text-white">
-        Welcome, {user?.name} 👋
-      </h1>
+      <h1 className="h1Style my-6 text-white">Welcome, {user?.name} 👋</h1>
       <ProfileMenu active={activeSection} onSelect={setActiveSection} />
 
       {activeSection === "My profile" && (
