@@ -1,9 +1,9 @@
 "use client";
 
-import { useProjectsByUserId } from "@/hooks/dbData/useProject";
 import Link from "next/link";
 import ProjectCard from "../cards/ProjectCard";
 import LoaderSmall from "../displayElements/LoaderSmall";
+import { useProjectsByUserId } from "@/hooks/dbData/project/useProject";
 
 const mockProjects = [
   {

@@ -11,13 +11,9 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletButton } from "@/providers/SolanaProvider";
 import toast from "react-hot-toast";
 import ApplicationValidationModal from "@/components/modals/ApplicationValidationModal";
-<<<<<<< HEAD
-import { useProject } from "@/hooks/dbData/useProject";
 import { useUser } from "@/hooks/dbData/useUser";
 import Loader from "@/components/displayElements/Loader";
-=======
 import { useProject } from "@/hooks/dbData/project/useProject";
->>>>>>> 4b5d14f (Refactor project hooks and structure: move useProject to a dedicated folder, create new createProject and type definitions, and update imports accordingly.)
 
 export default function ApplyPage() {
   const { publicKey } = useWallet();

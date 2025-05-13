@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import Loader from "@/components/displayElements/Loader";
-import { useProject } from "@/hooks/dbData/useProject";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import ReviewPhase from "@/components/_projectPage/ReviewPhase";
@@ -16,6 +15,7 @@ import VoteContent from "@/components/_projectPage/VoteContent";
 import FaqContent from "@/components/_projectPage/FaqContent";
 import BackButton from "@/components/buttons/BackButton";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { useProject } from "@/hooks/dbData/project/useProject";
 
 const ProjectPage = () => {
   const [activeTab, setActiveTab] = useState("about");
