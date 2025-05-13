@@ -1,6 +1,11 @@
 .anchor
 .DS_Store
-target
+
+target/debug
+target/deploy
+target/release
+target/sbf-solana-solana
+target/*.*
 **/*.rs.bk
 node_modules
 test-ledger

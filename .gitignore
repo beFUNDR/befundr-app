@@ -41,11 +41,5 @@ yarn-error.log*
 next-env.d.ts
 
 .anchor
-anchor/target/deploy
-anchor/target/debug
-anchor/target/release
-anchor/target/sbf-solana-solana
-anchor/target/.rustc_info.json
-!anchor/target/idl/*.json
-!anchor/target/types/*.ts
+
 test-ledger
