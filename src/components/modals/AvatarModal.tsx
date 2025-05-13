@@ -29,7 +29,6 @@ const AvatarModal = (props: Props) => {
       {isLoading && (
         <>
           <Loader />
-          <div className="bodyStyle">Fetching assets...</div>
         </>
       )}
       {error && <div>Erreur lors du chargement des assets</div>}

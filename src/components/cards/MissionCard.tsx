@@ -6,7 +6,7 @@ type Props = {
 
 const MissionCard = ({ mission }: Props) => {
   return (
-    <div className="bg-custom-gray-900 rounded-2xl p-6 flex items-center justify-between gap-4 border border-[#232428] max-w-2xl mx-auto">
+    <div className="bg-custom-gray-900 rounded-2xl p-6 flex items-center justify-between gap-4 border border-custom-gray-800 w-full max-w-2xl mx-auto">
       <div className="flex flex-col gap-2 flex-1">
         <div className="flex items-center gap-3 mb-1">
           <span className="h3Style leading-tight">{mission.title}</span>

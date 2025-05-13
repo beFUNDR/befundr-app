@@ -1,6 +1,9 @@
+import ButtonLabelSecondary from "../buttons/_ButtonLabelSecondary";
 import UpdateCard from "../cards/UpdateCard";
 
-type Props = {};
+type Props = {
+  isOwner: boolean;
+};
 
 const UpdateContent = (props: Props) => {
   // Mock d'un update
@@ -16,7 +19,13 @@ const UpdateContent = (props: Props) => {
   };
 
   return (
-    <div className="space-y-8 h-[500px] overflow-y-auto px-2">
+    <div className="flex flex-col justify-start items-center space-y-8 h-[500px] overflow-y-auto px-2">
+      {props.isOwner && (
+        <button className="w-40">
+          <ButtonLabelSecondary label="Add an update" />
+        </button>
+      )}
+      <UpdateCard update={update} />
       <UpdateCard update={update} />
     </div>
   );

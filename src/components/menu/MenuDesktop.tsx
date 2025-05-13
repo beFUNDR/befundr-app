@@ -12,7 +12,8 @@ import toast from "react-hot-toast";
 import WelcomeModal from "../modals/WelcomeModal";
 import { useUser } from "@/hooks/dbData/useUser";
 import { useQueryClient } from "@tanstack/react-query";
-import ApplyButton from "../buttons/ApplyButton";
+import { useGameProgramByUserId } from "@/hooks/dbData/useGameProgram";
+import PointCardSmall from "../cards/PointCardSmall";
 
 const MenuDesktop = () => {
   //* GLOBAL STATE
@@ -20,6 +21,9 @@ const MenuDesktop = () => {
   const { connected, publicKey } = useWallet();
   const queryClient = useQueryClient();
   const { data: userData } = useUser(publicKey?.toString());
+  const { data: gameProgramData } = useGameProgramByUserId(
+    publicKey?.toString() || ""
+  );
 
   //* LOCAL STATE
   const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(false);
@@ -90,7 +94,7 @@ const MenuDesktop = () => {
             </Link>
           ))}
         </div>
-        <ApplyButton />
+        {gameProgramData && <PointCardSmall points={gameProgramData.points} />}
         {connected ? <ProfilButton /> : <WalletButton />}
       </div>
 

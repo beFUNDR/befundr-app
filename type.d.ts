@@ -71,3 +71,7 @@ type Mission = {
   description: string;
   isPaid: boolean;
 };
+
+type GameProgram = {
+  points: number;
+};

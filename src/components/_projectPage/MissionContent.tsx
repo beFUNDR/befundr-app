@@ -1,6 +1,9 @@
+import ButtonLabelSecondary from "../buttons/_ButtonLabelSecondary";
 import MissionCard from "../cards/MissionCard";
 
-type Props = {};
+type Props = {
+  isOwner: boolean;
+};
 
 const MissionContent = (props: Props) => {
   // Mock of two missions (in English)
@@ -23,7 +26,12 @@ const MissionContent = (props: Props) => {
   ];
 
   return (
-    <div className="space-y-8 h-[500px] overflow-y-auto px-2">
+    <div className="w-2/3 mx-auto flex flex-col justify-start items-center space-y-8 h-[500px] overflow-y-auto px-2">
+      {props.isOwner && (
+        <button className="w-40">
+          <ButtonLabelSecondary label="Add a mission" />
+        </button>
+      )}
       {missions.map((mission) => (
         <MissionCard key={mission.id} mission={mission} />
       ))}

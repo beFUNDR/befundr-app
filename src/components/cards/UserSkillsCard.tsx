@@ -1,5 +1,5 @@
 import Image from "next/image";
-import SkillTag from "../displayElements/SkillTag";
+import SkillTag from "../tags/SkillTag";
 
 type Props = {
   user: User;

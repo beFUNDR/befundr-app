@@ -5,36 +5,41 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import UserProfileHeader from "@/components/_userPage/UserProfileHeader";
 import UserTabs from "@/components/_userPage/UserTabs";
-import UserDAOsContent from "@/components/_userPage/UserDAOsContent";
-import UserContributionsContent from "@/components/_userPage/UserContributionsContent";
+import UserCommunitiesContent from "@/components/_userPage/UserCommunitiesContent";
+import UserMissionsContent from "@/components/_userPage/UserMissionsContent";
 import UserProjectsContent from "@/components/_userPage/UserProjectsContent";
+import { useGameProgramByUserId } from "@/hooks/dbData/useGameProgram";
 
 const UserPage = () => {
   const params = useParams();
   const userId = params.userId as string;
   const { getUser } = useUser(userId);
+  const {
+    data: gameProgramData,
+    isLoading: isGameProgramLoading,
+    error: gameProgramError,
+  } = useGameProgramByUserId(userId);
   const { data: user, isLoading, error } = getUser(userId);
   const [activeTab, setActiveTab] = useState("projects");
 
-  console.log(userId);
-
-  if (isLoading)
+  if (isLoading || isGameProgramLoading)
     return (
       <div className="flex justify-center items-center h-screen">
         <Loader />
       </div>
     );
-  if (error) return <div>Error: {error.message}</div>;
-  if (!user) return <div>User not found</div>;
+  if (error || gameProgramError)
+    return <div>Error: {error?.message || gameProgramError?.message}</div>;
+  if (!user || !gameProgramData) return <div>User not found</div>;
 
   const renderTabContent = () => {
     switch (activeTab) {
       case "projects":
         return <UserProjectsContent userId={userId} />;
-      case "contributions":
-        return <UserContributionsContent />;
-      case "daos":
-        return <UserDAOsContent />;
+      case "missions":
+        return <UserMissionsContent />;
+      case "communities":
+        return <UserCommunitiesContent />;
       default:
         return <UserProjectsContent userId={userId} />;
     }
@@ -42,7 +47,7 @@ const UserPage = () => {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-12">
-      <UserProfileHeader user={user} />
+      <UserProfileHeader user={user} gameProgramData={gameProgramData} />
       <UserTabs activeTab={activeTab} onTabChange={setActiveTab} />
       {renderTabContent()}
     </div>

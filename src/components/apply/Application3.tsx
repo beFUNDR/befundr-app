@@ -1,6 +1,6 @@
 import { ProjectToCreate } from "@/app/apply/page";
 import Image from "next/image";
-import CategoryTag from "../displayElements/CategoryTag";
+import CategoryTag from "../tags/CategoryTag";
 import Divider from "../displayElements/Divider";
 import XButton from "../buttons/XButton";
 import DiscordButton from "../buttons/DiscordButton";

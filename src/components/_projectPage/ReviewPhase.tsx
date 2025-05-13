@@ -4,7 +4,7 @@ import TelegramButton from "@/components/buttons/TelegramButton";
 import XButton from "@/components/buttons/XButton";
 import CommunityLogo from "@/components/displayElements/CommunityLogo";
 import Divider from "@/components/displayElements/Divider";
-import StatusTag from "@/components/displayElements/StatusTag";
+import StatusTag from "@/components/tags/StatusTag";
 import Image from "next/image";
 
 type Props = { project: Project; owner: User };

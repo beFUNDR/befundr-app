@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Loader from "@/components/displayElements/Loader";
 import { useProject } from "@/hooks/dbData/useProject";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import ReviewPhase from "@/components/_projectPage/ReviewPhase";
 import { useUser } from "@/hooks/dbData/useUser";
-import CategoryTagBig from "@/components/displayElements/CategoryTagBig";
+import CategoryTagBig from "@/components/tags/CategoryTagBig";
 import Tabs from "@/components/_projectPage/Tabs";
 import AboutContent from "@/components/_projectPage/AboutContent";
 import UpdateContent from "@/components/_projectPage/UpdateContent";
@@ -15,9 +15,11 @@ import MissionContent from "@/components/_projectPage/MissionContent";
 import VoteContent from "@/components/_projectPage/VoteContent";
 import FaqContent from "@/components/_projectPage/FaqContent";
 import BackButton from "@/components/buttons/BackButton";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 const ProjectPage = () => {
   const [activeTab, setActiveTab] = useState("about");
+  const { publicKey } = useWallet();
   const params = useParams();
   const projectId = params.projectId as string;
   const { getProject } = useProject();
@@ -25,6 +27,10 @@ const ProjectPage = () => {
   const { data: owner, isLoading: isOwnerLoading } = useUser(
     project?.userId ?? ""
   );
+
+  const isOwner = useMemo(() => {
+    return publicKey?.toString() === project?.userId;
+  }, [owner, project]);
 
   if (isLoading)
     return (
@@ -44,17 +50,29 @@ const ProjectPage = () => {
   const renderTabContent = () => {
     switch (activeTab) {
       case "about":
-        return <AboutContent description={project.description} owner={owner} />;
+        return (
+          <AboutContent
+            description={project.description}
+            owner={owner}
+            isOwner={isOwner}
+          />
+        );
       case "updates":
-        return <UpdateContent />;
+        return <UpdateContent isOwner={isOwner} />;
       case "missionHub":
-        return <MissionContent />;
+        return <MissionContent isOwner={isOwner} />;
       case "faq":
         return <FaqContent />;
       case "vote":
-        return <VoteContent />;
+        return <VoteContent isOwner={isOwner} />;
       default:
-        return <AboutContent description={project.description} owner={owner} />;
+        return (
+          <AboutContent
+            description={project.description}
+            owner={owner}
+            isOwner={isOwner}
+          />
+        );
     }
   };
 

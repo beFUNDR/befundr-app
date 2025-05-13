@@ -1,17 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
 import ProfileMenu from "@/components/profile/ProfileMenu";
-import InputField from "@/components/displayElements/InputField";
 import { useUser } from "@/hooks/dbData/useUser";
 import { useWallet } from "@solana/wallet-adapter-react";
-import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
 import Loader from "@/components/displayElements/Loader";
-import { useRouter } from "next/navigation";
-import ProfileImageUpload from "@/components/profile/ProfileImageUpload";
+import { useRouter, useSearchParams } from "next/navigation";
+import { skills as allSkills } from "@/data/localData";
+import ProfilContent from "@/components/_myProfile.tsx/ProfilContent";
+import UserProjectsContent from "@/components/_userPage/UserProjectsContent";
 
 export default function MyProfilePage() {
   //* GLOBAL STATE
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialTab = searchParams.get("tab") || "My profile";
   const { publicKey, connected } = useWallet();
   const {
     data: user,
@@ -24,11 +26,12 @@ export default function MyProfilePage() {
   const [profilePic, setProfilePic] = useState("");
   const [pseudo, setPseudo] = useState("");
   const [bio, setBio] = useState("");
-  const [activeSection, setActiveSection] = useState("My Profile");
+  const [activeSection, setActiveSection] = useState(initialTab);
   const [telegram, setTelegram] = useState("");
   const [twitter, setTwitter] = useState("");
   const [website, setWebsite] = useState("");
   const [discord, setDiscord] = useState("");
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
   useEffect(() => {
     if (user) {
@@ -39,6 +42,7 @@ export default function MyProfilePage() {
       setWebsite(user.website || "");
       setDiscord(user.discord || "");
       if (user.avatar) setProfilePic(user.avatar);
+      setSelectedSkills(user.skills || []);
     }
   }, [user]);
 
@@ -46,6 +50,12 @@ export default function MyProfilePage() {
     // Ici, tu peux gérer l'upload ou l'affichage local
     const url = URL.createObjectURL(file);
     setProfilePic(url);
+  };
+
+  const handleSkillClick = (skill: string) => {
+    setSelectedSkills((prev) =>
+      prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill]
+    );
   };
 
   const handleSave = async () => {
@@ -59,7 +69,7 @@ export default function MyProfilePage() {
       website,
       discord,
       avatar: profilePic,
-      skills: [],
+      skills: selectedSkills,
     });
   };
 
@@ -69,6 +79,28 @@ export default function MyProfilePage() {
     }
   }, [connected]);
 
+  const profilContentProps = {
+    profilePic,
+    handleImageChange,
+    pseudo,
+    setPseudo,
+    bio,
+    setBio,
+    allSkills,
+    selectedSkills,
+    handleSkillClick,
+    website,
+    setWebsite,
+    telegram,
+    setTelegram,
+    twitter,
+    setTwitter,
+    discord,
+    setDiscord,
+    handleSave,
+    isUpdating,
+  };
+
   if (isLoading || !user) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -77,6 +109,8 @@ export default function MyProfilePage() {
     );
   }
 
+  console.log(user);
+
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
       <h1 className="text-3xl font-bold mb-2 text-white">
@@ -84,77 +118,27 @@ export default function MyProfilePage() {
       </h1>
       <ProfileMenu active={activeSection} onSelect={setActiveSection} />
 
-      {activeSection === "My Profile" && (
-        <>
-          <h2 className="h3Style mb-4">Personal details</h2>
-          <ProfileImageUpload
-            imageUrl={profilePic}
-            onImageChange={handleImageChange}
-          />
-
-          <InputField
-            label="Pseudo (username)"
-            value={pseudo}
-            onChange={(e) => setPseudo(e.target.value)}
-            required
-          />
-          <InputField
-            label="Short bio"
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-            textarea
-          />
-          <h2 className="h3Style mb-4 mt-8">Social links</h2>
-          <InputField
-            label="Website"
-            value={website}
-            onChange={(e) => setWebsite(e.target.value)}
-            required
-          />
-          <InputField
-            label="Telegram"
-            value={telegram}
-            onChange={(e) => setTelegram(e.target.value)}
-            required
-          />
-          <InputField
-            label="Twitter"
-            value={twitter}
-            onChange={(e) => setTwitter(e.target.value)}
-            required
-          />
-          <InputField
-            label="Discord"
-            value={discord}
-            onChange={(e) => setDiscord(e.target.value)}
-            required
-          />
-          <h2 className="h3Style mb-4 mt-8">DAO & Community affiliation</h2>
-        </>
+      {activeSection === "My profile" && (
+        <ProfilContent {...profilContentProps} />
       )}
-      {activeSection === "My Projects" && (
+      {activeSection === "My projects" && (
+        <UserProjectsContent userId={publicKey?.toString() ?? ""} />
+      )}
+      {activeSection === "My missions" && (
         <div className="text-white mt-8">
-          Section &quot;My Projects&quot; (à compléter)
+          Section &quot;My missions&quot; (à compléter)
         </div>
       )}
-      {activeSection === "My Contributions" && (
+      {activeSection === "My investments" && (
         <div className="text-white mt-8">
-          Section &quot;My Contributions&quot; (à compléter)
+          Section &quot;My investments&quot; (à compléter)
         </div>
       )}
-      {activeSection === "My DAOs" && (
+      {activeSection === "My communities" && (
         <div className="text-white mt-8">
-          Section &quot;My DAOs&quot; (à compléter)
+          Section &quot;My communities&quot; (à compléter)
         </div>
       )}
-      {activeSection === "My Points" && (
-        <div className="text-white mt-8">
-          Section &quot;My Points&quot; (à compléter)
-        </div>
-      )}
-      <button className="w-1/3" onClick={handleSave} disabled={isUpdating}>
-        <ButtonLabelAsync label="Save" isLoading={isUpdating} />
-      </button>
     </div>
   );
 }

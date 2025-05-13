@@ -1,5 +1,5 @@
 import Image from "next/image";
-import SkillTag from "../displayElements/SkillTag";
+import SkillTag from "../tags/SkillTag";
 import XButton from "../buttons/XButton";
 import DiscordButton from "../buttons/DiscordButton";
 import TelegramButton from "../buttons/TelegramButton";
@@ -8,9 +8,13 @@ import PointCard from "../cards/PointCard";
 
 interface UserProfileHeaderProps {
   user: User;
+  gameProgramData: GameProgram;
 }
 
-const UserProfileHeader = ({ user }: UserProfileHeaderProps) => {
+const UserProfileHeader = ({
+  user,
+  gameProgramData,
+}: UserProfileHeaderProps) => {
   // Mock des données manquantes
   const points = (user as any).points ?? 50;
   const roles: string[] = (user as any).roles ?? ["Superteam member"];
@@ -59,14 +63,18 @@ const UserProfileHeader = ({ user }: UserProfileHeaderProps) => {
         </div>
         {/* Socials */}
         <div className="flex gap-4 mt-4">
-          {user.twitter && <XButton href={user.twitter} />}
-          {user.discord && <DiscordButton href={user.discord} />}
-          {user.telegram && <TelegramButton href={user.telegram} />}
+          {user.twitter && <XButton href={`https://x.com/${user.twitter}`} />}
+          {user.discord && (
+            <DiscordButton href={`https://discord.com/users/${user.discord}`} />
+          )}
+          {user.telegram && (
+            <TelegramButton href={`https://t.me/${user.telegram}`} />
+          )}
           {user.website && <InternetButton href={user.website} />}
         </div>
       </div>
       {/* Points */}
-      <PointCard points={points} />
+      <PointCard points={gameProgramData.points} />
     </div>
   );
 };

@@ -1,37 +1,3 @@
-/**
- * LOCAL DATA
- *
- * Only for testing purposes
- */
-export const user = {
-  name: "Jérôme",
-  address: "0xA3F9...10A1B3",
-  avatar: "/images/avatar.png", // Replace with actual path
-};
-
-const mockProject: Project = {
-  id: "1",
-  name: "beFUNDR",
-  description: "The decentralized incubator",
-  image: "/images/projects/befundr_image.png",
-  logo: "/images/projects/befundr_logo.png",
-  fundingStatus: "Funding",
-  fundingPercent: 50,
-  daysLeft: 25,
-  backers: 120,
-  supportedBy: "monke",
-  tags: ["Community", "Product", "AI"],
-};
-
-export const projects = [
-  mockProject,
-  mockProject,
-  mockProject,
-  mockProject,
-  mockProject,
-  mockProject,
-];
-
 export const communities = [
   {
     name: "Monke",
@@ -61,4 +27,27 @@ export const partners = [
     logo: "/images/partners/konnect.jpg",
     description: "Your web3 community from URL to IRL",
   },
+];
+
+export const skills: string[] = [
+  "AI",
+  "Product",
+  "Community",
+  "Design",
+  "Marketing",
+  "Writing",
+  "Video",
+  "Music",
+  "Frontend",
+  "Backend",
+  "Fullstack",
+  "DevOps",
+  "Security",
+  "Blockchain",
+  "Smart Contracts",
+  "NFTs",
+  "DeFi",
+  "GameFi",
+  "SocialFi",
+  "DAO",
 ];

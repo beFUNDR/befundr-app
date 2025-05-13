@@ -6,6 +6,7 @@
   --foreground: #171717;
   --accent: #08f7e7;
   --secondary: #f774e1;
+  --third: #f1ca19;
   --custom-gray-900: #18191c;
   --custom-gray-800: #2a2a2a;
   --custom-gray-600: #525252;
@@ -26,6 +27,7 @@
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
   --color-secondary: var(--secondary);
+  --color-third: var(--third);
   --color-custom-gray-900: var(--custom-gray-900);
   --color-custom-gray-800: var(--custom-gray-800);
   --color-custom-gray-600: var(--custom-gray-600);

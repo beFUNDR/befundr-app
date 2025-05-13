@@ -1,14 +1,6 @@
 // src/components/ProfilButton.js
 import { useEffect, useRef, useState } from "react";
-import {
-  User,
-  FileText,
-  Users,
-  CheckSquare,
-  Settings,
-  LogOut,
-  DollarSign,
-} from "lucide-react";
+import { User, FileText, Users, LogOut, DollarSign } from "lucide-react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Image from "next/image";
 import { concatAddress } from "@/utils/utilsFunctions";
@@ -16,6 +8,7 @@ import { useUser } from "@/hooks/dbData/useUser";
 import { createAvatar } from "@dicebear/core";
 import { glass } from "@dicebear/collection";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
 const ProfilButton = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -71,72 +64,97 @@ const ProfilButton = () => {
             : concatAddress(publicKey?.toString())}
         </span>
       </button>
-      {isOpen && (
-        <div
-          className="absolute right-0 mt-2 w-48 bg-custom-gray-800 text-white rounded-2xl shadow-lg"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="p-4 border-b border-gray-700">
-            <div className="flex items-center space-x-2">
-              {userData?.avatar ? (
-                <Image
-                  src={userData?.avatar}
-                  alt="Avatar"
-                  className="rounded-full"
-                  width={40}
-                  height={40}
-                />
-              ) : (
-                <div
-                  className="w-10 h-10 rounded-full overflow-hidden"
-                  dangerouslySetInnerHTML={{ __html: svg.toString() }}
-                />
-              )}
-              <div>
-                <div>{userData?.name}</div>
-                <div className=" text-gray-400">
-                  {concatAddress(publicKey?.toString())}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="absolute right-0 mt-2 w-48 bg-custom-gray-800 text-white rounded-2xl shadow-lg"
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-4 border-b border-gray-700">
+              <div className="flex items-center space-x-2">
+                {userData?.avatar ? (
+                  <Image
+                    src={userData?.avatar}
+                    alt="Avatar"
+                    className="rounded-full"
+                    width={40}
+                    height={40}
+                  />
+                ) : (
+                  <div
+                    className="w-10 h-10 rounded-full overflow-hidden"
+                    dangerouslySetInnerHTML={{ __html: svg.toString() }}
+                  />
+                )}
+                <div>
+                  <div>{userData?.name}</div>
+                  <div className=" text-gray-400">
+                    {concatAddress(publicKey?.toString())}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <ul className="py-2">
-            <Link href="/myprofile">
-              <li className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2">
-                <User size={16} color="gray" />
-                <span>My profile</span>
+            <ul className="py-2">
+              <Link href="/myprofile?tab=My profile">
+                <li
+                  className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2"
+                  onClick={closeMenu}
+                >
+                  <User size={16} color="gray" />
+                  <span>My profile</span>
+                </li>
+              </Link>
+              <Link href="/myprofile?tab=My projects">
+                <li
+                  className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2"
+                  onClick={closeMenu}
+                >
+                  <FileText size={16} color="gray" />
+                  <span>My projects</span>
+                </li>
+              </Link>
+              <Link href="/myprofile?tab=My missions">
+                <li
+                  className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2"
+                  onClick={closeMenu}
+                >
+                  <DollarSign size={16} color="gray" />
+                  <span>My missions</span>
+                </li>
+              </Link>
+              <Link href="/myprofile?tab=My communities">
+                <li
+                  className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2"
+                  onClick={closeMenu}
+                >
+                  <Users size={16} color="gray" />
+                  <span>My communities</span>
+                </li>
+              </Link>
+              <Link href="/myprofile?tab=My investments">
+                <li
+                  className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2"
+                  onClick={closeMenu}
+                >
+                  <DollarSign size={16} color="gray" />
+                  <span>My investments</span>
+                </li>
+              </Link>
+              <li
+                className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2"
+                onClick={() => disconnect()}
+              >
+                <LogOut size={16} color="gray" />
+                <span>Disconnect</span>
               </li>
-            </Link>
-            <li className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2">
-              <FileText size={16} color="gray" />
-              <span>My projects</span>
-            </li>
-            <li className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2">
-              <DollarSign size={16} color="gray" />
-              <span>My contributions</span>
-            </li>
-            <li className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2">
-              <Users size={16} color="gray" />
-              <span>My DAOs</span>
-            </li>
-            <li className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2">
-              <CheckSquare size={16} color="gray" />
-              <span>My votes</span>
-            </li>
-            <li className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2">
-              <Settings size={16} color="gray" />
-              <span>Settings</span>
-            </li>
-            <li
-              className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2"
-              onClick={() => disconnect()}
-            >
-              <LogOut size={16} color="gray" />
-              <span>Disconnect</span>
-            </li>
-          </ul>
-        </div>
-      )}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -1,11 +1,11 @@
 // src/components/profile/ProfileMenu.tsx
 
 const menuItems = [
-  "My Profile",
-  "My Projects",
-  "My Contributions",
-  "My DAOs",
-  "My Points",
+  "My profile",
+  "My projects",
+  "My missions",
+  "My communities",
+  "My investments",
 ];
 
 export default function ProfileMenu({

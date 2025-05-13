@@ -5,8 +5,8 @@ interface Tab {
 
 const TABS: Tab[] = [
   { id: "projects", label: "Projects" },
-  { id: "contributions", label: "Contributions" },
-  { id: "daos", label: "DAOs" },
+  { id: "missions", label: "Missions done" },
+  { id: "communities", label: "Communities" },
 ];
 
 interface UserTabsProps {
