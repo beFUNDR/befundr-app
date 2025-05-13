@@ -5,7 +5,7 @@
  * It handle rpc url export to handle interaction based on web3js
  */
 
-import { createSolanaClient } from "gill";
+import { clusterApiUrl, Connection } from "@solana/web3.js";
 
 // Network moniker
 export type SolanaMoniker =
@@ -34,22 +34,17 @@ function getSolanaRpcUrl(moniker: SolanaMoniker, customUrl?: string): string {
 }
 
 // 🎯 CHOOSE NETWORK HERE
-const network: SolanaMoniker = "devnet";
+const network: SolanaMoniker = "localnet";
 const rpcUrl = getSolanaRpcUrl(network);
 
-const { rpc, rpcSubscriptions, sendAndConfirmTransaction } = createSolanaClient(
-  {
-    urlOrMoniker: rpcUrl,
-    // optional: specify a custom RPC URL
-  }
+// SOLANA WEB3.JS CONNECTION OBJECT
+const connection = new Connection(
+  network === "localnet" ? "http://127.0.0.1:8899" : clusterApiUrl(network),
+  "confirmed"
 );
 
-const solanaClient = {
-  rpc,
-  rpcSubscriptions,
-  sendAndConfirmTransaction,
+export const solanaClient = {
   network,
   rpcUrl,
+  connection,
 };
-
-export default solanaClient;
