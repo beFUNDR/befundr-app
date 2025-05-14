@@ -9,7 +9,6 @@ import {
   getAllDocumentsFromCollection,
   getDocument,
 } from "@/utils/firebaseClient";
-import { User } from "../../../type";
 
 export const useUser = (wallet: string | undefined) => {
   const queryClient = useQueryClient();

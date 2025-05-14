@@ -9,7 +9,6 @@ import { createProject } from "./createProject";
 import { getBefundrProgram } from "../../../../anchor/src";
 import { CreateProjectParams, UpdateProjectParams } from "./type";
 import { PublicKey } from "@solana/web3.js";
-import { Project } from "../../../../type";
 import { approveProject } from "./approveProject";
 
 // Fonction utilitaire pure

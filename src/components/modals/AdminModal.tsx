@@ -86,13 +86,12 @@ const AdminModal = ({
               <div className="flex flex-col items-center">
                 <div
                   className={`w-8 h-8 flex items-center justify-center rounded-full font-bold text-sm
-      ${
-        isCompleted
-          ? "bg-green-500 text-white"
-          : isActive
-          ? "bg-accent text-gray-900"
-          : "bg-gray-300 text-gray-600"
-      }`}
+      ${isCompleted
+                      ? "bg-green-500 text-white"
+                      : isActive
+                        ? "bg-accent text-gray-900"
+                        : "bg-gray-300 text-gray-600"
+                    }`}
                 >
                   {idx + 1}
                 </div>
