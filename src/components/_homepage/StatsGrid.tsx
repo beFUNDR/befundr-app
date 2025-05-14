@@ -4,28 +4,28 @@ import { useEffect, useRef, useState } from "react";
 const stats = [
   {
     icon: <TrendingUp className="text-secondary w-8 h-8" />,
-    value: 36000000,
-    display: "$5M+",
+    value: 12000000,
+    display: "$12M",
     label: "Raised",
     isMoney: true,
   },
   {
     icon: <FileText className="text-secondary w-8 h-8" />,
-    value: 200,
-    display: "200+",
+    value: 18,
+    display: "18",
     label: "Active projects",
   },
   {
     icon: <Link className="text-secondary w-8 h-8" />,
-    value: 50,
-    display: "50+",
+    value: 6,
+    display: "6",
     label: "Engaged DAOs",
   },
   {
     icon: <CheckCircle className="text-secondary w-8 h-8" />,
     value: 95,
     display: "95%",
-    label: "Milestone success",
+    label: "Token launch success",
     isPercent: true,
   },
 ];
@@ -65,7 +65,7 @@ function useCountTo(
 const StatCard = ({ icon, value, label, isPercent, isMoney }: any) => {
   const animatedValue = useCountTo(value, 2000, isPercent, isMoney);
   return (
-    <div className=" border border-custom-gray-800 rounded-2xl p-6 flex flex-col items-start min-w-[180px] min-h-[120px] shadow-md">
+    <div className=" border border-custom-gray-800 rounded-2xl p-6 flex flex-col items-start min-w-[180px] min-h-[120px] shadow-md bg-black/50">
       <div className="rounded-full bg-custom-gray-800 p-3 mb-2 flex items-center justify-center">
         {icon}
       </div>

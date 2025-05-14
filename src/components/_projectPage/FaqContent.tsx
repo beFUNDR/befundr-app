@@ -3,32 +3,21 @@ import FaqQuestionCard from "../cards/FaqQuestionCard";
 const FaqContent = () => {
   return (
     <div className="flex flex-col gap-4 h-[500px] overflow-y-auto px-2">
-      <FaqQuestionCard question="How is beFUNDR different from traditional incubators?">
+      <FaqQuestionCard question="What problem does this project solve?">
         <p>
-          beFUNDR is a crowdfunding platform that allows you to raise funds from
-          the community. It is different from traditional incubators because it
-          is a community-driven platform that allows you to raise funds from the
-          community.
-        </p>
-        <p>
-          beFUNDR is a crowdfunding platform that allows you to raise funds from
-          the community. It is different from traditional incubators because it
-          is a community-driven platform that allows you to raise funds from the
-          community.
+          Our project addresses a common pain point in the Web3 space: lack of
+          accessible, user-friendly tools for newcomers. By simplifying
+          interactions and reducing friction, we aim to onboard the next wave of
+          users and contributors to the decentralized ecosystem.
         </p>
       </FaqQuestionCard>
-      <FaqQuestionCard question="How is beFUNDR different from traditional incubators?">
+
+      <FaqQuestionCard question="How will the funds be used after the kickstart phase?">
         <p>
-          beFUNDR is a crowdfunding platform that allows you to raise funds from
-          the community. It is different from traditional incubators because it
-          is a community-driven platform that allows you to raise funds from the
-          community.
-        </p>
-        <p>
-          beFUNDR is a crowdfunding platform that allows you to raise funds from
-          the community. It is different from traditional incubators because it
-          is a community-driven platform that allows you to raise funds from the
-          community.
+          The initial funds will be allocated to product development, smart
+          contract audits, community building, and launching key features.
+          Transparency is core to our mission — a detailed funding roadmap will
+          be published and regularly updated.
         </p>
       </FaqQuestionCard>
     </div>

@@ -11,7 +11,7 @@ const links: { label: string; href: string }[] = [
     href: "/projects",
   },
   {
-    label: "Skills hub",
+    label: "Skills Hub",
     href: "/skillshub",
   },
   {

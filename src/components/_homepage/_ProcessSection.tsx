@@ -7,12 +7,12 @@ const features = [
   {
     icon: <TrendingUp className="text-accent w-8 h-8 mb-4" />,
     title: "The best projects",
-    desc: "Projects endorsed by leading web3 communities",
+    desc: "Selected through a rigorous process by leading web3 experts and communities",
   },
   {
     icon: <Users className="text-accent w-8 h-8 mb-4" />,
     title: "Full community support",
-    desc: "Community members can fund and contribute to projects",
+    desc: "Community members can fund and contribute to projects thanks to the Skills Hub",
   },
   {
     icon: <Shield className="text-accent w-8 h-8 mb-4" />,

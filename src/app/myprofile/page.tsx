@@ -9,6 +9,7 @@ import { skills as allSkills } from "@/data/localData";
 import ProfilContent from "@/components/_myProfile.tsx/ProfilContent";
 import UserProjectsContent from "@/components/_userPage/UserProjectsContent";
 import UserMissionsContent from "@/components/_userPage/UserMissionsContent";
+import UserCommunitiesContent from "@/components/_userPage/UserCommunitiesContent";
 
 function MyProfilePage() {
   //* GLOBAL STATE
@@ -145,13 +146,11 @@ function MyProfilePage() {
         <UserMissionsContent userId={publicKey?.toString() ?? ""} />
       )}
       {activeSection === "My investments" && (
-        <div className="text-white mt-8">
-          Section &quot;My investments&quot; (à compléter)
-        </div>
+        <div className="text-white mt-8">in progress</div>
       )}
       {activeSection === "My communities" && (
         <div className="text-white mt-8">
-          Section &quot;My communities&quot; (à compléter)
+          <UserCommunitiesContent />
         </div>
       )}
     </div>
