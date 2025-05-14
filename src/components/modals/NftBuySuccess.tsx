@@ -16,7 +16,7 @@ const NftBuySuccess = (props: Props) => {
         <CircleCheckBig size={100} className="text-custom-gray-200" />
       </div>
       <div className="h3Style">
-        You've successfully bought {props.quantity} NFTs!
+        You&apos;ve successfully bought {props.quantity} NFTs!
       </div>
       <p className="bodyStyle">
         Now, the journey begins for {props.projectName}. You will be able to
