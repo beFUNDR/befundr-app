@@ -25,7 +25,7 @@ pub fn start_incubation(ctx: Context<StartIncubation>) -> Result<()> {
 
 #[derive(Accounts)]
 pub struct StartIncubation<'info> {
-    #[account(
+    #[account(mut,
         seeds = [PROJECT_SEED, &project.project_counter.to_le_bytes()],
         bump,
     )]

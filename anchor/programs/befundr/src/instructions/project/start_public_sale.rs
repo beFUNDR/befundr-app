@@ -33,7 +33,7 @@ pub fn start_public_sale(
 
 #[derive(Accounts)]
 pub struct StartPublicSale<'info> {
-    #[account(
+    #[account(mut, 
         seeds = [PROJECT_SEED, &project.project_counter.to_le_bytes()],
         bump,
     )]

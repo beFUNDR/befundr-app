@@ -22,6 +22,7 @@
       "accounts": [
         {
           "name": "project",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -623,6 +624,7 @@
       "accounts": [
         {
           "name": "project",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -937,6 +939,7 @@
       "accounts": [
         {
           "name": "project",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -1014,6 +1017,7 @@
       "accounts": [
         {
           "name": "project",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -1082,6 +1086,7 @@
       "accounts": [
         {
           "name": "project",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -1176,6 +1181,7 @@
       "accounts": [
         {
           "name": "project",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -1350,6 +1356,7 @@
       "accounts": [
         {
           "name": "project",
+          "writable": true,
           "pda": {
             "seeds": [
               {

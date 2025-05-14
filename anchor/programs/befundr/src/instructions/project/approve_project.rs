@@ -25,7 +25,7 @@ pub fn approve_project(ctx: Context<ApproveProject>) -> Result<()> {
 
 #[derive(Accounts)]
 pub struct ApproveProject<'info> {
-    #[account(
+    #[account(mut, 
         seeds = [PROJECT_SEED, &project.project_counter.to_le_bytes()],
         bump,
     )]

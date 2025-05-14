@@ -7,8 +7,10 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useAnchorProvider } from "@/providers/SolanaProvider";
 import { createProject } from "./createProject";
 import { getBefundrProgram } from "../../../../anchor/src";
+import { StartNftMintRoundProjectParams } from "./type";
 import { PublicKey } from "@solana/web3.js";
 import { approveProject } from "./approveProject";
+import { startNftMintRound } from "./startNftMintRound";
 
 // Fonction utilitaire pure
 export const getProjectsByUserId = async (userId: string) => {
@@ -110,12 +112,20 @@ export const useProject = () => {
       if (!publicKey) {
         throw new Error("Public key is required to approve the project");
       }
-      return approveProject({
-        project,
-        authority: publicKey,
-        payer: publicKey,
-        program: befundrProgram,
-      });
+      return approveProject({ project, authority: publicKey, payer: publicKey, program: befundrProgram });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+    },
+  });
+
+  const startNftMintRoundProjectMutation = useMutation({
+    mutationFn: (startNftMintRoundParams: StartNftMintRoundProjectParams) => {
+      const { project, nftMaxSupply, nftUsdcPrice, nftCollectionName } = startNftMintRoundParams;
+      if (!publicKey) {
+        throw new Error("Public key is required to approve the project");
+      }
+      return startNftMintRound({ project, nftMaxSupply, nftUsdcPrice, nftCollectionName, authority: publicKey, payer: publicKey, program: befundrProgram });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
@@ -125,6 +135,7 @@ export const useProject = () => {
   return {
     createProject: createProjectMutation.mutateAsync,
     approveProject: approveProjectMutation.mutateAsync,
+    startNftMintRound: startNftMintRoundProjectMutation.mutateAsync,
     isCreating: createProjectMutation.isPending,
     error: createProjectMutation.error,
     projects: projectsQuery.data,

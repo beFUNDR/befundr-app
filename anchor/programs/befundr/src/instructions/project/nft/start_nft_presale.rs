@@ -44,7 +44,7 @@ pub fn start_nft_presale(
 
 #[derive(Accounts)]
 pub struct StartNftPresale<'info> {
-    #[account(
+    #[account(mut,
         seeds = [PROJECT_SEED, &project.project_counter.to_le_bytes()],
         bump,
     )]

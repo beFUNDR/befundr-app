@@ -42,15 +42,12 @@ export const PATCH = async (request: NextRequest) => {
   try {
     const { project } = await request.json();
 
-    const userRef = admin
-      .firestore()
-      .collection("projects")
-      .doc(project.projectPda);
-    await userRef.update({ status: project.status });
+    const userRef = admin.firestore().collection("projects").doc(project.projectPda);
+    await userRef.update({ ...project });
 
     return NextResponse.json({ projectId: project.projectPda });
   } catch (error) {
-    console.error("Error updating project status:", error);
+    console.error("Error updating project:", error);
     return NextResponse.json(
       { error: "Failed to update project" },
       { status: 500 }

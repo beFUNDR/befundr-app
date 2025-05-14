@@ -3,7 +3,7 @@ import React from "react";
 
 type Props = {
   label: string;
-  value: string;
+  value: string | number;
   onChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;

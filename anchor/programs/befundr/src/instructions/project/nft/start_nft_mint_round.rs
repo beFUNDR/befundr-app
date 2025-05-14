@@ -13,7 +13,7 @@ pub fn start_nft_mint_round(
     nft_collection_name: String,
 ) -> Result<()> {
     let project = &mut ctx.accounts.project;
-    let globals = &mut ctx.accounts.globals;
+    let globals = &ctx.accounts.globals;
 
     require!(
         globals.admins.contains(&ctx.accounts.authority.key()),
@@ -49,7 +49,7 @@ pub fn start_nft_mint_round(
 
 #[derive(Accounts)]
 pub struct StartNftMintRound<'info> {
-    #[account(
+    #[account(mut,
         seeds = [PROJECT_SEED, &project.project_counter.to_le_bytes()],
         bump,
     )]

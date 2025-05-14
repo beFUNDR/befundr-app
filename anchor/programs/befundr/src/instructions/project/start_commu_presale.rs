@@ -33,7 +33,7 @@ pub fn start_commu_presale(
 
 #[derive(Accounts)]
 pub struct StartCommuPresale<'info> {
-    #[account(
+    #[account(mut, 
         seeds = [PROJECT_SEED, &project.project_counter.to_le_bytes()],
         bump,
     )]

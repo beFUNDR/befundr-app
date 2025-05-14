@@ -59,7 +59,7 @@ pub fn mint_nft(
 
 #[derive(Accounts)]
 pub struct MintNft<'info> {
-    #[account(
+    #[account(mut, 
         seeds = [PROJECT_SEED, &project.project_counter.to_le_bytes()],
         bump,
     )]

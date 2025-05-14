@@ -28,6 +28,7 @@ export type Befundr = {
       "accounts": [
         {
           "name": "project",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -629,6 +630,7 @@ export type Befundr = {
       "accounts": [
         {
           "name": "project",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -943,6 +945,7 @@ export type Befundr = {
       "accounts": [
         {
           "name": "project",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -1020,6 +1023,7 @@ export type Befundr = {
       "accounts": [
         {
           "name": "project",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -1088,6 +1092,7 @@ export type Befundr = {
       "accounts": [
         {
           "name": "project",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -1182,6 +1187,7 @@ export type Befundr = {
       "accounts": [
         {
           "name": "project",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -1356,6 +1362,7 @@ export type Befundr = {
       "accounts": [
         {
           "name": "project",
+          "writable": true,
           "pda": {
             "seeds": [
               {

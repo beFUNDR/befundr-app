@@ -16,3 +16,13 @@ interface UpdateProjectParams {
     payer: PublicKey;
     program: Program<Befundr>;
 }
+
+interface StartNftMintRoundProjectParams {
+    project: ProjectToUpdate;
+    nftMaxSupply: number;
+    nftUsdcPrice: number;
+    nftCollectionName: string;
+    authority: PublicKey;
+    payer: PublicKey;
+    program: Program<Befundr>;
+}

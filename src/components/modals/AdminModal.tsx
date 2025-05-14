@@ -3,6 +3,8 @@ import { useProject } from "@/hooks/dbData/project/useProject";
 import { useState } from "react";
 import ModalLayout from "./_ModalLayout";
 import ButtonLabel from "../buttons/_ButtonLabel";
+import InputField from "../displayElements/InputField";
+import { handleProjectStepAction } from "@/hooks/dbData/project/utils/handleProjectStepAction";
 
 type Props = {
   project: Project;
@@ -11,52 +13,44 @@ type Props = {
   onStatusChange?: (newStatus: ProjectStatus) => void;
 };
 
-export const handleProjectStepAction = async (
-  currentStatus: ProjectStatus,
-  project: Project,
-  updateFun: any
-): Promise<any> => {
-  switch (currentStatus) {
-    case ProjectStatus.WaitingForApproval:
-      return await updateFun(project);
-    case ProjectStatus.NftMintRound:
-      console.log("→ Déclenchement du mint NFT...");
-      return "proceed";
-
-    case ProjectStatus.PublicSale:
-      console.log("→ Lancement de la vente publique...");
-      return "proceed";
-
-    default:
-      return "proceed";
-  }
-};
-
 const AdminModal = ({
   project,
   onClose,
-  initialStatus = ProjectStatus.WaitingForApproval,
   onStatusChange,
 }: Props) => {
-  const [status, setStatus] = useState<ProjectStatus>(
-    project.status as ProjectStatus
-  );
+  const [status, setStatus] = useState<ProjectStatus>(project.status as ProjectStatus);
+  const [maxSupply, setMaxSupply] = useState<number>(0);
+  const [usdcPrice, setUsdcPrice] = useState<number>(0);
+  const [collectionName, setCollectionName] = useState<string>("");
   const currentStepIndex = projectSteps.findIndex(
     (step) => step.key === status
   );
 
-  const { approveProject } = useProject();
+  const { approveProject, startNftMintRound } = useProject();
 
   const handleNext = async () => {
     const current = status;
     const currentStepIndex = projectSteps.findIndex((s) => s.key === current);
     if (currentStepIndex >= projectSteps.length - 1) return;
 
-    const result = await handleProjectStepAction(
-      current,
-      project,
-      approveProject
-    );
+    let updateFun = approveProject;
+    let params: any = {};
+
+    switch (current) {
+      case ProjectStatus.WaitingForApproval:
+        updateFun = approveProject;
+        break;
+      case ProjectStatus.NftMintRound:
+        updateFun = startNftMintRound as any;
+        params = {
+          nftMaxSupply: maxSupply,
+          nftUsdcPrice: usdcPrice,
+          nftCollectionName: collectionName,
+        };
+        break;
+    }
+
+    const result = await handleProjectStepAction(current, project, updateFun, params);
 
     if (result === "proceed") {
       const nextStatus = projectSteps[currentStepIndex + 1].key;
@@ -109,6 +103,28 @@ const AdminModal = ({
       </div>
 
       <div className="mt-10 flex justify-end">
+        {project.status == ProjectStatus.Published && <><InputField
+          type="number"
+          label="NFT Max Supply"
+          value={maxSupply}
+          onChange={(e) => setMaxSupply(Number(e.target.value))}
+          placeholder="Enter the max supply"
+        />
+          <InputField
+            type="number"
+            label="NFT USDC Price"
+            value={usdcPrice}
+            onChange={(e) => setUsdcPrice(Number(e.target.value))}
+            placeholder="Enter the price in USDC"
+          />
+          <InputField
+            type="text"
+            label=" Collection Name"
+            value={collectionName}
+            onChange={(e) => setCollectionName(e.target.value)}
+            placeholder="Enter the collection name"
+          />
+        </>}
         <button
           onClick={handleNext}
           disabled={!projectSteps[currentStepIndex]?.nextAction}
