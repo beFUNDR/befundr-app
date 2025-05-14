@@ -19,6 +19,8 @@ import { useProject } from "@/hooks/dbData/project/useProject";
 import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
 import AdminModal from "@/components/modals/AdminModal";
 import { ProjectStatus } from "@/data/ProjectStatus";
+import PublishedPhase from "@/components/_projectPage/PublishedPhase";
+import NftMintRoundPhase from "@/components/_projectPage/NftMintRoundPhase";
 
 const ProjectPage = () => {
   const [activeTab, setActiveTab] = useState("about");
@@ -108,15 +110,14 @@ const ProjectPage = () => {
       </p>
 
       {/* Main block */}
-      <div className="flex flex-col md:flex-row gap-8 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         {/* Dashboard image */}
-        <div className="flex-1 flex items-center justify-center min-w-[350px] aspect-square">
+        <div className="relative flex items-center justify-center min-w-[350px] aspect-square ">
           {project.mainImage && (
             <Image
               src={project.mainImage}
               alt="Dashboard preview"
-              width={500}
-              height={350}
+              fill
               className="rounded-2xl border border-custom-gray-600 object-cover aspect-square"
             />
           )}
@@ -124,6 +125,12 @@ const ProjectPage = () => {
         {/* Project info */}
         {project.status === ProjectStatus.WaitingForApproval && (
           <WaitingForApprovalPhase project={project} owner={owner} />
+        )}
+        {project.status === ProjectStatus.Published && (
+          <PublishedPhase project={project} owner={owner} />
+        )}
+        {project.status === ProjectStatus.NftMintRound && (
+          <NftMintRoundPhase project={project} owner={owner} />
         )}
       </div>
 

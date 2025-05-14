@@ -47,7 +47,7 @@ const UserProfileHeader = ({
         </div>
         {/* skills */}
         <div className="flex items-center gap-2 mt-2">
-          {user.skills.map((skill: string, idx: number) => (
+          {user.skills?.map((skill: string, idx: number) => (
             <SkillTag key={idx} skill={skill} />
           ))}
         </div>

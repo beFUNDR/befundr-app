@@ -52,7 +52,7 @@ const ModalLayout = (props: Props) => {
             {/* Bouton de fermeture */}
             <button
               onClick={handleClose}
-              className="absolute top-4 right-4 p-2 hover:bg-custom-gray-600 rounded-full transition-colors duration-200"
+              className="absolute top-4 right-4 p-2 hover:bg-custom-gray-800 rounded-full transition-colors duration-200"
               aria-label="Fermer"
             >
               <X size={30} className="text-custom-gray-200 hover:text-white" />

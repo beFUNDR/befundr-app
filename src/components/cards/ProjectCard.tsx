@@ -4,6 +4,7 @@ import CommunityLogo from "../displayElements/CommunityLogo";
 import StatusTag from "../tags/StatusTag";
 
 const ProjectCard = ({ project }: { project: Project }) => {
+  console.log(project.supportedBy);
   return (
     <div className="relative  rounded-3xl border bg-custom-gray-900 hover:border-custom-gray-600 border-custom-gray-800 shadow-lg overflow-hidden max-w-md w-[300px] h-[500px] transition-all duration-300">
       {/* Dashboard image */}
@@ -47,7 +48,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                     key={index}
                     className="relative flex items-center justify-center w-10 h-10"
                   >
-                    <CommunityLogo community={community} />
+                    <CommunityLogo collectionName={community} />
                   </div>
                 ))}
               </div>

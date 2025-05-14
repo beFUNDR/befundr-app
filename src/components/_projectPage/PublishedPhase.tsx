@@ -11,17 +11,20 @@ import DefaultAvatar from "../displayElements/DefaultAvatar";
 
 type Props = { project: Project; owner: User };
 
-const WaitingForApprovalPhase = (props: Props) => {
+const PublishedPhase = (props: Props) => {
   return (
-    <div className="flex-1 flex flex-col justify-between gap-2 bg-black/70 rounded-2xl p-8 border border-custom-gray-600 min-w-[350px]">
+    <div className=" flex flex-col justify-between gap-2 bg-black/70 rounded-2xl p-8 border border-custom-gray-600 min-w-[350px] aspect-square">
       {/* Title */}
       <div className="flex justify-between items-center gap-2">
-        <p className="h3Style">Project is in review</p>
+        <p className="h3Style">Project selected</p>
         <StatusTag status={props.project.status} />
       </div>
       <p className="bodyStyle -mt-2">
-        beFUNDR is reviewing the project to ensure it meets our guidelines.
+        This project has been selected by beFUNDR to integrate the next
+        incubation batch.
+        <br /> Stay tuned for updates!
       </p>
+
       <p className="h4Style mt-4">Builder</p>
       {/* Owner & stats */}
       <div className="flex justify-between items-stretch gap-4">
@@ -80,4 +83,4 @@ const WaitingForApprovalPhase = (props: Props) => {
   );
 };
 
-export default WaitingForApprovalPhase;
+export default PublishedPhase;

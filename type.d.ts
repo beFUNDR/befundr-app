@@ -12,7 +12,7 @@ type Project = {
   discord?: string;
   telegram?: string;
   status: string;
-  supportedBy?: Community["name"][];
+  supportedBy?: string[];
   id: PublicKey;
 };
 
