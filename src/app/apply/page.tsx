@@ -32,7 +32,7 @@ export default function ApplyPage() {
     twitter: "",
     discord: "",
     telegram: "",
-    status: "In review",
+    status: "WaitingForApproval",
   });
   const [mainImageFile, setMainImageFile] = useState<File | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);

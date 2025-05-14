@@ -10,7 +10,7 @@ import Link from "next/link";
 
 type Props = { project: Project; owner: User };
 
-const ReviewPhase = (props: Props) => {
+const WaitingForApprovalPhase = (props: Props) => {
   return (
     <div className="flex-1 flex flex-col justify-between gap-2  rounded-2xl p-8 border border-custom-gray-600 min-w-[350px]">
       {/* Title */}
@@ -77,4 +77,4 @@ const ReviewPhase = (props: Props) => {
   );
 };
 
-export default ReviewPhase;
+export default WaitingForApprovalPhase;

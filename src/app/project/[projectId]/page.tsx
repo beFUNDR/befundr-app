@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import Loader from "@/components/displayElements/Loader";
 import { useParams } from "next/navigation";
 import Image from "next/image";
-import ReviewPhase from "@/components/_projectPage/ReviewPhase";
+import WaitingForApprovalPhase from "@/components/_projectPage/WaitingForApprovalPhase";
 import { useUser } from "@/hooks/dbData/useUser";
 import CategoryTagBig from "@/components/tags/CategoryTagBig";
 import Tabs from "@/components/_projectPage/Tabs";
@@ -123,7 +123,7 @@ const ProjectPage = () => {
         </div>
         {/* Project info */}
         {project.status === ProjectStatus.WaitingForApproval && (
-          <ReviewPhase project={project} owner={owner} />
+          <WaitingForApprovalPhase project={project} owner={owner} />
         )}
       </div>
 
