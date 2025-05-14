@@ -18,7 +18,7 @@ const CommunityCard = ({ collection }: { collection: Collection }) => {
         alt={collection.name + " logo"}
         width={100}
         height={100}
-        className="rounded-full mb-4 aspect-square"
+        className="rounded-full mb-4 aspect-square object-cover"
       />
       <h3 className="h3Style mb-2">{collection.name}</h3>
       <p className="bodyStyle  text-center line-clamp-1">
