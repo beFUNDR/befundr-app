@@ -7,9 +7,10 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useAnchorProvider } from "@/providers/SolanaProvider";
 import { createProject } from "./createProject";
 import { getBefundrProgram } from "../../../../anchor/src";
-import { CreateProjectParams } from "./type";
+import { CreateProjectParams, UpdateProjectParams } from "./type";
 import { PublicKey } from "@solana/web3.js";
 import { Project } from "../../../../type";
+import { approveProject } from "./approveProject";
 
 // Fonction utilitaire pure
 export const getProjectsByUserId = async (userId: string) => {
@@ -102,15 +103,21 @@ export const useProject = () => {
     },
   });
 
-  /*const approveProjectMutation = useMutation({
-    mutationFn: approveProject,
+  const approveProjectMutation = useMutation({
+    mutationFn: (project: Project) => {
+      if (!publicKey) {
+        throw new Error("Public key is required to approve the project");
+      }
+      return approveProject({ project, authority: publicKey, payer: publicKey, program: befundrProgram });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
     },
-  });*/
+  });
 
   return {
     createProject: createProjectMutation.mutateAsync,
+    approveProject: approveProjectMutation.mutateAsync,
     isCreating: createProjectMutation.isPending,
     error: createProjectMutation.error,
     projects: projectsQuery.data,

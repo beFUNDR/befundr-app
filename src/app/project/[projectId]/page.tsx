@@ -133,7 +133,7 @@ const ProjectPage = () => {
       {renderTabContent()}
 
       {isShowManageModal && (
-        <AdminModal onClose={() => setIsShowManageModal(false)} />
+        <AdminModal project={project} onClose={() => setIsShowManageModal(false)} />
       )}
     </div>
   );

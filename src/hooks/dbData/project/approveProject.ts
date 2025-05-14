@@ -2,6 +2,7 @@ import { confirmTransaction } from "@/utils/solanaUtils";
 import { PublicKey, SystemProgram } from "@solana/web3.js";
 import { BEFUNDR_PROGRAM_ID } from "../../../../anchor/src";
 import { UpdateProjectParams } from "./type";
+import { ProjectStatus } from "@/data/ProjectStatus";
 
 export const approveProject = async ({
     project,
@@ -16,13 +17,8 @@ export const approveProject = async ({
 
     let config;
     config = await program.account.globals.fetch(configPda);
-
-    const [projectPda] = PublicKey.findProgramAddressSync(
-        [Buffer.from("project"), config.createdProjectCounter.toArrayLike(Buffer, 'le', 8)],
-        program.programId
-    );
-
-    const createProjectTx = await program.methods
+    const projectPda = project.projectPda;
+    const approveProjectTx = await program.methods
         .approveProject()
         .accountsPartial({
             globals: configPda,
@@ -32,7 +28,7 @@ export const approveProject = async ({
         })
         .signers([])
         .rpc({ skipPreflight: true });
-    await confirmTransaction(program, createProjectTx);
+    await confirmTransaction(program, approveProjectTx);
 
     console.log("Project approved", await program.account.project.fetch(projectPda));
 
@@ -40,7 +36,7 @@ export const approveProject = async ({
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            project: { ...project, projectPda: projectPda },
+            project: { ...project, status: ProjectStatus.Published, projectPda: projectPda },
         }),
     });
 

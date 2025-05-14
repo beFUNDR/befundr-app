@@ -1,23 +1,52 @@
 import { ProjectStatus, projectSteps } from "@/data/ProjectStatus";
+import { useProject } from "@/hooks/dbData/project/useProject";
 import { useState } from "react";
+import { Project } from "../../../type";
 
 type Props = {
+  project: Project;
   onClose: () => void;
   initialStatus?: ProjectStatus;
   onStatusChange?: (newStatus: ProjectStatus) => void;
 };
 
+export const handleProjectStepAction = async (currentStatus: ProjectStatus, project: Project, updateFun: any): Promise<any> => {
+
+  switch (currentStatus) {
+    case ProjectStatus.WaitingForApproval:
+      return await updateFun(project);
+    case ProjectStatus.NftMintRound:
+      console.log("→ Déclenchement du mint NFT...");
+      return "proceed";
+
+    case ProjectStatus.PublicSale:
+      console.log("→ Lancement de la vente publique...");
+      return "proceed";
+
+    default:
+      return "proceed";
+  }
+};
+
 const AdminModal = ({
+  project,
   onClose,
   initialStatus = ProjectStatus.WaitingForApproval,
   onStatusChange,
 }: Props) => {
-  const [status, setStatus] = useState<ProjectStatus>(initialStatus);
+  const [status, setStatus] = useState<ProjectStatus>(project.status as ProjectStatus);
   const currentStepIndex = projectSteps.findIndex((step) => step.key === status);
 
-  const handleNext = () => {
+  const { approveProject } = useProject();
 
-    if (currentStepIndex < projectSteps.length - 1) {
+  const handleNext = async () => {
+    const current = status;
+    const currentStepIndex = projectSteps.findIndex((s) => s.key === current);
+    if (currentStepIndex >= projectSteps.length - 1) return;
+
+    const result = await handleProjectStepAction(current, project, approveProject);
+
+    if (result === "proceed") {
       const nextStatus = projectSteps[currentStepIndex + 1].key;
       setStatus(nextStatus);
       onStatusChange?.(nextStatus);
