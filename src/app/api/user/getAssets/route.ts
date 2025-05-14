@@ -23,7 +23,8 @@ export async function POST(req: NextRequest) {
       id: "1",
       method: "getAssetsByOwner",
       params: {
-        ownerAddress: wallet /*"5FALSVLRjuRZHSmQVdT2RUZC6KadCuDmxY7gaQFWFBxf"*/, //TODO: remove after testing
+        ownerAddress:
+          /*"BvMiFRYKT1Q3ZZJQGvxgfybG9Tza3k8kWqp3H4gzUojz"*/ wallet /*"5FALSVLRjuRZHSmQVdT2RUZC6KadCuDmxY7gaQFWFBxf"*/, //TODO: remove after testing
         page: 1,
         limit: 50,
         sortBy: { sortBy: "created", sortDirection: "asc" },
