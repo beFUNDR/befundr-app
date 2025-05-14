@@ -14,6 +14,7 @@ import ApplicationValidationModal from "@/components/modals/ApplicationValidatio
 import { useUser } from "@/hooks/dbData/useUser";
 import Loader from "@/components/displayElements/Loader";
 import { useProject } from "@/hooks/dbData/project/useProject";
+import { ProjectToCreate } from "../../../type";
 
 export default function ApplyPage() {
   const { publicKey } = useWallet();
