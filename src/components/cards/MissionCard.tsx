@@ -62,7 +62,7 @@ const MissionCard = ({ mission }: Props) => {
           )}
           <div>
             <div className="text-xs text-gray-400">Done by</div>
-            <div className="font-bold text-white">{user.name}</div>
+            <div className="font-bold text-white">{user?.name}</div>
           </div>
         </Link>
       )}
