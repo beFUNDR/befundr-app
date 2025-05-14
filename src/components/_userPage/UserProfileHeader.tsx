@@ -5,6 +5,7 @@ import DiscordButton from "../buttons/DiscordButton";
 import TelegramButton from "../buttons/TelegramButton";
 import InternetButton from "../buttons/InternetButton";
 import PointCard from "../cards/PointCard";
+import DefaultAvatar from "../displayElements/DefaultAvatar";
 
 interface UserProfileHeaderProps {
   user: User;
@@ -23,17 +24,23 @@ const UserProfileHeader = ({
   const daos = (user as any).daos ?? 4;
   const projects = (user as any).projects ?? 1;
 
+  console.log(user);
+
   return (
     <div className="flex flex-col md:flex-row gap-8 items-center mb-8 w-full">
       {/* Avatar */}
       <div className="flex-shrink-0">
-        <Image
-          src={user.avatar}
-          alt={user.name}
-          width={220}
-          height={220}
-          className="rounded-2xl border-4 border-custom-gray-800 bg-black"
-        />
+        {user.avatar ? (
+          <Image
+            src={user.avatar}
+            alt={user.name}
+            width={220}
+            height={220}
+            className="rounded-2xl border-4 border-custom-gray-800 bg-black"
+          />
+        ) : (
+          <DefaultAvatar size={40} publicKey={user.wallet} />
+        )}
       </div>
       {/* Infos */}
       <div className="flex-1 flex flex-col gap-2 items-start justify-center">

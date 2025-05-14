@@ -59,6 +59,24 @@ export default function MyProfilePage() {
     );
   };
 
+  // check if the profile is complete
+  const isCompleteProfil = () => {
+    // required field
+    const hasRequiredFields = pseudo.trim() !== "" && bio.trim() !== "";
+
+    // at least one social link
+    const hasSocialLink =
+      telegram.trim() !== "" ||
+      twitter.trim() !== "" ||
+      website.trim() !== "" ||
+      discord.trim() !== "";
+
+    // at least one skill
+    const hasSkills = selectedSkills.length > 0;
+
+    return hasRequiredFields && hasSocialLink && hasSkills;
+  };
+
   const handleSave = async () => {
     if (!publicKey) return;
     await updateUser({
@@ -71,6 +89,7 @@ export default function MyProfilePage() {
       discord,
       avatar: profilePic,
       skills: selectedSkills,
+      isCompleteProfil: isCompleteProfil(),
     });
   };
 
@@ -100,6 +119,7 @@ export default function MyProfilePage() {
     setDiscord,
     handleSave,
     isUpdating,
+    isCompleteProfil: isCompleteProfil(),
   };
 
   if (isLoading || !user) {

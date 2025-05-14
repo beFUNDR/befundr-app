@@ -22,6 +22,7 @@ type ProfilContentProps = {
   setDiscord: (v: string) => void;
   handleSave: () => void;
   isUpdating: boolean;
+  isCompleteProfil: boolean;
 };
 
 const ProfilContent = ({
@@ -44,10 +45,15 @@ const ProfilContent = ({
   setDiscord,
   handleSave,
   isUpdating,
+  isCompleteProfil,
 }: ProfilContentProps) => {
   return (
     <>
       <h2 className="h3Style mb-4">Personal details</h2>
+      <p className="bodyStyle mb-6">
+        Information marked with * is required to appear in the Skills Hub or to
+        create a project.
+      </p>
       <ProfileImageUpload
         imageUrl={profilePic}
         onImageChange={handleImageChange}
@@ -64,10 +70,11 @@ const ProfilContent = ({
         value={bio}
         onChange={(e) => setBio(e.target.value)}
         textarea
+        required
       />
 
       {/* Section Skills */}
-      <h2 className="h3Style mb-4 mt-8">Skills</h2>
+      <h2 className="h3Style mb-4 mt-8">Skills *</h2>
       <div className="flex flex-wrap gap-2 mb-6">
         {allSkills.map((skill) => (
           <button
@@ -87,30 +94,26 @@ const ProfilContent = ({
         ))}
       </div>
 
-      <h2 className="h3Style mb-4 mt-8">Social links</h2>
+      <h2 className="h3Style mb-4 mt-8">Social links (* at least one)</h2>
       <InputField
         label="Website"
         value={website}
         onChange={(e) => setWebsite(e.target.value)}
-        required
       />
       <InputField
         label="Telegram"
         value={telegram}
         onChange={(e) => setTelegram(e.target.value)}
-        required
       />
       <InputField
         label="Twitter"
         value={twitter}
         onChange={(e) => setTwitter(e.target.value)}
-        required
       />
       <InputField
         label="Discord"
         value={discord}
         onChange={(e) => setDiscord(e.target.value)}
-        required
       />
       <div className="flex justify-center mt-10">
         <button
@@ -121,6 +124,13 @@ const ProfilContent = ({
           <ButtonLabelAsync label="Save" isLoading={isUpdating} />
         </button>
       </div>
+      {isCompleteProfil && (
+        <p className="bodyStyle my-4 !text-green-400 text-center">
+          Your profile is complete.
+          <br /> You can now create a project and be displayed on the skills
+          hub.
+        </p>
+      )}
     </>
   );
 };

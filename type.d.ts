@@ -1,5 +1,3 @@
-import { PublicKey } from "@solana/web3.js";
-
 // Type Project (mocké pour les besoins de la démo)
 type Project = {
   userId: string;
@@ -49,7 +47,7 @@ type UpdateProjectParams = {
   status: string;
   project_counter: BN;
   id: PublicKey;
-}
+};
 
 type Collection = {
   name: string;
@@ -78,6 +76,7 @@ type User = {
   website: string;
   discord: string;
   skills: string[];
+  isCompleteProfil: boolean;
 };
 
 type Update = {

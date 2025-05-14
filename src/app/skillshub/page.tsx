@@ -37,7 +37,7 @@ const SkillHubPage = () => {
         >
           {users &&
             users.map((user, idx) => {
-              if (user.data.avatar && user.data.name) {
+              if (user.data.isCompleteProfil) {
                 return (
                   <Link key={idx} href={`/skillshub/${user.id}`}>
                     <UserSkillCard user={user.data} />

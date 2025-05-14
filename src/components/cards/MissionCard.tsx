@@ -3,6 +3,7 @@ import ButtonLabelSecondarySmall from "../buttons/_ButtonLabelSecondarySmall";
 import { useUser } from "@/hooks/dbData/useUser";
 import Image from "next/image";
 import Link from "next/link";
+import DefaultAvatar from "../displayElements/DefaultAvatar";
 type Props = {
   mission: Mission;
 };
@@ -48,7 +49,7 @@ const MissionCard = ({ mission }: Props) => {
           href={`/skillshub/${user?.wallet}`}
           className="flex justify-start items-center gap-4 "
         >
-          {user?.avatar && (
+          {user?.avatar ? (
             <Image
               src={user.avatar}
               alt={user.name}
@@ -56,6 +57,8 @@ const MissionCard = ({ mission }: Props) => {
               height={40}
               className="rounded-full"
             />
+          ) : (
+            <DefaultAvatar size={12} publicKey={user?.wallet} />
           )}
           <div>
             <div className="text-xs text-gray-400">Done by</div>

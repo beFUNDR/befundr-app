@@ -56,13 +56,19 @@ const AvatarModal = (props: Props) => {
       )}
       {data && data.result.items.length === 0 && (
         <div className="flex flex-col items-center justify-center gap-2 h-full w-full">
-          <p className="h3Style">No assets found</p>
+          <p className="h3Style mb-6">No assets found</p>
           <p className="bodyStyle">
-            You don't have any assets from the whitelisted collections
+            You don’t own any NFTs from our whitelisted partner collections.
+          </p>
+          <p className="bodyStyle">
+            You’ll keep this default avatar until you hold an eligible asset.
+          </p>
+          <p className="bodyStyle">
+            But no worries — you can still enjoy the full beFUNDR experience!
           </p>
           <Link
             href="/communities"
-            className="text-accent underline font-semibold text-base mb-2 w-fit"
+            className="text-accent underline font-semibold text-base my-6 w-fit"
           >
             Discover the communities →
           </Link>

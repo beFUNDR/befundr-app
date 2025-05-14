@@ -5,10 +5,9 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import Image from "next/image";
 import { concatAddress } from "@/utils/utilsFunctions";
 import { useUser } from "@/hooks/dbData/useUser";
-import { createAvatar } from "@dicebear/core";
-import { glass } from "@dicebear/collection";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import DefaultAvatar from "../displayElements/DefaultAvatar";
 
 const ProfilButton = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,10 +22,6 @@ const ProfilButton = () => {
   const closeMenu = () => {
     setIsOpen(false);
   };
-
-  const svg = createAvatar(glass, {
-    seed: publicKey?.toString(),
-  });
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -53,10 +48,9 @@ const ProfilButton = () => {
             height={40}
           />
         ) : (
-          <div
-            className="w-10 h-10 rounded-full overflow-hidden"
-            dangerouslySetInnerHTML={{ __html: svg.toString() }}
-          />
+          publicKey && (
+            <DefaultAvatar size={10} publicKey={publicKey?.toString()} />
+          )
         )}
         <span>
           {userData?.name
@@ -85,10 +79,12 @@ const ProfilButton = () => {
                     height={40}
                   />
                 ) : (
-                  <div
-                    className="w-10 h-10 rounded-full overflow-hidden"
-                    dangerouslySetInnerHTML={{ __html: svg.toString() }}
-                  />
+                  publicKey && (
+                    <DefaultAvatar
+                      size={10}
+                      publicKey={publicKey?.toString()}
+                    />
+                  )
                 )}
                 <div>
                   <div>{userData?.name}</div>

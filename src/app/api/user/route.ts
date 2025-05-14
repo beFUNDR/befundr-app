@@ -2,6 +2,23 @@ import admin from "@/lib/firebase/firebaseAdmin";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 
+const isCompleteProfil = (user: User): boolean => {
+  // required field
+  const hasRequiredFields = user.name?.trim() !== "" && user.bio?.trim() !== "";
+
+  // at least one social link
+  const hasSocialLink =
+    user.telegram?.trim() !== "" ||
+    user.twitter?.trim() !== "" ||
+    user.website?.trim() !== "" ||
+    user.discord?.trim() !== "";
+
+  // at least one skill
+  const hasSkills = user.skills && user.skills.length > 0;
+
+  return hasRequiredFields && hasSocialLink && hasSkills;
+};
+
 export async function GET(req: NextRequest) {
   try {
     //* GET THE DATA FROM THE REQUEST
@@ -57,6 +74,8 @@ export async function POST(req: NextRequest) {
       twitter: "",
       website: "",
       discord: "",
+      skills: [],
+      isCompleteProfil: false,
     };
 
     await admin.firestore().collection("users").doc(wallet).set(newUser);
@@ -80,8 +99,27 @@ export async function PATCH(req: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Récupérer les données actuelles de l'utilisateur
     const userRef = admin.firestore().collection("users").doc(wallet);
-    await userRef.update(fields);
+    const currentUser = await userRef.get();
+    const currentData = currentUser.data() as User;
+
+    // Fusionner les données actuelles avec les nouvelles données
+    const updatedUser = {
+      ...currentData,
+      ...fields,
+    };
+
+    // Vérifier si le profil est complet
+    const isComplete = isCompleteProfil(updatedUser);
+
+    // Mettre à jour avec le statut de complétion
+    await userRef.update({
+      ...fields,
+      isCompleteProfil: isComplete,
+    });
+
     const updatedDoc = await userRef.get();
     return NextResponse.json(updatedDoc.data(), { status: 200 });
   } catch (error) {

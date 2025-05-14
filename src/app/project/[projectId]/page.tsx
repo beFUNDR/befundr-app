@@ -109,14 +109,14 @@ const ProjectPage = () => {
       {/* Main block */}
       <div className="flex flex-col md:flex-row gap-8 mb-8">
         {/* Dashboard image */}
-        <div className="flex-1 flex items-center justify-center min-w-[350px]">
+        <div className="flex-1 flex items-center justify-center min-w-[350px] aspect-square">
           {project.mainImage && (
             <Image
               src={project.mainImage}
               alt="Dashboard preview"
               width={500}
               height={350}
-              className="rounded-2xl border border-custom-gray-600"
+              className="rounded-2xl border border-custom-gray-600 object-cover aspect-square"
             />
           )}
         </div>

@@ -5,6 +5,7 @@ import ProjectCard from "@/components/cards/ProjectCard";
 import Loader from "@/components/displayElements/Loader";
 import Link from "next/link";
 import { useProject } from "@/hooks/dbData/project/useProject";
+import ApplyButton from "@/components/buttons/ApplyButton";
 
 // On suppose que le type Project est global
 
@@ -26,7 +27,10 @@ const ProjectsPage = () => {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12 ">
-      <h1 className="h1Style my-6">Discover and fund projects</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="h1Style my-6">Discover and fund projects</h1>
+        <ApplyButton />
+      </div>
       <p className="bodyStyle max-w-xl mb-10">
         Discover hand-picked projects from the best builders from the OG Solana
         community.
@@ -46,7 +50,7 @@ const ProjectsPage = () => {
         {categories.map((cat) => (
           <button
             key={cat}
-            className={`min-w-20 py-2 rounded-full border text-sm font-semibold transition ${
+            className={`min-w-26 py-2 rounded-full border text-sm font-semibold transition ${
               selectedCategory === cat
                 ? "text-accent border-accent"
                 : " text-custom-gray-400 border-custom-gray-400 hover:text-custom-gray-200 hover:border-custom-gray-200 "
