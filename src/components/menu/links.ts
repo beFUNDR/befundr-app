@@ -18,6 +18,10 @@ const links: { label: string; href: string }[] = [
     label: "Communities",
     href: "/communities",
   },
+  {
+    label: "Partners",
+    href: "/partners",
+  },
 
   {
     label: "FAQ",

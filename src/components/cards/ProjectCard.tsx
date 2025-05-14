@@ -14,6 +14,9 @@ const ProjectCard = ({ project }: { project: Project }) => {
           fill
           className="object-cover rounded-t-3xl"
         />
+        <div className="absolute top-4 right-4">
+          <StatusTag status={project.status} />
+        </div>
         <div className="absolute -bottom-8 left-2 w-16 h-16 rounded-full bg-black border border-custom-gray-800 flex items-center justify-center shadow-lg">
           <Image
             src={project.logo}
@@ -29,7 +32,6 @@ const ProjectCard = ({ project }: { project: Project }) => {
       <div className="pt-10 pb-6 px-6 flex flex-col  gap-2">
         <div className="flex justify-between items-center gap-2 mb-1">
           <h2 className="text-2xl font-bold text-white">{project.name}</h2>
-          <StatusTag status={project.status} />
         </div>
         <p className="bodyStyle text-[#b6f7f7] mb-2">{project.headLine}</p>
 

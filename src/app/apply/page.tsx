@@ -119,7 +119,7 @@ export default function ApplyPage() {
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
       <h1 className="h2Style mb-4 ">Apply for your project 🚀</h1>
-      {(!user.name || !user.avatar) && (
+      {!user.isCompleteProfil && (
         <p className="bodyStyle !text-red-600 mb-6">
           Your profile is not set. Please set it before applying.
         </p>

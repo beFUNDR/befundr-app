@@ -2,7 +2,6 @@
 import Link from "next/link";
 import links from "./menu/links";
 import Image from "next/image";
-import { X as XIcon } from "lucide-react";
 
 // Icônes Lucide custom pour Discord et Telegram (SVG inline)
 const DiscordIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -47,12 +46,6 @@ const Footer = () => {
                 {link.label}
               </Link>
             ))}
-            <Link href="/docs" className=" hover:text-accent transition">
-              Docs
-            </Link>
-            <Link href="/privacy" className=" hover:text-accent transition">
-              Privacy
-            </Link>
           </nav>
           {/* Socials */}
           <div className="flex gap-6 items-center">
@@ -61,13 +54,39 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <DiscordIcon className="w-7 h-7 text-gray-400 hover:text-accent transition" />
+              <Image
+                src="/images/icons/discordGray.svg"
+                alt="Discord"
+                width={30}
+                height={30}
+                className="text-custom-gray-400"
+              />
             </a>
-            <a href="https://t.me" target="_blank" rel="noopener noreferrer">
-              <TelegramIcon className="w-7 h-7 text-gray-400 hover:text-accent transition" />
+            <a
+              href="https://t.me/+QOBxwqiwEkVkNTFk"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                src="/images/icons/telegramGray.svg"
+                alt="Telegram"
+                width={30}
+                height={30}
+                className="text-custom-gray-400"
+              />
             </a>
-            <a href="https://x.com" target="_blank" rel="noopener noreferrer">
-              <XIcon className="w-7 h-7 text-gray-400 hover:text-accent transition" />
+            <a
+              href="https://x.com/befundr"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                src="/images/icons/xGray.svg"
+                alt="X"
+                width={30}
+                height={30}
+                className="text-custom-gray-400"
+              />
             </a>
           </div>
         </div>
