@@ -1,4 +1,5 @@
 import FaqQuestionCard from "@/components/cards/FaqQuestionCard";
+import Image from "next/image";
 
 const FaqPage = () => {
   return (
@@ -8,6 +9,30 @@ const FaqPage = () => {
         You can find here the most common questions about beFUNDR.
       </p>
       <h2 className="h2Style mb-6">Builders</h2>
+      <FaqQuestionCard question="How does funding work on beFUNDR?">
+        <p>
+          Funding on beFUNDR happens in two key phases. First, selected projects
+          receive up to <strong>$100k in kickstart funding</strong>, sourced
+          from early adopters during an NFT sale. This gives builders the runway
+          to prototype and engage their community.
+        </p>
+        <p>
+          Then comes the <strong>incubation phase</strong>, supported by our
+          Community Skills Hub — a curated network of mentors and contributors.
+          After proving traction, projects move into a{" "}
+          <strong>token or tokenized-equity sale</strong> conducted in 3 rounds:
+          first to NFT holders, then to OG communities, and finally to the
+          public.
+        </p>
+
+        <Image
+          src="/images/funding_process.png"
+          alt="befundr funding process"
+          width={500}
+          height={500}
+          className="w-2/3 mx-auto my-6"
+        />
+      </FaqQuestionCard>
       <FaqQuestionCard question="How can I apply to be incubated by beFUNDR?">
         <p>
           You can apply by submitting a short form on our website with your

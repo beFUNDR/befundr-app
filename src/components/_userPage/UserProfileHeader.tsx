@@ -24,8 +24,6 @@ const UserProfileHeader = ({
   const daos = (user as any).daos ?? 4;
   const projects = (user as any).projects ?? 1;
 
-  console.log(user);
-
   return (
     <div className="flex flex-col md:flex-row gap-8 items-center mb-8 w-full">
       {/* Avatar */}

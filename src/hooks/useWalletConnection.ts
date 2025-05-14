@@ -19,18 +19,13 @@ export const useWalletConnection = () => {
             setUser(userData);
           } else if (response.status === 404) {
             // L'utilisateur n'existe pas encore, on peut le créer ici si nécessaire
-            console.log("Utilisateur non trouvé, création possible");
+            console.log("User not found, creation possible");
           } else {
-            toast.error(
-              "Erreur lors de la récupération des données utilisateur"
-            );
+            toast.error("Error while fetching user data");
           }
         } catch (error) {
-          console.error(
-            "Erreur lors de la récupération des données utilisateur:",
-            error
-          );
-          toast.error("Erreur lors de la récupération des données utilisateur");
+          console.error("Error while fetching user data:", error);
+          toast.error("Error while fetching user data");
         }
       } else {
         setUser({

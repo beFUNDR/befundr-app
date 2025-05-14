@@ -28,8 +28,6 @@ const UserMissionsContent = ({ userId }: { userId: string }) => {
     error,
   } = useMissionsByDoneByUserId(userId);
 
-  console.log(missions);
-
   if (isLoading) return <LoaderSmall />;
   if (error) return <div>Error: {error.message}</div>;
 

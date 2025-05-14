@@ -13,7 +13,7 @@ const FaqQuestionCard = ({ question, children }: FaqQuestionProps) => {
 
   return (
     <div
-      className={`w-full mb-6 border rounded-3xl transition-all duration-300 ${
+      className={`w-full mb-6 border rounded-3xl transition-all duration-300 bg-black/70 ${
         open ? "border-accent" : "border-custom-gray-800"
       }`}
     >
