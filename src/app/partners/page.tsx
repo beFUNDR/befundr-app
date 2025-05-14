@@ -3,9 +3,7 @@ import PartnerCard from "@/components/cards/PartnerCard";
 import Loader from "@/components/displayElements/Loader";
 import { useGetAllPartners } from "@/hooks/dbData/usePartner";
 
-type Props = {};
-
-const PartnersPage = (props: Props) => {
+const PartnersPage = () => {
   const {
     data: partners,
     isLoading: isLoadingPartners,

@@ -14,11 +14,10 @@ import ApplicationValidationModal from "@/components/modals/ApplicationValidatio
 import { useUser } from "@/hooks/dbData/useUser";
 import Loader from "@/components/displayElements/Loader";
 import { useProject } from "@/hooks/dbData/project/useProject";
-import { ProjectToCreate } from "../../../type";
 
 export default function ApplyPage() {
   const { publicKey } = useWallet();
-  const { createProject, isCreating, error } = useProject();
+  const { createProject, isCreating } = useProject();
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 3;
   const [project, setProject] = useState<ProjectToCreate>({

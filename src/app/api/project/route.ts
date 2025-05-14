@@ -28,19 +28,6 @@ export async function POST(request: NextRequest) {
         )) || "";
     }
 
-    // Création du projet dans Firestore
-    const docRef = await admin
-      .firestore()
-      .collection("projects")
-      .doc(project.projectPda)
-      .set({
-        ...project,
-        mainImage: mainImageUrl,
-        logo: logoUrl,
-        createdAt: admin.firestore.FieldValue.serverTimestamp(),
-        owner: publicKey,
-      });
-
     return NextResponse.json({});
   } catch (error) {
     console.error("Error creating project:", error);
@@ -55,7 +42,10 @@ export const PATCH = async (request: NextRequest) => {
   try {
     const { project } = await request.json();
 
-    const userRef = admin.firestore().collection("projects").doc(project.projectPda);
+    const userRef = admin
+      .firestore()
+      .collection("projects")
+      .doc(project.projectPda);
     await userRef.update({ status: project.status });
 
     return NextResponse.json({ projectId: project.projectPda });
@@ -66,4 +56,4 @@ export const PATCH = async (request: NextRequest) => {
       { status: 500 }
     );
   }
-}
+};

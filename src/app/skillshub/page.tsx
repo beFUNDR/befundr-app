@@ -33,7 +33,7 @@ const SkillHubPage = () => {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
-      <h1 className="h1Style my-6">Discover the community's skills</h1>
+      <h1 className="h1Style my-6">Discover the community&apos;s skills</h1>
       <p className="bodyStyle max-w-xl mb-10">
         beFUNDR is a community of builders, investors, and enthusiasts. We
         believe in the power of collaboration and the importance of building

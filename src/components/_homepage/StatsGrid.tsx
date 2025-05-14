@@ -52,7 +52,6 @@ function useCountTo(
       }
     }
     requestAnimationFrame(step);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [end]);
   if (isPercent) return value + "%";
   if (isMoney) {

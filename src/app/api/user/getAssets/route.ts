@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
     const allowedCollections = allowedSnap.docs.map((doc) => doc.id);
     console.log(allowedCollections);
 
-    const filteredItems = data.result.items.filter((item) => {
+    const filteredItems = data.result.items.filter((item: any) => {
       return allowedCollections.includes(item.grouping?.[0]?.group_value);
     });
 

@@ -1,8 +1,6 @@
 import FaqQuestionCard from "../cards/FaqQuestionCard";
 
-type Props = {};
-
-const FaqContent = (props: Props) => {
+const FaqContent = () => {
   return (
     <div className="flex flex-col gap-4 h-[500px] overflow-y-auto px-2">
       <FaqQuestionCard question="How is beFUNDR different from traditional incubators?">

@@ -49,7 +49,7 @@ export const useUser = (wallet: string | undefined) => {
     }
   };
 
-  const userQuery = (userId: string) =>
+  const useUserQuery = (userId: string) =>
     useQuery({
       queryKey: ["user", userId],
       queryFn: () => getUser(userId),
@@ -99,7 +99,7 @@ export const useUser = (wallet: string | undefined) => {
     users: usersQuery.data,
     isLoadingUsers: usersQuery.isLoading,
     usersError: usersQuery.error,
-    getUser: userQuery,
+    getUser: useUserQuery,
   };
 };
 

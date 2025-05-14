@@ -7,7 +7,6 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useAnchorProvider } from "@/providers/SolanaProvider";
 import { createProject } from "./createProject";
 import { getBefundrProgram } from "../../../../anchor/src";
-import { CreateProjectParams, UpdateProjectParams } from "./type";
 import { PublicKey } from "@solana/web3.js";
 import { approveProject } from "./approveProject";
 
@@ -86,7 +85,7 @@ export const useProject = () => {
     queryFn: getAllProjects,
   });
 
-  const projectQuery = (projectId: string) =>
+  const useProjectQuery = (projectId: string) =>
     useQuery({
       queryKey: ["project", projectId],
       queryFn: () => getProject(projectId),
@@ -94,8 +93,12 @@ export const useProject = () => {
     });
 
   const createProjectMutation = useMutation({
-    mutationFn: (createProjectParams: CreateProjectParams) => {
-      return createProject({ ...createProjectParams, userPublicKey: publicKey, program: befundrProgram });
+    mutationFn: (createProjectParams: any) => {
+      return createProject({
+        ...createProjectParams,
+        userPublicKey: publicKey,
+        program: befundrProgram,
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
@@ -107,7 +110,12 @@ export const useProject = () => {
       if (!publicKey) {
         throw new Error("Public key is required to approve the project");
       }
-      return approveProject({ project, authority: publicKey, payer: publicKey, program: befundrProgram });
+      return approveProject({
+        project,
+        authority: publicKey,
+        payer: publicKey,
+        program: befundrProgram,
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
@@ -122,6 +130,6 @@ export const useProject = () => {
     projects: projectsQuery.data,
     isLoadingProjects: projectsQuery.isLoading,
     projectsError: projectsQuery.error,
-    getProject: projectQuery,
+    getProject: useProjectQuery,
   };
 };

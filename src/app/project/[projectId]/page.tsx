@@ -34,7 +34,7 @@ const ProjectPage = () => {
 
   const isOwner = useMemo(() => {
     return publicKey?.toString() === project?.userId;
-  }, [owner, project]);
+  }, [project, publicKey]);
 
   const isAdmin = useMemo(() => {
     return (

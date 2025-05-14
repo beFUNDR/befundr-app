@@ -1,8 +1,6 @@
 import FaqQuestionCard from "@/components/cards/FaqQuestionCard";
 
-type Props = {};
-
-const FaqPage = (props: Props) => {
+const FaqPage = () => {
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12 ">
       <h1 className="h1Style my-6">Frequently Asked Questions</h1>
@@ -105,9 +103,9 @@ const FaqPage = (props: Props) => {
           services. We match them with trusted partners.
         </p>
         <p>
-          If you're interested in partnering with beFUNDR, please reach out on
-          our X account and get access to incubated teams and visibility within
-          the community.
+          If you&apos;re interested in partnering with beFUNDR, please reach out
+          on our X account and get access to incubated teams and visibility
+          within the community.
         </p>
       </FaqQuestionCard>
     </div>

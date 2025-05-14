@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const mockDaos = [
   {
     name: "MonkeDAO",
@@ -30,7 +32,7 @@ const UserCommunitiesContent = () => {
           className="bg-custom-gray-900 rounded-2xl p-6 flex flex-col items-center border border-custom-gray-700 shadow-lg"
         >
           <div className="w-16 h-16 rounded-full bg-black flex items-center justify-center mb-4">
-            <img
+            <Image
               src={dao.logo}
               alt={dao.name}
               className="w-12 h-12 object-contain"

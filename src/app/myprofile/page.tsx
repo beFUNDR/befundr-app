@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import ProfileMenu from "@/components/_profile/ProfileMenu";
 import { useUser } from "@/hooks/dbData/useUser";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -10,7 +10,7 @@ import ProfilContent from "@/components/_myProfile.tsx/ProfilContent";
 import UserProjectsContent from "@/components/_userPage/UserProjectsContent";
 import UserMissionsContent from "@/components/_userPage/UserMissionsContent";
 
-export default function MyProfilePage() {
+function MyProfilePage() {
   //* GLOBAL STATE
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -97,7 +97,7 @@ export default function MyProfilePage() {
     if (!connected) {
       router.push("/");
     }
-  }, [connected]);
+  }, [connected, router]);
 
   const profilContentProps = {
     profilePic,
@@ -155,5 +155,19 @@ export default function MyProfilePage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function MyProfilePageWithSuspense() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center h-screen">
+          <Loader />
+        </div>
+      }
+    >
+      <MyProfilePage />
+    </Suspense>
   );
 }

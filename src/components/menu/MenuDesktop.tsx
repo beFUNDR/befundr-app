@@ -47,46 +47,46 @@ const MenuDesktop = () => {
     return currentPathname.startsWith(pathname);
   };
 
-  const createUser = async () => {
-    if (!publicKey || userData !== "not_found") return;
-
-    try {
-      const res = await fetch("/api/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ wallet: publicKey.toString() }),
-      });
-
-      if (!res.ok) throw new Error("Erreur création utilisateur");
-
-      const resGameProgram = await fetch("/api/gameprogram", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId: publicKey.toString() }),
-      });
-
-      if (!resGameProgram.ok) throw new Error("Erreur création game program");
-
-      setIsWelcomeModalOpen(true);
-
-      // Invalidate the user and game queries
-      queryClient.invalidateQueries({
-        queryKey: ["user", publicKey.toString()],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["gameProgram", publicKey.toString()],
-      });
-    } catch (error) {
-      console.error("Error creating user", error);
-      toast.error("Error creating user");
-    }
-  };
-
   useEffect(() => {
+    const createUser = async () => {
+      if (!publicKey || userData !== "not_found") return;
+
+      try {
+        const res = await fetch("/api/user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ wallet: publicKey.toString() }),
+        });
+
+        if (!res.ok) throw new Error("Erreur création utilisateur");
+
+        const resGameProgram = await fetch("/api/gameprogram", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId: publicKey.toString() }),
+        });
+
+        if (!resGameProgram.ok) throw new Error("Erreur création game program");
+
+        setIsWelcomeModalOpen(true);
+
+        // Invalidate the user and game queries
+        queryClient.invalidateQueries({
+          queryKey: ["user", publicKey.toString()],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["gameProgram", publicKey.toString()],
+        });
+      } catch (error) {
+        console.error("Error creating user", error);
+        toast.error("Error creating user");
+      }
+    };
+
     if (
       connected &&
       (!userData || userData === "not_found") &&

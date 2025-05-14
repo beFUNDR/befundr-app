@@ -1,3 +1,4 @@
+import Image from "next/image";
 import ButtonLabelSecondary from "../buttons/_ButtonLabelSecondary";
 import DefaultAvatar from "../displayElements/DefaultAvatar";
 
@@ -24,18 +25,21 @@ const AboutContent = ({ description, owner, isOwner }: Props) => {
         <p className="text-gray-300 mb-6">{description}</p>
         <p className="text-gray-300 mb-6">{description}</p>
         <h2 className="text-xl font-bold text-white mb-2">Team</h2>
-        {owner &&
-          (owner.avatar ? (
-            <img
-              src={owner.avatar}
-              alt={owner.name}
-              width={96}
-              height={96}
-              className="object-cover"
-            />
-          ) : (
-            <DefaultAvatar size={24} publicKey={owner.wallet} />
-          ))}
+        <div className="flex flex-col justify-start items-center gap-2">
+          {owner &&
+            (owner.avatar ? (
+              <Image
+                src={owner.avatar}
+                alt={owner.name}
+                width={96}
+                height={96}
+                className="object-cover rounded-full"
+              />
+            ) : (
+              <DefaultAvatar size={24} publicKey={owner.wallet} />
+            ))}
+          <p className="bodyStyle mb-6">{owner.name}</p>
+        </div>
       </div>
     </div>
   );

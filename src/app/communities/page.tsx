@@ -3,9 +3,7 @@ import CommunityCard from "@/components/cards/CommunityCard";
 import Loader from "@/components/displayElements/Loader";
 import { useGetAllCollections } from "@/hooks/dbData/useCollection";
 
-type Props = {};
-
-const CommunitiesPage = (props: Props) => {
+const CommunitiesPage = () => {
   const {
     data: communities,
     isLoading: isLoadingCommunities,

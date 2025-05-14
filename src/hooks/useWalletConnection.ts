@@ -43,6 +43,7 @@ export const useWalletConnection = () => {
           website: "",
           discord: "",
           skills: [],
+          isCompleteProfil: false,
         });
       }
     };

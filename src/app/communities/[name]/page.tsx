@@ -27,8 +27,6 @@ const mockChartData = [
   { date: "1 june", value: 350000 },
 ];
 
-const TABS = ["Dashboard", "Projects", "Leaderboard", "FAQs"];
-
 const CommunityPage = () => {
   const params = useParams();
   const rawName = params.name as string;
@@ -64,7 +62,7 @@ const CommunityPage = () => {
             alt={collection.data.name}
             width={160}
             height={160}
-            className="rounded-xl bg-custom-gray-900 border border-custom-gray-700"
+            className="rounded-xl bg-custom-gray-900 border border-custom-gray-700 aspect-square object-cover"
           />
         </div>
         <div className="flex-1 flex flex-col gap-2">

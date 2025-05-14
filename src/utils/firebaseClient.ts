@@ -58,7 +58,7 @@ export async function getAllDocumentsFromCollection<T>(
   collectionName: string
 ): Promise<{ results: { data: T; id: string }[]; error: Error | null }> {
   // Variable to store the results of the operation
-  let results: { data: T; id: string }[] = [];
+  const results: { data: T; id: string }[] = [];
   // Variable to store any error that occurs during the operation
   let error = null;
 

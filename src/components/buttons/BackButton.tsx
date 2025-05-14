@@ -2,9 +2,7 @@
 import { ArrowLeftIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-type Props = {};
-
-const BackButton = (props: Props) => {
+const BackButton = () => {
   const router = useRouter();
 
   return (
