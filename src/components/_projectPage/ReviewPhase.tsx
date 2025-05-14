@@ -7,6 +7,7 @@ import Divider from "@/components/displayElements/Divider";
 import StatusTag from "@/components/tags/StatusTag";
 import Image from "next/image";
 import Link from "next/link";
+import { Project, User } from "../../../type";
 
 type Props = { project: Project; owner: User };
 

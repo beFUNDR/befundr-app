@@ -22,8 +22,10 @@ export const createProject = async ({
 
     let config;
     try {
+        console.log("Fetching config");
         config = await program.account.globals.fetch(configPda);
     } catch (error) {
+        console.log("Config not found, creating it");
 
         //Admin not initialized yet, then we create it with the current user for test purposes
         const tx = await program.methods
@@ -67,7 +69,7 @@ export const createProject = async ({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            project: { ...project, projectPda: projectPda },
+            project: { ...project, projectPda: projectPda, userId: userPublicKey },
             mainImageBase64,
             logoBase64,
             publicKey: userPublicKey.toString(),
