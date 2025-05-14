@@ -18,6 +18,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useProject } from "@/hooks/dbData/project/useProject";
 import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
 import AdminModal from "@/components/modals/AdminModal";
+import { ProjectStatus } from "@/data/ProjectStatus";
 
 const ProjectPage = () => {
   const [activeTab, setActiveTab] = useState("about");
@@ -121,7 +122,7 @@ const ProjectPage = () => {
           )}
         </div>
         {/* Project info */}
-        {project.status === "In review" && (
+        {project.status === ProjectStatus.WaitingForApproval && (
           <ReviewPhase project={project} owner={owner} />
         )}
       </div>
@@ -133,7 +134,10 @@ const ProjectPage = () => {
       {renderTabContent()}
 
       {isShowManageModal && (
-        <AdminModal project={project} onClose={() => setIsShowManageModal(false)} />
+        <AdminModal
+          project={project}
+          onClose={() => setIsShowManageModal(false)}
+        />
       )}
     </div>
   );
