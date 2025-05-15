@@ -22,8 +22,6 @@ const AboutContent = ({ description, owner, isOwner }: Props) => {
           Project description
         </h2>
         <p className="text-gray-300 mb-6">{description}</p>
-        <p className="text-gray-300 mb-6">{description}</p>
-        <p className="text-gray-300 mb-6">{description}</p>
         <h2 className="text-xl font-bold text-white mb-2">Team</h2>
         <div className="flex flex-col justify-start items-center gap-2">
           {owner &&
