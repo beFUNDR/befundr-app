@@ -2,13 +2,20 @@ import { CircleCheckBig } from "lucide-react";
 import ModalLayout from "./_ModalLayout";
 import ButtonLabel from "../buttons/_ButtonLabel";
 import ButtonLabelSecondary from "../buttons/_ButtonLabelSecondary";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type Props = {
   onClose: () => void;
 };
 
 const WelcomeModal = (props: Props) => {
+  const router = useRouter();
+
+  const handleProfileSetup = () => {
+    props.onClose();
+    router.push("/myprofile");
+  };
+
   return (
     <ModalLayout item="start" justify="center" onClose={props.onClose}>
       <div className="flex justify-center items-center bg-custom-gray-600 rounded-full p-3 w-16 h-16">
@@ -20,9 +27,9 @@ const WelcomeModal = (props: Props) => {
         contribute.
       </p>
       <div className="flex justify-start items-center gap-4">
-        <Link href="/myprofile">
+        <button onClick={handleProfileSetup}>
           <ButtonLabel label="Setup my profile" />
-        </Link>
+        </button>
         <button onClick={props.onClose}>
           <ButtonLabelSecondary label="Do it later" />
         </button>

@@ -137,11 +137,6 @@ export default function ApplyPage() {
         <Application2 project={project} setProject={setProject} />
       )}
       {currentStep === 3 && <Application3 project={project} user={user} />}
-      {currentStep === totalSteps && (
-        <p className="bodyStyle my-4">
-          You will sign a transaction to apply for your project.
-        </p>
-      )}
       <div className="flex justify-start mt-4 gap-4">
         {currentStep > 1 && (
           <button
