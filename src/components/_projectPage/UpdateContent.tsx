@@ -25,7 +25,6 @@ const UpdateContent = (props: Props) => {
         </button>
       )}
       <UpdateCard update={update} />
-      <UpdateCard update={update} />
     </div>
   );
 };
