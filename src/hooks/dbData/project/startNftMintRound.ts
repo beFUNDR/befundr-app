@@ -20,9 +20,32 @@ export const startNftMintRound = async ({
     );
 
     const collection = new Keypair();
+    let config;
+    try {
+        console.log("Fetching config");
+        config = await program.account.globals.fetch(configPda);
+    } catch (error) {
+        console.log("Config not found, creating it");
 
+        //Admin not initialized yet, then we create it with the current user for test purposes
+        const tx = await program.methods
+            .updateAdmin([authority])
+            .accountsPartial({
+                config: configPda,
+                payer: authority,
+                authority: authority,
+                systemProgram: SystemProgram.programId,
+            })
+            .rpc({ skipPreflight: true });
 
-    const projectPda = new PublicKey(project.projectPda);
+        await confirmTransaction(program, tx);
+        config = await program.account.globals.fetch(configPda);
+    }
+
+    const [projectPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("project"), config.createdProjectCounter.toArrayLike(Buffer, 'le', 8)],
+        program.programId
+    );
 
     const startNftMintRoundProjectTx = await program.methods
         .startNftMintRound(new BN(nftMaxSupply), new BN(nftUsdcPrice * 10 ** 6), nftCollectionName)
@@ -36,7 +59,7 @@ export const startNftMintRound = async ({
             systemProgram: SystemProgram.programId,
         })
         .signers([collection])
-        .rpc();
+        .rpc({ skipPreflight: true });
 
     await confirmTransaction(program, startNftMintRoundProjectTx);
 
@@ -44,7 +67,7 @@ export const startNftMintRound = async ({
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            project: { ...project, status: ProjectStatus.NftMintRound, nftCollection: collection.publicKey, nftUsdcPrice: nftUsdcPrice, nftMaxSupply: nftMaxSupply, nftCollectionName: nftCollectionName },
+            project: { ...project, status: ProjectStatus.NftMintRound, projectPda: projectPda, nftCollection: collection.publicKey, nftUsdcPrice: nftUsdcPrice, nftMaxSupply: nftMaxSupply, nftCollectionName: nftCollectionName },
         }),
     });
 

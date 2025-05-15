@@ -1109,8 +1109,8 @@ export type Befundr = {
               },
               {
                 "kind": "account",
-                "path": "project.project_counter",
-                "account": "project"
+                "path": "globals.created_project_counter",
+                "account": "globals"
               }
             ]
           }
@@ -1121,6 +1121,7 @@ export type Befundr = {
         },
         {
           "name": "globals",
+          "writable": true,
           "pda": {
             "seeds": [
               {

@@ -2,7 +2,7 @@ use anchor_lang::prelude::*;
 use mpl_core::{instructions::CreateCollectionV2CpiBuilder, ID as MPL_CORE_PROGRAM_ID};
 
 use crate::{
-    errors::{AdminError, ProjectError},
+    errors::{AdminError},
     Globals, Project, ProjectStatus, GLOBALS_SEED, PROJECT_SEED,
 };
 
@@ -13,17 +13,18 @@ pub fn start_nft_mint_round(
     nft_collection_name: String,
 ) -> Result<()> {
     let project = &mut ctx.accounts.project;
-    let globals = &ctx.accounts.globals;
+    let globals = &mut ctx.accounts.globals;
 
     require!(
         globals.admins.contains(&ctx.accounts.authority.key()),
         AdminError::NotAllowed
     );
 
-    require!(
-        project.status == ProjectStatus::Published,
-        ProjectError::WrongStatus
-    );
+    project.owner = ctx.accounts.authority.key();
+
+    project.usdc_balance = 0;
+    project.project_counter = globals.created_project_counter;
+    globals.created_project_counter += 1;
 
     project.nft_max_supply = nft_max_supply;
     project.minted_nft = 0;
@@ -49,9 +50,12 @@ pub fn start_nft_mint_round(
 
 #[derive(Accounts)]
 pub struct StartNftMintRound<'info> {
-    #[account(mut,
-        seeds = [PROJECT_SEED, &project.project_counter.to_le_bytes()],
+    #[account(
+        init,
+        seeds = [PROJECT_SEED.as_ref(), &globals.created_project_counter.to_le_bytes()],
         bump,
+        payer = payer,
+        space = 8 + Project::INIT_SPACE 
     )]
     pub project: Account<'info, Project>,
 
@@ -59,7 +63,7 @@ pub struct StartNftMintRound<'info> {
     /// CHECK: This doesn't need to be checked, because there is the address constraint
     pub mpl_core_program: UncheckedAccount<'info>,
 
-    #[account(
+    #[account(mut,
         seeds = [GLOBALS_SEED],
         bump,
     )]

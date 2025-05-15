@@ -1,20 +1,17 @@
-import { PublicKey } from "@solana/web3.js";
+import { Connection, PublicKey } from "@solana/web3.js";
 import type { Befundr } from '../../../../anchor/src/index';
-import { Program } from '@coral-xyz/anchor';
+import { Program, Wallet } from '@coral-xyz/anchor';
 
 interface CreateProjectParams {
     project: ProjectToCreate;
     mainImageFile: File;
     logoFile: File;
     userPublicKey?: PublicKey | null;
-    program: Program<Befundr>;
+    program?: Program<Befundr>;
 }
 
 interface UpdateProjectParams {
     project: ProjectToUpdate;
-    authority: PublicKey;
-    payer: PublicKey;
-    program: Program<Befundr>;
 }
 
 interface StartNftMintRoundProjectParams {
@@ -24,5 +21,22 @@ interface StartNftMintRoundProjectParams {
     nftCollectionName: string;
     authority: PublicKey;
     payer: PublicKey;
+    program: Program<Befundr>;
+}
+
+interface StartIncubationProjectParams {
+    project: ProjectToUpdate;
+    authority: PublicKey;
+    payer: PublicKey;
+    program: Program<Befundr>;
+}
+
+interface MintNftParams {
+    project: ProjectToUpdate;
+    quantity: number;
+    authority: PublicKey;
+    payer: PublicKey;
+    connection: Connection;
+    sendTransaction: WalletAdapterProps['sendTransaction']
     program: Program<Befundr>;
 }

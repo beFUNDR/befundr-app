@@ -4,7 +4,7 @@ import { uploadImageServer } from "@/utils/firebaseFunctions";
 
 export async function POST(request: NextRequest) {
   try {
-    const { project, publicKey, mainImageBase64, logoBase64 } =
+    const { project, mainImageBase64, logoBase64 } =
       await request.json();
 
     let mainImageUrl = project.mainImage || "";
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
       mainImageUrl =
         (await uploadImageServer(
           image,
-          `projects/${publicKey}/${project.name}/mainImage.png`
+          `projects/${project.userId}/${project.name}/mainImage.png`
         )) || "";
     }
 
@@ -24,11 +24,23 @@ export async function POST(request: NextRequest) {
       logoUrl =
         (await uploadImageServer(
           image,
-          `projects/${publicKey}/${project.name}/logo.png`
+          `projects/${project.userId}/${project.name}/logo.png`
         )) || "";
     }
 
-    return NextResponse.json({});
+    const projectId = admin.firestore().collection("projects").doc().id;
+
+    await admin.firestore().collection("projects").doc(projectId).set({
+      ...project,
+      mainImage: mainImageUrl,
+      logo: logoUrl,
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      owner: project.userId,
+      id: projectId
+    });
+    console.log("Project created")
+
+    return NextResponse.json({ projectId });
   } catch (error) {
     console.error("Error creating project:", error);
     return NextResponse.json(
@@ -40,12 +52,11 @@ export async function POST(request: NextRequest) {
 
 export const PATCH = async (request: NextRequest) => {
   try {
-    const { project } = await request.json();
+    const { project, dataToUpdate } = await request.json();
+    const userRef = admin.firestore().collection("projects").doc(project.id);
+    await userRef.update({ ...project, ...dataToUpdate });
 
-    const userRef = admin.firestore().collection("projects").doc(project.projectPda);
-    await userRef.update({ ...project });
-
-    return NextResponse.json({ projectId: project.projectPda });
+    return NextResponse.json({ projectId: project.id });
   } catch (error) {
     console.error("Error updating project:", error);
     return NextResponse.json(

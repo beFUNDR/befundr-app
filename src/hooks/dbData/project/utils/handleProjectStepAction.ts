@@ -2,6 +2,7 @@ import { ProjectStatus } from "@/data/ProjectStatus";
 
 type UpdateFunction = (...args: any[]) => Promise<any>;
 
+//TODO Delete this file as it is a useless duplicate in the workflow
 export const handleProjectStepAction = async (
     currentStatus: ProjectStatus,
     project: Project,
@@ -12,6 +13,9 @@ export const handleProjectStepAction = async (
         case ProjectStatus.WaitingForApproval:
             return await updateFun(project);
 
+        case ProjectStatus.Published:
+            return await updateFun({ project, ...params });
+
         case ProjectStatus.NftMintRound:
             return await updateFun({
                 project,
@@ -19,7 +23,10 @@ export const handleProjectStepAction = async (
             });
 
         case ProjectStatus.PublicSale:
-            return "proceed";
+            return await updateFun({
+                project,
+                ...params
+            });
 
         default:
             return "proceed";

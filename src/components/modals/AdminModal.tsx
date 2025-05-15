@@ -19,14 +19,14 @@ const AdminModal = ({
   onStatusChange,
 }: Props) => {
   const [status, setStatus] = useState<ProjectStatus>(project.status as ProjectStatus);
-  const [maxSupply, setMaxSupply] = useState<number>(0);
-  const [usdcPrice, setUsdcPrice] = useState<number>(0);
-  const [collectionName, setCollectionName] = useState<string>("");
+  const [maxSupply, setMaxSupply] = useState<number>(200);
+  const [usdcPrice, setUsdcPrice] = useState<number>(500);
+  const [collectionName, setCollectionName] = useState<string>("Awesome Collection");
   const currentStepIndex = projectSteps.findIndex(
     (step) => step.key === status
   );
 
-  const { approveProject, startNftMintRound } = useProject();
+  const { approveProject, startNftMintRound, startIncubation } = useProject();
 
   const handleNext = async () => {
     const current = status;
@@ -40,13 +40,17 @@ const AdminModal = ({
       case ProjectStatus.WaitingForApproval:
         updateFun = approveProject;
         break;
-      case ProjectStatus.NftMintRound:
+      case ProjectStatus.Published:
         updateFun = startNftMintRound as any;
         params = {
           nftMaxSupply: maxSupply,
           nftUsdcPrice: usdcPrice,
           nftCollectionName: collectionName,
         };
+        break;
+      case ProjectStatus.NftMintRound:
+        updateFun = startIncubation as any;
+        params = {};
         break;
     }
 

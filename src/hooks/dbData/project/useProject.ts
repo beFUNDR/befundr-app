@@ -3,14 +3,15 @@ import {
   getAllDocumentsFromCollection,
   getDocument,
 } from "@/utils/firebaseClient";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useAnchorProvider } from "@/providers/SolanaProvider";
 import { createProject } from "./createProject";
 import { getBefundrProgram } from "../../../../anchor/src";
-import { StartNftMintRoundProjectParams } from "./type";
-import { PublicKey } from "@solana/web3.js";
+import { StartIncubationProjectParams, StartNftMintRoundProjectParams } from "./type";
 import { approveProject } from "./approveProject";
 import { startNftMintRound } from "./startNftMintRound";
+import { startIncubation } from "./startIncubation";
+import { mintNft } from "./mintNft";
 
 // Fonction utilitaire pure
 export const getProjectsByUserId = async (userId: string) => {
@@ -41,7 +42,9 @@ export const useProjectsByUserId = (userId: string) =>
   });
 
 export const useProject = () => {
-  const { publicKey, wallet } = useWallet();
+  const { publicKey, sendTransaction } = useWallet();
+  const { connection } = useConnection();
+
   const queryClient = useQueryClient();
 
   const provider = useAnchorProvider();
@@ -75,7 +78,7 @@ export const useProject = () => {
       if (!result) {
         throw new Error("Projet non trouvé");
       }
-      return { ...result, id: new PublicKey(projectId) };
+      return { ...result, id: projectId };
     } catch (error) {
       console.error("Erreur lors de la récupération du projet:", error);
       throw error;
@@ -99,7 +102,6 @@ export const useProject = () => {
       return createProject({
         ...createProjectParams,
         userPublicKey: publicKey,
-        program: befundrProgram,
       });
     },
     onSuccess: () => {
@@ -110,9 +112,9 @@ export const useProject = () => {
   const approveProjectMutation = useMutation({
     mutationFn: (project: Project) => {
       if (!publicKey) {
-        throw new Error("Public key is required to approve the project");
+        throw new Error("Public key is required to perform the action");
       }
-      return approveProject({ project, authority: publicKey, payer: publicKey, program: befundrProgram });
+      return approveProject({ project });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
@@ -123,9 +125,35 @@ export const useProject = () => {
     mutationFn: (startNftMintRoundParams: StartNftMintRoundProjectParams) => {
       const { project, nftMaxSupply, nftUsdcPrice, nftCollectionName } = startNftMintRoundParams;
       if (!publicKey) {
-        throw new Error("Public key is required to approve the project");
+        throw new Error("Public key is required to perform the action");
       }
       return startNftMintRound({ project, nftMaxSupply, nftUsdcPrice, nftCollectionName, authority: publicKey, payer: publicKey, program: befundrProgram });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+    },
+  });
+
+  const startIncubationMutation = useMutation({
+    mutationFn: (startNftMintRoundParams: StartIncubationProjectParams) => {
+      const { project } = startNftMintRoundParams;
+      if (!publicKey) {
+        throw new Error("Public key is required to perform the action");
+      }
+      return startIncubation({ project, authority: publicKey, payer: publicKey, program: befundrProgram });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+    },
+  });
+
+  const mintNftMutation = useMutation({
+    mutationFn: (mintNftParams: any) => {
+      const { project, quantity } = mintNftParams;
+      if (!publicKey) {
+        throw new Error("Public key is required to approve the project");
+      }
+      return mintNft({ project, quantity, authority: publicKey, payer: publicKey, sendTransaction: sendTransaction, connection, program: befundrProgram });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
@@ -136,6 +164,8 @@ export const useProject = () => {
     createProject: createProjectMutation.mutateAsync,
     approveProject: approveProjectMutation.mutateAsync,
     startNftMintRound: startNftMintRoundProjectMutation.mutateAsync,
+    startIncubation: startIncubationMutation.mutateAsync,
+    mintNft: mintNftMutation.mutateAsync,
     isCreating: createProjectMutation.isPending,
     error: createProjectMutation.error,
     projects: projectsQuery.data,
