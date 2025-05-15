@@ -15,11 +15,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useGameProgramByUserId } from "@/hooks/dbData/useGameProgram";
 import PointCardSmall from "../cards/PointCardSmall";
 import ButtonLabelSecondarySmall from "../buttons/_ButtonLabelSecondarySmall";
+import { bs58 } from "@coral-xyz/anchor/dist/cjs/utils/bytes";
+import { concatAddress } from "@/utils/utilsFunctions";
 
 const MenuDesktop = () => {
   //* GLOBAL STATE
   const currentPathname = usePathname();
-  const { connected, publicKey } = useWallet();
+  const { connected, publicKey, signMessage } = useWallet();
   const queryClient = useQueryClient();
   const { data: userData, isLoading: isUserLoading } = useUser(
     publicKey?.toString()
@@ -36,6 +38,32 @@ const MenuDesktop = () => {
       userData?.wallet === process.env.NEXT_PUBLIC_ADMIN_2
     );
   }, [userData]);
+
+  useEffect(() => {
+    const signWelcomeMessage = async () => {
+      if (!signMessage || !publicKey) return;
+
+      const message = new TextEncoder().encode(
+        `Welcome to beFUNDR ! Please sign this message to prove ownership of the wallet : ${concatAddress(
+          publicKey.toBase58()
+        )}`
+      );
+
+      try {
+        const signature = await signMessage(message);
+        const signatureBase58 = bs58.encode(signature);
+        console.log("Signature:", signatureBase58);
+
+        // Tu peux maintenant envoyer la signature à ton backend pour vérification
+      } catch (err) {
+        console.error("Signature refusée ou erreur:", err);
+      }
+    };
+
+    if (connected) {
+      signWelcomeMessage();
+    }
+  }, [connected, signMessage, publicKey]);
 
   //* FUNCTIONS
   const isActive = (pathname: string) => {
