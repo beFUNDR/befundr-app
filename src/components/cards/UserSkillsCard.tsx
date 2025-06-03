@@ -21,7 +21,7 @@ const skillColors: Record<string, string> = {
 };
 
 const UserSkillCard = ({ user }: Props) => {
-  const maxSkills = 3;
+  const maxSkills = 2;
   const displayedSkills = user.skills?.slice(0, maxSkills);
   const extraSkills = user.skills?.length - maxSkills;
 
