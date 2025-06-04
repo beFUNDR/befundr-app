@@ -36,7 +36,7 @@ const Footer = () => {
             />
           </div>
           {/* Menu */}
-          <nav className="flex gap-6 text-lg">
+          <nav className="flex gap-6 text-sm md:text-lg">
             {links.map((link) => (
               <Link
                 href={link.href}

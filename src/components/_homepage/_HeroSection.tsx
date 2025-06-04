@@ -5,6 +5,7 @@ import { AnimatedBlock } from "../displayElements/AnimatedBlock";
 import { useEffect, useState } from "react";
 import ExploreProjectButton from "../buttons/ExploreProjectButton";
 import ApplyButton from "../buttons/ApplyButton";
+import Image from "next/image";
 
 const HeroSection = () => {
   const [videoVisible, setVideoVisible] = useState(false);
@@ -17,25 +18,31 @@ const HeroSection = () => {
   return (
     <AnimatedBlock className="flex flex-col w-full">
       <div className="w-full relative h-[300px] overflow-hidden">
-        {/* <Image
-          src={"/images/heroSection.jpeg"}
-          alt="hero-image"
-          className="w-full object-cover aspect-video"
-          fill
-        /> */}
         <video
           src="/videos/video_homepage_compress.mp4"
           autoPlay
           muted
           loop
           className={`w-full h-full object-cover max-h-[400px] transition-opacity duration-1000 ${
-            videoVisible ? "opacity-100" : "opacity-0"
+            videoVisible ? "opacity-50 md:opacity-100" : "opacity-0"
           }`}
         />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#030303] to-transparent" />
+        <div className="absolute md:hidden bottom-1/5 left-1/2 -translate-x-1/2 w-full md:w-2/3 max-w-[600px]  p-6">
+          <div className="relative w-full h-[120px]">
+            <Image
+              alt="logo"
+              src={"/images/logo.png"}
+              className="object-contain"
+              priority
+              fill
+            />
+          </div>
+        </div>
       </div>
       <div className="container mx-auto flex flex-col md:flex-row gap-12 py-16 px-4">
         <div className="flex-1 flex flex-col justify-center gap-4">
-          <h1 className="h1Style mb-4">
+          <h1 className=" h1Style mb-4 ">
             beFUNDR, the{" "}
             <strong className="text-accent">decentralized incubator</strong>
           </h1>
@@ -53,7 +60,7 @@ const HeroSection = () => {
             whether tokens or NFTs.
           </p>
           <FeaturesList />
-          <div className="flex gap-4 mt-8">
+          <div className="flex flex-col md:flex-row gap-4 mt-8">
             <ExploreProjectButton />
             <ApplyButton />
           </div>

@@ -58,7 +58,7 @@ const FaqSection = () => {
             high-potential teams early.
           </p>
         </FaqQuestionCard>
-        <Link href="/faq" className="w-48">
+        <Link href="/faq" className="w-full md:w-48">
           <ButtonLabelSecondary label="See all FAQ" />
         </Link>
       </div>

@@ -21,19 +21,19 @@ const ProjectSection = () => {
             Explore the latest and most promising projects from the top builders
             in the Solana ecosystem.
           </p>
-          <div className="flex flex-row gap-4 overflow-x-auto scrollbar-thin scrollbar-thumb-[#222] scrollbar-track-transparent py-2">
+          <div className=" flex flex-row gap-4 overflow-x-auto scrollbar-thin scrollbar-thumb-[#222] scrollbar-track-transparent py-2">
             {projects &&
               projects.slice(0, 6).map((project, index) => (
                 <Link
                   key={index}
                   href={`/project/${project.id}`}
-                  className="min-w-[340px] max-w-xs flex-shrink-0"
+                  className="min-w-[200px] md:min-w-[340px] max-w-xs flex-shrink-0 "
                 >
                   <ProjectCard project={project.data} />
                 </Link>
               ))}
           </div>
-          <div className="w-48">
+          <div className="w-full md:w-48 ">
             <ExploreProjectButton />
           </div>
         </div>
