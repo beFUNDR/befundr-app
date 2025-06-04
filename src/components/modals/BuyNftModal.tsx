@@ -32,7 +32,7 @@ const BuyNftModal = (props: Props) => {
 
   return (
     <ModalLayout justify="center" item="center" onClose={props.onClose} dark>
-      <div className="flex flex-col gap-6 min-w-[320px]">
+      <div className="flex flex-col gap-6 w-fullmd:min-w-[320px]">
         <h2 className="h3Style">Buy NFT</h2>
         <p className="bodyStyle">
           You are about to buy a NFT from the project. Please confirm your

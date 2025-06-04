@@ -22,8 +22,8 @@ const NftBuySuccess = (props: Props) => {
         Now, the journey begins for {props.projectName}. You will be able to
         access the project page and see the progress of the project.
       </p>
-      <div className="flex justify-center items-center gap-4">
-        <Link href="/">
+      <div className="flex justify-center items-center gap-4 w-full md:w-auto">
+        <Link href="/" className="w-full md:w-auto">
           <ButtonLabel label="Awesome!" />
         </Link>
       </div>
