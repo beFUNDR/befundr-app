@@ -23,6 +23,7 @@ const HeroSection = () => {
           autoPlay
           muted
           loop
+          playsInline
           className={`w-full h-full object-cover max-h-[400px] transition-opacity duration-1000 ${
             videoVisible ? "opacity-50 md:opacity-100" : "opacity-0"
           }`}
