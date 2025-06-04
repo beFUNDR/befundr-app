@@ -41,7 +41,7 @@ const SkillHubPage = () => {
       </p>
 
       {/* Filtres compétences */}
-      <div className="flex gap-2 mb-8 flex-wrap">
+      <div className="flex gap-2 mb-8 overflow-x-auto pb-4">
         <button
           className={`min-w-20 py-2 rounded-full border text-sm font-semibold transition ${
             !selectedSkill
@@ -55,7 +55,7 @@ const SkillHubPage = () => {
         {skills.map((skill) => (
           <button
             key={skill}
-            className={`min-w-26 py-2 rounded-full border text-sm font-semibold transition ${
+            className={`min-w-26 md:py-1 rounded-full border text-sm font-semibold transition ${
               selectedSkill === skill
                 ? "text-accent border-accent"
                 : " text-custom-gray-400 border-custom-gray-400 hover:text-custom-gray-200 hover:border-custom-gray-200 "
@@ -77,10 +77,10 @@ const SkillHubPage = () => {
         </div>
       ) : (
         <div
-          className="grid gap-8  w-full justify-center"
+          className="grid gap-4 md:gap-8 w-full justify-center"
           style={{
             gridTemplateColumns:
-              "repeat(auto-fit,minmax(min(200px, 100%), 200px))",
+              "repeat(auto-fit, minmax(min(160px, 100%), 1fr))",
           }}
         >
           {filteredUsers.map((user, idx) => (

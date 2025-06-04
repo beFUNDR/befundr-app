@@ -30,7 +30,7 @@ const FaqSection = () => {
             alt="befundr funding process"
             width={500}
             height={500}
-            className="w-2/3 mx-auto my-6"
+            className="w-full md:w-2/3 mx-auto my-6"
           />
         </FaqQuestionCard>
         <FaqQuestionCard question="How can I apply to be incubated by beFUNDR?">
@@ -58,7 +58,7 @@ const FaqSection = () => {
             high-potential teams early.
           </p>
         </FaqQuestionCard>
-        <Link href="/faq" className="w-48">
+        <Link href="/faq" className="w-full md:w-48">
           <ButtonLabelSecondary label="See all FAQ" />
         </Link>
       </div>

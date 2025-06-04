@@ -16,11 +16,11 @@ export default function ProfileMenu({
   onSelect: (item: string) => void;
 }) {
   return (
-    <nav className="flex border-b border-gray-700 mb-8">
+    <nav className="flex border-b border-gray-700 mb-8 overflow-x-auto">
       {menuItems.map((item) => (
         <button
           key={item}
-          className={`px-4 py-2 text-base font-medium ${
+          className={`px-4 py-2 text-base font-medium whitespace-nowrap ${
             active === item
               ? "border-b-2 border-accent text-accent"
               : "text-white hover:text-accent"

@@ -6,7 +6,7 @@ import MenuDesktop from "@/components/menu/MenuDesktop";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import background from "../../public/images/gridBackground.svg";
-import MobileWarning from "@/components/displayElements/MobileWarning";
+import MobileMenu from "@/components/menu/MobileMenu";
 
 export const metadata: Metadata = {
   title: "beFUNDR",
@@ -28,11 +28,11 @@ export default function RootLayout({
       <body className={`${lato.className} antialiased`}>
         <Providers>
           {/* Affichage mobile */}
-          <div className="md:hidden">
+          {/* <div className="md:hidden">
             <MobileWarning />
-          </div>
+          </div> */}
           {/* Affichage desktop */}
-          <div className="hidden md:flex flex-col justify-start min-h-screen text-textColor-main relative">
+          <div className="flex flex-col justify-start min-h-screen max-w-screen text-textColor-main relative">
             {/* Fond noir */}
             <div className="fixed inset-0 -z-20 bg-black" />
             {/* SVG */}
@@ -45,7 +45,12 @@ export default function RootLayout({
                 priority
               />
             </div>
-            <MenuDesktop />
+            <div className="hidden lg:block">
+              <MenuDesktop />
+            </div>
+            <div className="block lg:hidden">
+              <MobileMenu />
+            </div>
             <main className="flex-grow mt-20 w-full">
               <div className="relative flex flex-col justify-center items-center w-full ">
                 {children}

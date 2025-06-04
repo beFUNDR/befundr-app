@@ -16,10 +16,10 @@ const UserProfileHeader = ({
   user,
   gameProgramData,
 }: UserProfileHeaderProps) => {
-  // Mock des données manquantes
+  // Mock data
   const points = (user as any).points ?? 50;
   const roles: string[] = (user as any).roles ?? ["Superteam member"];
-  const since = (user as any).since ?? 2021;
+  const since = (user as any).since ?? new Date().getFullYear();
   const contributions = (user as any).contributions ?? 10;
   const daos = (user as any).daos ?? 4;
   const projects = (user as any).projects ?? 1;
@@ -41,12 +41,12 @@ const UserProfileHeader = ({
         )}
       </div>
       {/* Infos */}
-      <div className="flex-1 flex flex-col gap-2 items-start justify-center">
+      <div className="flex-1 flex flex-col gap-2 items-center md:items-start justify-center">
         <div className="flex items-center gap-3">
           <h1 className="h1Style">{user.name}</h1>
         </div>
         {/* skills */}
-        <div className="flex items-center gap-2 mt-2">
+        <div className="flex items-center gap-2 mt-2 flex-wrap justify-center md:justify-start">
           {user.skills?.map((skill: string, idx: number) => (
             <SkillTag key={idx} skill={skill} />
           ))}
@@ -67,7 +67,7 @@ const UserProfileHeader = ({
           </div>
         </div>
         {/* Socials */}
-        <div className="flex gap-4 mt-4">
+        <div className="flex gap-2 md:gap-4 mt-4">
           {user.twitter && <XButton href={`https://x.com/${user.twitter}`} />}
           {user.discord && (
             <DiscordButton href={`https://discord.com/users/${user.discord}`} />

@@ -92,7 +92,7 @@ const CreateMissionModal = ({
 
         {error && <div className="text-red-500 text-sm">{error}</div>}
 
-        <button type="submit">
+        <button type="submit" className="w-full md:w-auto">
           <ButtonLabelAsync label="Create mission" isLoading={isCreating} />
         </button>
       </form>

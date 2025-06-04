@@ -117,7 +117,7 @@ const ProfilContent = ({
       />
       <div className="flex justify-center mt-10">
         <button
-          className="w-1/3 mx-auto"
+          className="w-full md:w-1/3 mx-auto"
           onClick={handleSave}
           disabled={isUpdating}
         >

@@ -25,7 +25,7 @@ const stats = [
     icon: <CheckCircle className="text-secondary w-8 h-8" />,
     value: 95,
     display: "95%",
-    label: "Token launch success",
+    label: "Project success",
     isPercent: true,
   },
 ];
@@ -65,7 +65,7 @@ function useCountTo(
 const StatCard = ({ icon, value, label, isPercent, isMoney }: any) => {
   const animatedValue = useCountTo(value, 2000, isPercent, isMoney);
   return (
-    <div className=" border border-custom-gray-800 rounded-2xl p-6 flex flex-col items-start min-w-[180px] min-h-[120px] shadow-md bg-black/50">
+    <div className="border border-custom-gray-800 rounded-2xl p-4 md:p-6 flex flex-col justify-center md:justify-start items-center md:items-stretch w-[150px] md:min-w-[180px] h-[150px] md:h-[180px] shadow-md bg-black/50 aspect-square ">
       <div className="rounded-full bg-custom-gray-800 p-3 mb-2 flex items-center justify-center">
         {icon}
       </div>
@@ -78,7 +78,7 @@ const StatCard = ({ icon, value, label, isPercent, isMoney }: any) => {
 };
 
 const StatsGrid = () => (
-  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-md">
+  <div className="grid grid-cols-2 gap-6 w-full max-w-md justify-items-center items-stretch">
     {stats.map((stat, idx) => (
       <StatCard key={idx} {...stat} />
     ))}

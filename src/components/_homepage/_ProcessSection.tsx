@@ -47,7 +47,7 @@ const ProcessSection = () => {
             </div>
           ))}
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
           <ExploreProjectButton />
           <ApplyButton />
         </div>

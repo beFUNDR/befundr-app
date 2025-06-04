@@ -32,7 +32,7 @@ const FaqQuestionCard = ({ question, children }: FaqQuestionProps) => {
         )}
       </button>
       <div
-        className={`overflow-hidden transition-all duration-300 px-8 ${
+        className={`overflow-hidden transition-all duration-300 px-4 md:px-8 ${
           open ? "max-h-[1000px] py-2" : "max-h-0 py-0"
         }`}
       >

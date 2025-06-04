@@ -26,11 +26,11 @@ const WelcomeModal = (props: Props) => {
         Welcome to BeFUNDR. You can now explore projects, invest, and
         contribute.
       </p>
-      <div className="flex justify-start items-center gap-4">
-        <button onClick={handleProfileSetup}>
+      <div className="flex flex-col md:flex-row justify-start items-center gap-4 w-full">
+        <button onClick={handleProfileSetup} className="w-full md:w-auto">
           <ButtonLabel label="Setup my profile" />
         </button>
-        <button onClick={props.onClose}>
+        <button onClick={props.onClose} className="w-full md:w-auto">
           <ButtonLabelSecondary label="Do it later" />
         </button>
       </div>

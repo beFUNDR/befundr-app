@@ -30,7 +30,7 @@ const FaqPage = () => {
           alt="befundr funding process"
           width={500}
           height={500}
-          className="w-2/3 mx-auto my-6"
+          className="w-full md:w-2/3 mx-auto my-6"
         />
       </FaqQuestionCard>
       <FaqQuestionCard question="How can I apply to be incubated by beFUNDR?">

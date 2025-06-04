@@ -12,10 +12,10 @@ const MissionCard = ({ mission }: Props) => {
   const { data: user } = useUser(mission.doneBy);
 
   return (
-    <div className="bg-custom-gray-900 rounded-2xl p-6 flex items-center justify-between gap-4 border border-custom-gray-800 w-full max-w-2xl mx-auto">
-      <div className="flex flex-col gap-2 flex-1">
-        <div className="flex items-center gap-3 mb-1">
-          <span className="h3Style leading-tight">{mission.title}</span>
+    <div className="bg-custom-gray-900 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 border border-custom-gray-800 w-full max-w-2xl mx-auto">
+      <div className="flex flex-col gap-2 flex-1 w-full ">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-3 mb-1 w-full">
+          <span className="h3Style leading-tight w-full">{mission.title}</span>
           <span className="px-2 py-0.5 rounded-full bg-accent/20 text-accent text-xs ">
             {mission.skill}
           </span>
@@ -34,7 +34,7 @@ const MissionCard = ({ mission }: Props) => {
         </div>
       </div>
       {mission.status === "open" && (
-        <button>
+        <button className="w-full md:w-auto">
           <ButtonLabelSecondarySmall label="Apply" />
         </button>
       )}
