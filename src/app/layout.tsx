@@ -11,6 +11,20 @@ import MobileMenu from "@/components/menu/MobileMenu";
 export const metadata: Metadata = {
   title: "beFUNDR",
   description: "The Decentralized Incubator",
+  icons: {
+    icon: [
+      {
+        url: "/images/icons/icon-light.png",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/images/icons/icon-dark.png",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
+    shortcut: "/images/icons/icon-dark.png",
+    apple: "/images/icons/icon-dark.png",
+  },
 };
 
 const lato = Lato({
