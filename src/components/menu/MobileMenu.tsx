@@ -48,6 +48,16 @@ const MobileMenu = () => {
           isMenuOpen ? "translate-x-0 " : "-translate-x-full"
         } z-20`}
       >
+        <Link
+          href={"/"}
+          onClick={handleLinkClick}
+          className={` px-4 py-1 border-b-2 ${
+            isActive("/") ? " border-accentColor" : "border-transparent"
+          } transition-all`}
+          key={"/"}
+        >
+          Home
+        </Link>
         {links.map((link) => (
           <Link
             href={link.href}
