@@ -26,7 +26,7 @@ const UserSkillCard = ({ user }: Props) => {
   const extraSkills = user.skills?.length - maxSkills;
 
   return (
-    <div className="bg-custom-gray-900 rounded-2xl p-2 flex flex-col items-center justify-between gap-3 border border-custom-gray-800 hover:border-custom-gray-400 max-w-xs mx-auto shadow-lg w-[200px] h-[300px] transition-all duration-300">
+    <div className="bg-custom-gray-900 rounded-2xl p-2 flex flex-col items-center justify-between md:gap-3 border border-custom-gray-800 hover:border-custom-gray-400 max-w-xs mx-auto shadow-lg min-w-[160px] md:w-[200px] h-[280px] md:h-[300px] transition-all duration-300">
       <div className="w-24 h-24 rounded-full border-4 border-custom-gray-800 overflow-hidden mb-2">
         {user.avatar ? (
           <Image
@@ -40,7 +40,9 @@ const UserSkillCard = ({ user }: Props) => {
           <DefaultAvatar size={24} publicKey={user.wallet} />
         )}
       </div>
-      <div className="text-2xl font-bold text-white mb-1">{user.name}</div>
+      <div className="h4Style md:h2Style font-bold text-white mb-1">
+        {user.name}
+      </div>
       <div className="flex flex-col items-center gap-2 w-full">
         <div className="flex flex-wrap justify-center gap-2 w-full">
           {displayedSkills &&
