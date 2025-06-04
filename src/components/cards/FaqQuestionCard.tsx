@@ -18,7 +18,7 @@ const FaqQuestionCard = ({ question, children }: FaqQuestionProps) => {
       }`}
     >
       <button
-        className="flex w-full items-center justify-between px-8 py-6 focus:outline-none"
+        className="flex w-full items-center justify-between px-4 md:px-8 py-3 md:py-6 focus:outline-none"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
       >

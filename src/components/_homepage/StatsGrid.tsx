@@ -66,7 +66,7 @@ const StatCard = ({ icon, value, label, isPercent, isMoney }: any) => {
   const animatedValue = useCountTo(value, 2000, isPercent, isMoney);
   return (
     <div className="border border-custom-gray-800 rounded-2xl p-4 md:p-6 flex flex-col justify-center md:justify-start items-center md:items-stretch w-[150px] md:min-w-[180px] h-[150px] md:h-[180px] shadow-md bg-black/50 aspect-square ">
-      <div className="rounded-full bg-custom-gray-800 p-3 mb-2 flex items-center justify-center">
+      <div className="rounded-full bg-custom-gray-800 w-14 mb:w-16 mb-2 flex items-center justify-center aspect-square">
         {icon}
       </div>
       <div className="text-secondary text-3xl font-bold leading-tight">

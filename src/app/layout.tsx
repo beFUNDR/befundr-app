@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/providers/_providers";
-import MenuDesktop from "@/components/menu/MenuDesktop";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import background from "../../public/images/gridBackground.svg";
-import MobileMenu from "@/components/menu/MobileMenu";
+import MenuComponent from "@/components/menu/MenuComponent";
 
 export const metadata: Metadata = {
   title: "beFUNDR",
@@ -59,12 +58,7 @@ export default function RootLayout({
                 priority
               />
             </div>
-            <div className="hidden lg:block">
-              <MenuDesktop />
-            </div>
-            <div className="block lg:hidden">
-              <MobileMenu />
-            </div>
+            <MenuComponent />
             <main className="flex-grow mt-20 w-full">
               <div className="relative flex flex-col justify-center items-center w-full ">
                 {children}
