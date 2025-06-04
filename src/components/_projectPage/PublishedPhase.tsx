@@ -13,7 +13,7 @@ type Props = { project: Project; owner: User };
 
 const PublishedPhase = (props: Props) => {
   return (
-    <div className=" flex flex-col justify-between gap-2 bg-black/70 rounded-2xl p-8 border border-custom-gray-600 min-w-[350px] aspect-square">
+    <div className=" flex flex-col justify-between gap-2 bg-black/70 rounded-2xl p-4 md:p-8 border border-custom-gray-600 min-w-[350px] aspect-square">
       {/* Title */}
       <div className="flex justify-between items-center gap-2">
         <p className="h3Style">Project selected</p>
@@ -67,7 +67,7 @@ const PublishedPhase = (props: Props) => {
       <Divider />
       {/* Socials */}
       <p className="h4Style">Socials</p>
-      <div className="grid grid-cols-4 gap-2 justify-center mb-2">
+      <div className="grid grid-cols-4 gap-4 justify-center mb-2 justify-items-center">
         {props.project.website && (
           <InternetButton href={props.project.website} />
         )}

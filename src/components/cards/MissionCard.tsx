@@ -34,7 +34,7 @@ const MissionCard = ({ mission }: Props) => {
         </div>
       </div>
       {mission.status === "open" && (
-        <button>
+        <button className="w-full md:w-auto">
           <ButtonLabelSecondarySmall label="Apply" />
         </button>
       )}
