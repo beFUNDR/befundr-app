@@ -52,15 +52,20 @@ const MenuDesktop = () => {
       try {
         const signature = await signMessage(message);
         const signatureBase58 = bs58.encode(signature);
-        console.log("Signature:", signatureBase58);
-
-        // Tu peux maintenant envoyer la signature à ton backend pour vérification
+        // Store the signature in session storage to avoid signing again
+        sessionStorage.setItem("befundr_signed", "true");
       } catch (err) {
         console.error("Signature refusée ou erreur:", err);
       }
     };
 
-    if (connected) {
+    const hasSigned =
+      typeof window !== "undefined" &&
+      sessionStorage.getItem("befundr_signed") === "true";
+
+    console.log("hasSigned", hasSigned);
+
+    if (connected && !hasSigned) {
       signWelcomeMessage();
     }
   }, [connected, signMessage, publicKey]);
