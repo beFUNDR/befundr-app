@@ -17,7 +17,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
         <div className="absolute top-4 right-4">
           <StatusTag status={project.status} />
         </div>
-        <div className="absolute -bottom-8 left-2 w-16 h-16 rounded-full  border-2 border-black flex items-center justify-center shadow-lg">
+        <div className="absolute -bottom-8 left-2 w-16 h-16 rounded-full  border-2 border-custom-gray-600 flex items-center justify-center shadow-lg">
           <Image
             src={project.logo}
             alt={project.name + " logo"}

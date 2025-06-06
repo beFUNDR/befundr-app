@@ -75,7 +75,7 @@ const MainProjectInfos = (props: Props) => {
       </div>
       <Divider />
       {/* Info links */}
-      <p className="h4Style">Infos</p>
+      <p className="h4Style">Info</p>
       <div className="grid grid-cols-4 gap-4 justify-center mb-2 justify-items-center">
         {props.project.pitchLink && (
           <PitchButton href={props.project.pitchLink} />

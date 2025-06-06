@@ -5,7 +5,7 @@ import MultiImageSelector from "../displayElements/MultiImageSelector";
 
 type Props = {
   project: ProjectToCreate;
-  setProject: (p: ProjectToCreate) => void;
+  setProject: (p: ProjectToCreate | Project) => void;
   setMainImageFile: (file: File) => void;
   setLogoFile: (file: File) => void;
   setImagesFiles: (files: File[]) => void;

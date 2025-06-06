@@ -74,6 +74,7 @@ const ProjectPage = () => {
             description={project.description}
             owner={owner}
             isOwner={isOwner}
+            projectId={projectId}
           />
         );
       case "updates":
@@ -90,6 +91,7 @@ const ProjectPage = () => {
             description={project.description}
             owner={owner}
             isOwner={isOwner}
+            projectId={projectId}
           />
         );
     }
