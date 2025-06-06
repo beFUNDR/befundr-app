@@ -42,6 +42,7 @@ export default function InputField({
           value={value}
           onChange={onChange}
           required={required}
+          placeholder={placeholder}
         />
       )}
     </div>

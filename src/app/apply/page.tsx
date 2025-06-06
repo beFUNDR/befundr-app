@@ -26,6 +26,7 @@ export default function ApplyPage() {
     category: "Community",
     mainImage: "",
     logo: "",
+    images: [],
     headLine: "",
     description: "",
     website: "",
@@ -36,6 +37,7 @@ export default function ApplyPage() {
   });
   const [mainImageFile, setMainImageFile] = useState<File | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [imagesFiles, setImagesFiles] = useState<File[]>([]);
   const [isApplicationValidated, setIsApplicationValidated] = useState(false);
   const { data: user, isLoading: isUserLoading } = useUser(
     publicKey?.toString() || ""
@@ -81,6 +83,7 @@ export default function ApplyPage() {
         project,
         mainImageFile,
         logoFile,
+        imagesFiles,
       });
 
       setIsApplicationValidated(true);
@@ -131,13 +134,14 @@ export default function ApplyPage() {
           setProject={setProject}
           setMainImageFile={setMainImageFile}
           setLogoFile={setLogoFile}
+          setImagesFiles={setImagesFiles}
         />
       )}
       {currentStep === 2 && (
         <Application2 project={project} setProject={setProject} />
       )}
       {currentStep === 3 && <Application3 project={project} user={user} />}
-      <div className="flex justify-start mt-4 gap-4">
+      <div className="flex flex-col md:flex-row justify-start mt-4 gap-4">
         {currentStep > 1 && (
           <button
             type="button"

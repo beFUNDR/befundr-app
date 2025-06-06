@@ -1,12 +1,14 @@
 "use client";
 import InputField from "@/components/displayElements/InputField";
 import ImageSelector from "../displayElements/ImageSelector";
+import MultiImageSelector from "../displayElements/MultiImageSelector";
 
 type Props = {
   project: ProjectToCreate;
   setProject: (p: ProjectToCreate) => void;
   setMainImageFile: (file: File) => void;
   setLogoFile: (file: File) => void;
+  setImagesFiles: (files: File[]) => void;
 };
 
 const categories = [
@@ -24,6 +26,7 @@ export default function Application1({
   setProject,
   setMainImageFile,
   setLogoFile,
+  setImagesFiles,
 }: Props) {
   const handleCategoryChange = (cat: string) => {
     setProject({ ...project, category: cat });
@@ -40,6 +43,15 @@ export default function Application1({
     }
   };
 
+  const handleImagesSelection = (name: string, files: File[]) => {
+    setProject({
+      ...project,
+      [name]: files.map((file) => URL.createObjectURL(file)),
+    });
+    if (name === "images") {
+      setImagesFiles(files);
+    }
+  };
   return (
     <form className="flex flex-col gap-8">
       <div>
@@ -94,6 +106,15 @@ export default function Application1({
         objectFit="cover"
         resolution="1200x1200"
         defaultImage={project.logo}
+      />
+      <label className="h4Style">Other images (max 4)</label>
+      <MultiImageSelector
+        name="images"
+        handleSelection={(name, files) => handleImagesSelection(name, files)}
+        objectFit="cover"
+        resolution="1200x1200"
+        defaultImages={project.images}
+        maxImages={4}
       />
     </form>
   );

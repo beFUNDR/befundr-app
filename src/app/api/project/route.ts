@@ -4,11 +4,12 @@ import { uploadImageServer } from "@/utils/firebaseFunctions";
 
 export async function POST(request: NextRequest) {
   try {
-    const { project, mainImageBase64, logoBase64 } =
+    const { project, mainImageBase64, logoBase64, additionalImagesBase64 } =
       await request.json();
 
     let mainImageUrl = project.mainImage || "";
     let logoUrl = project.logo || "";
+    let additionalImagesUrls: string[] = [];
 
     if (mainImageBase64) {
       const image = Buffer.from(mainImageBase64, "base64");
@@ -28,17 +29,36 @@ export async function POST(request: NextRequest) {
         )) || "";
     }
 
+    if (additionalImagesBase64 && additionalImagesBase64.length > 0) {
+      additionalImagesUrls = await Promise.all(
+        additionalImagesBase64.map(async (base64: string, index: number) => {
+          const image = Buffer.from(base64, "base64");
+          return (
+            (await uploadImageServer(
+              image,
+              `projects/${project.userId}/${project.name}/additional_${index}.png`
+            )) || ""
+          );
+        })
+      );
+    }
+
     const projectId = admin.firestore().collection("projects").doc().id;
 
-    await admin.firestore().collection("projects").doc(projectId).set({
-      ...project,
-      mainImage: mainImageUrl,
-      logo: logoUrl,
-      createdAt: admin.firestore.FieldValue.serverTimestamp(),
-      owner: project.userId,
-      id: projectId
-    });
-    console.log("Project created")
+    await admin
+      .firestore()
+      .collection("projects")
+      .doc(projectId)
+      .set({
+        ...project,
+        mainImage: mainImageUrl,
+        logo: logoUrl,
+        images: additionalImagesUrls,
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        owner: project.userId,
+        id: projectId,
+      });
+    console.log("Project created");
 
     return NextResponse.json({ projectId });
   } catch (error) {
