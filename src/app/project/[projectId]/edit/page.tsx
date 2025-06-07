@@ -14,27 +14,30 @@ import BackButton from "@/components/buttons/BackButton";
 import ButtonLabel from "@/components/buttons/_ButtonLabel";
 import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
 import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
+import toast from "react-hot-toast";
 
 export default function EditProjectPage() {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [project, setProject] = useState<Project | null>(null);
-  const [mainImageFile, setMainImageFile] = useState<File | null>(null);
-  const [logoFile, setLogoFile] = useState<File | null>(null);
-  const [imagesFiles, setImagesFiles] = useState<(File | string)[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
+  //* GLOBAL STATE
   const params = useParams();
   const router = useRouter();
   const { publicKey } = useWallet();
   const projectId = params.projectId as string;
-  const { getProject } = useProject();
+  const { getProject, updateProject, isUpdatingProject } = useProject();
   const { data: projectData, isLoading: isProjectLoading } =
     getProject(projectId);
   const { data: user, isLoading: isUserLoading } = useUser(
     projectData?.userId ?? ""
   );
 
+  //* LOCAL STATE
+  const [currentStep, setCurrentStep] = useState(1);
+  const [project, setProject] = useState<Project | null>(null);
+  const [mainImageFile, setMainImageFile] = useState<File | undefined>(
+    undefined
+  );
+  const [logoFile, setLogoFile] = useState<File | undefined>(undefined);
+  const [imagesFiles, setImagesFiles] = useState<(File | string)[]>([]);
+  const [error, setError] = useState<string | null>(null);
   const totalSteps = 3;
 
   useEffect(() => {
@@ -85,13 +88,36 @@ export default function EditProjectPage() {
     });
   }
 
-  const handleProjectUpdate = (updatedProject: ProjectToCreate | Project) => {
+  const handleLocalProjectUpdate = (
+    updatedProject: ProjectToCreate | Project
+  ) => {
     if (project) {
       setProject({ ...project, ...updatedProject });
     }
   };
 
-  // console.log("project", project);
+  const handleProjectUpdate = async () => {
+    if (!project || !publicKey) return;
+
+    try {
+      await updateProject({
+        project: project,
+        dataToUpdate: dataToUpdate,
+        mainImageFile: mainImageFile,
+        logoFile: logoFile,
+        imagesFiles: imagesFiles,
+        userPublicKey: publicKey,
+      });
+
+      toast.success("Project updated successfully");
+      router.push(`/project/${projectId}`);
+    } catch (error) {
+      toast.error("Error updating project");
+      console.error("Error updating project:", error);
+    }
+  };
+
+  console.log("project", project);
   // console.log("dataToUpdate", dataToUpdate);
   console.log("mainImageFile", mainImageFile);
   console.log("logoFile", logoFile);
@@ -131,7 +157,7 @@ export default function EditProjectPage() {
       {currentStep === 1 && (
         <Application1
           project={project}
-          setProject={handleProjectUpdate}
+          setProject={handleLocalProjectUpdate}
           setMainImageFile={setMainImageFile}
           setLogoFile={setLogoFile}
           setImagesFiles={setImagesFiles}
@@ -139,7 +165,7 @@ export default function EditProjectPage() {
       )}
 
       {currentStep === 2 && (
-        <Application2 project={project} setProject={handleProjectUpdate} />
+        <Application2 project={project} setProject={handleLocalProjectUpdate} />
       )}
 
       {currentStep === 3 && <Application3 project={project} user={user!} />}
@@ -164,8 +190,12 @@ export default function EditProjectPage() {
           </button>
         )}
         {currentStep === totalSteps && (
-          <button type="button">
-            <ButtonLabelAsync label="Update" isLoading={false} />
+          <button
+            type="button"
+            onClick={handleProjectUpdate}
+            disabled={isUpdatingProject}
+          >
+            <ButtonLabelAsync label="Update" isLoading={isUpdatingProject} />
           </button>
         )}
       </div>

@@ -2,6 +2,7 @@
 import InputField from "@/components/displayElements/InputField";
 import ImageSelector from "../displayElements/ImageSelector";
 import MultiImageSelector from "../displayElements/MultiImageSelector";
+import { usePathname } from "next/navigation";
 
 type Props = {
   project: ProjectToCreate;
@@ -28,13 +29,20 @@ export default function Application1({
   setLogoFile,
   setImagesFiles,
 }: Props) {
+  const pathname = usePathname();
+  const isEditPage = pathname.endsWith("edit");
+
   const handleCategoryChange = (cat: string) => {
     setProject({ ...project, category: cat });
   };
 
   const handleImageSelection = (name: string, file: File) => {
     if (file.type.startsWith("image/")) {
-      setProject({ ...project, [name]: URL.createObjectURL(file) });
+      // if not edit page, set the project with the new image
+      // if edit page, keep the old image url to handle deletion during update
+      if (!isEditPage) {
+        setProject({ ...project, [name]: URL.createObjectURL(file) });
+      }
       if (name === "mainImage") {
         setMainImageFile(file);
       } else if (name === "logo") {
@@ -44,12 +52,16 @@ export default function Application1({
   };
 
   const handleImagesSelection = (name: string, files: (File | string)[]) => {
-    setProject({
-      ...project,
-      [name]: files.map((file) =>
-        typeof file === "string" ? file : URL.createObjectURL(file)
-      ),
-    });
+    // if not edit page, set the project with the new image
+    // if edit page, keep the old image url to handle deletion during update
+    if (!isEditPage) {
+      setProject({
+        ...project,
+        [name]: files.map((file) =>
+          typeof file === "string" ? file : URL.createObjectURL(file)
+        ),
+      });
+    }
     if (name === "images") {
       setImagesFiles(files);
     }
@@ -61,12 +73,21 @@ export default function Application1({
         <p className="text-gray-400 mb-4">
           Basic info to introduce your project.
         </p>
-        <InputField
-          label="Project name"
-          value={project.name}
-          onChange={(e) => setProject({ ...project, name: e.target.value })}
-          required
-        />
+        {isEditPage ? (
+          <div className="flex flex-col gap-2">
+            <p className="block text-white font-medium mb-2">
+              Project name (cannot be changed)
+            </p>
+            <p className="bodyStyle mb-4">{project.name} </p>
+          </div>
+        ) : (
+          <InputField
+            label="Project name"
+            value={project.name}
+            onChange={(e) => setProject({ ...project, name: e.target.value })}
+            required
+          />
+        )}
         <div className="mb-4">
           <label className="block text-white font-medium mb-2">
             Project category *

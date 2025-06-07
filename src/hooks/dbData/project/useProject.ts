@@ -201,7 +201,8 @@ export const useProject = () => {
 
   return {
     createProject: createProjectMutation.mutateAsync,
-    updateProject: updateProjectMutation,
+    updateProject: updateProjectMutation.mutateAsync,
+    isUpdatingProject: updateProjectMutation.isPending,
     approveProject: approveProjectMutation.mutateAsync,
     startNftMintRound: startNftMintRoundProjectMutation.mutateAsync,
     startIncubation: startIncubationMutation.mutateAsync,

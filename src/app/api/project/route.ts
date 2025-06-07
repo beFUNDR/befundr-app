@@ -72,9 +72,95 @@ export async function POST(request: NextRequest) {
 
 export const PATCH = async (request: NextRequest) => {
   try {
-    const { project, dataToUpdate } = await request.json();
+    const {
+      project,
+      dataToUpdate,
+      mainImageBase64,
+      logoBase64,
+      additionalImagesBase64,
+      userPublicKey,
+    } = await request.json();
+
+    let mainImageUrl = project.mainImage;
+    let logoUrl = project.logo;
+    // let additionalImagesUrls = project.images || [];
+
+    // Handle main image update
+    if (mainImageBase64) {
+      // Delete old main image
+      if (project.mainImage) {
+        const oldImagePath = project.mainImage.split("/projects/")[1];
+        await admin
+          .storage()
+          .bucket()
+          .file(`projects/${oldImagePath}`)
+          .delete();
+      }
+      // Upload new main image
+      const image = Buffer.from(mainImageBase64, "base64");
+      mainImageUrl = await uploadImageServer(
+        image,
+        `projects/${project.userId}/${project.name}/mainImage.png`
+      );
+    }
+
+    // Handle logo update
+    if (logoBase64) {
+      // Delete old logo
+      if (project.logo) {
+        const oldLogoPath = project.logo.split("/projects/")[1];
+        await admin.storage().bucket().file(`projects/${oldLogoPath}`).delete();
+      }
+      // Upload new logo
+      const image = Buffer.from(logoBase64, "base64");
+      logoUrl = await uploadImageServer(
+        image,
+        `projects/${project.userId}/${project.name}/logo.png`
+      );
+    }
+
+    // Gestion des images additionnelles
+    // if (additionalImagesBase64 && additionalImagesBase64.length > 0) {
+    //   // Supprimer les anciennes images qui ne sont plus présentes
+    //   const oldImages = project.images || [];
+    //   const newImageUrls = additionalImagesBase64.filter(
+    //     (url) => typeof url === "string"
+    //   );
+    //   const imagesToDelete = oldImages.filter(
+    //     (url) => !newImageUrls.includes(url)
+    //   );
+
+    //   await Promise.all(
+    //     imagesToDelete.map(async (url) => {
+    //       const imagePath = url.split("/o/")[1].split("?")[0];
+    //       await admin
+    //         .storage()
+    //         .bucket()
+    //         .file(decodeURIComponent(imagePath))
+    //         .delete();
+    //     })
+    //   );
+
+    //   // Upload des nouvelles images
+    //   additionalImagesUrls = await Promise.all(
+    //     additionalImagesBase64.map(async (base64: string, index: number) => {
+    //       if (typeof base64 === "string") return base64;
+    //       const image = Buffer.from(base64, "base64");
+    //       return await uploadImageServer(
+    //         image,
+    //         `projects/${project.userId}/${project.name}/additional_${index}.png`
+    //       );
+    //     })
+    //   );
+    // }
+
     const projectRef = admin.firestore().collection("projects").doc(project.id);
-    await projectRef.update({ ...project, ...dataToUpdate });
+    await projectRef.update({
+      ...dataToUpdate,
+      mainImage: mainImageUrl,
+      logo: logoUrl,
+      // images: additionalImagesUrls,
+    });
 
     return NextResponse.json({ projectId: project.id });
   } catch (error) {

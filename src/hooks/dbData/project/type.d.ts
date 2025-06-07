@@ -14,6 +14,9 @@ interface CreateProjectParams {
 interface UpdateProjectParams {
   project: Project;
   dataToUpdate?: Partial<Project>;
+  mainImageFile?: File;
+  logoFile?: File;
+  imagesFiles?: (File | string)[];
   userPublicKey: PublicKey | null;
 }
 
