@@ -8,7 +8,7 @@ type Props = {
   setProject: (p: ProjectToCreate | Project) => void;
   setMainImageFile: (file: File) => void;
   setLogoFile: (file: File) => void;
-  setImagesFiles: (files: File[]) => void;
+  setImagesFiles: (files: (File | string)[]) => void;
 };
 
 const categories = [
@@ -43,10 +43,12 @@ export default function Application1({
     }
   };
 
-  const handleImagesSelection = (name: string, files: File[]) => {
+  const handleImagesSelection = (name: string, files: (File | string)[]) => {
     setProject({
       ...project,
-      [name]: files.map((file) => URL.createObjectURL(file)),
+      [name]: files.map((file) =>
+        typeof file === "string" ? file : URL.createObjectURL(file)
+      ),
     });
     if (name === "images") {
       setImagesFiles(files);

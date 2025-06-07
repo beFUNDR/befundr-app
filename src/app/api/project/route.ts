@@ -73,8 +73,8 @@ export async function POST(request: NextRequest) {
 export const PATCH = async (request: NextRequest) => {
   try {
     const { project, dataToUpdate } = await request.json();
-    const userRef = admin.firestore().collection("projects").doc(project.id);
-    await userRef.update({ ...project, ...dataToUpdate });
+    const projectRef = admin.firestore().collection("projects").doc(project.id);
+    await projectRef.update({ ...project, ...dataToUpdate });
 
     return NextResponse.json({ projectId: project.id });
   } catch (error) {

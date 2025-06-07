@@ -20,7 +20,7 @@ export default function EditProjectPage() {
   const [project, setProject] = useState<Project | null>(null);
   const [mainImageFile, setMainImageFile] = useState<File | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
-  const [imagesFiles, setImagesFiles] = useState<File[]>([]);
+  const [imagesFiles, setImagesFiles] = useState<(File | string)[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -61,7 +61,29 @@ export default function EditProjectPage() {
     }
   }, [projectData]);
 
-  console.log("project", project);
+  const dataToUpdate: Partial<Project> = {};
+
+  if (project && projectData) {
+    const fieldsToCheck = [
+      "name",
+      "category",
+      "headLine",
+      "description",
+      "pitchLink",
+      "videoLink",
+      "otherLink",
+      "website",
+      "twitter",
+      "discord",
+      "telegram",
+    ] as const;
+
+    fieldsToCheck.forEach((field) => {
+      if (project[field] !== projectData[field]) {
+        dataToUpdate[field] = project[field];
+      }
+    });
+  }
 
   const handleProjectUpdate = (updatedProject: ProjectToCreate | Project) => {
     if (project) {
@@ -69,82 +91,11 @@ export default function EditProjectPage() {
     }
   };
 
-  const handleNext = () => {
-    if (currentStep < 3) {
-      setCurrentStep(currentStep + 1);
-    }
-  };
-
-  const handlePrevious = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
-
-  const handleSubmit = async () => {
-    if (!project || !publicKey) return;
-
-    setIsLoading(true);
-    setError(null);
-
-    // try {
-    //   const updatedProject = { ...project };
-    //   const imagesToDelete: string[] = [];
-
-    //   // Gestion de l'image principale
-    //   if (mainImageFile) {
-    //     const mainImageUrl = await uploadImageToStorage(
-    //       mainImageFile,
-    //       "projects"
-    //     );
-    //     updatedProject.mainImage = mainImageUrl;
-    //     if (projectData?.mainImage) {
-    //       imagesToDelete.push(projectData.mainImage);
-    //     }
-    //   }
-
-    //   // Gestion du logo
-    //   if (logoFile) {
-    //     const logoUrl = await uploadImageToStorage(logoFile, "projects");
-    //     updatedProject.logo = logoUrl;
-    //     if (projectData?.logo) {
-    //       imagesToDelete.push(projectData.logo);
-    //     }
-    //   }
-
-    //   // Gestion des images additionnelles
-    //   if (imagesFiles.length > 0) {
-    //     const newImageUrls = await Promise.all(
-    //       imagesFiles.map((file) => uploadImageToStorage(file, "projects"))
-    //     );
-    //     updatedProject.images = newImageUrls;
-
-    //     // Supprimer les anciennes images qui ne sont plus utilisées
-    //     const oldImages = projectData?.images || [];
-    //     const imagesToKeep = newImageUrls.filter((url) =>
-    //       oldImages.includes(url)
-    //     );
-    //     const imagesToRemove = oldImages.filter(
-    //       (url) => !imagesToKeep.includes(url)
-    //     );
-    //     imagesToDelete.push(...imagesToRemove);
-    //   }
-
-    //   // Supprimer les images non utilisées
-    //   await Promise.all(
-    //     imagesToDelete.map((url) => deleteImageFromStorage(url))
-    //   );
-
-    //   // Mettre à jour le projet dans Firestore
-    //   await updateProject(projectId, updatedProject);
-
-    //   router.push(`/project/${projectId}`);
-    // } catch (err) {
-    //   setError(err instanceof Error ? err.message : "Une erreur est survenue");
-    // } finally {
-    //   setIsLoading(false);
-    // }
-  };
+  // console.log("project", project);
+  // console.log("dataToUpdate", dataToUpdate);
+  console.log("mainImageFile", mainImageFile);
+  console.log("logoFile", logoFile);
+  console.log("imagesFiles", imagesFiles);
 
   if (isProjectLoading || isUserLoading || !project) {
     return (

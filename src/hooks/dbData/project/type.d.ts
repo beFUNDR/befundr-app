@@ -12,7 +12,9 @@ interface CreateProjectParams {
 }
 
 interface UpdateProjectParams {
-  project: ProjectToUpdate;
+  project: Project;
+  dataToUpdate?: Partial<Project>;
+  userPublicKey: PublicKey | null;
 }
 
 interface StartNftMintRoundProjectParams {

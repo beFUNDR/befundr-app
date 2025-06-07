@@ -5,7 +5,7 @@ import Image from "next/image";
 
 type Props = {
   name: string;
-  handleSelection: (name: string, files: File[]) => void;
+  handleSelection: (name: string, files: (File | string)[]) => void;
   objectFit: string;
   resolution: string;
   defaultImages?: string[];
@@ -14,13 +14,16 @@ type Props = {
 
 const MultiImageSelector = (props: Props) => {
   const [imagesToDisplay, setImagesToDisplay] = useState<string[]>([]);
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [selectedFiles, setSelectedFiles] = useState<(File | string)[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
   const MAX_IMAGES = props.maxImages || 4;
 
   useEffect(() => {
-    if (props.defaultImages) setImagesToDisplay(props.defaultImages);
+    if (props.defaultImages) {
+      setImagesToDisplay(props.defaultImages);
+      setSelectedFiles(props.defaultImages);
+    }
   }, [props.defaultImages]);
 
   const handleUploadClick = () => {

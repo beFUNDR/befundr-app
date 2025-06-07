@@ -37,7 +37,7 @@ export default function ApplyPage() {
   });
   const [mainImageFile, setMainImageFile] = useState<File | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
-  const [imagesFiles, setImagesFiles] = useState<File[]>([]);
+  const [imagesFiles, setImagesFiles] = useState<(File | string)[]>([]);
   const [isApplicationValidated, setIsApplicationValidated] = useState(false);
   const { data: user, isLoading: isUserLoading } = useUser(
     publicKey?.toString() || ""
