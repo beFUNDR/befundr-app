@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import admin from "@/lib/firebase/firebaseAdmin";
 import { uploadImageServer } from "@/utils/firebaseFunctions";
 
+/**
+ * Create a new project
+ * @param request - The request object
+ * @returns The project ID
+ */
 export async function POST(request: NextRequest) {
   try {
     const { project, mainImageBase64, logoBase64, additionalImagesBase64 } =
@@ -10,23 +15,22 @@ export async function POST(request: NextRequest) {
     let mainImageUrl = project.mainImage || "";
     let logoUrl = project.logo || "";
     let additionalImagesUrls: string[] = [];
+    const timestamp = Date.now();
 
     if (mainImageBase64) {
       const image = Buffer.from(mainImageBase64, "base64");
-      mainImageUrl =
-        (await uploadImageServer(
-          image,
-          `projects/${project.userId}/${project.name}/mainImage.png`
-        )) || "";
+      mainImageUrl = await uploadImageServer(
+        image,
+        `projects/${project.userId}/${project.name}/mainImage_v=${timestamp}.png`
+      );
     }
 
     if (logoBase64) {
       const image = Buffer.from(logoBase64, "base64");
-      logoUrl =
-        (await uploadImageServer(
-          image,
-          `projects/${project.userId}/${project.name}/logo.png`
-        )) || "";
+      logoUrl = await uploadImageServer(
+        image,
+        `projects/${project.userId}/${project.name}/logo_v=${timestamp}.png`
+      );
     }
 
     if (additionalImagesBase64 && additionalImagesBase64.length > 0) {
@@ -36,7 +40,7 @@ export async function POST(request: NextRequest) {
           return (
             (await uploadImageServer(
               image,
-              `projects/${project.userId}/${project.name}/additional_${index}.png`
+              `projects/${project.userId}/${project.name}/additional_${index}_v=${timestamp}.png`
             )) || ""
           );
         })
@@ -70,6 +74,11 @@ export async function POST(request: NextRequest) {
   }
 }
 
+/**
+ * Update a project
+ * @param request - The request object
+ * @returns The project ID
+ */
 export const PATCH = async (request: NextRequest) => {
   try {
     const {
@@ -83,7 +92,8 @@ export const PATCH = async (request: NextRequest) => {
 
     let mainImageUrl = project.mainImage;
     let logoUrl = project.logo;
-    // let additionalImagesUrls = project.images || [];
+    let additionalImagesUrls = project.images || [];
+    const timestamp = Date.now();
 
     // Handle main image update
     if (mainImageBase64) {
@@ -100,7 +110,7 @@ export const PATCH = async (request: NextRequest) => {
       const image = Buffer.from(mainImageBase64, "base64");
       mainImageUrl = await uploadImageServer(
         image,
-        `projects/${project.userId}/${project.name}/mainImage.png`
+        `projects/${project.userId}/${project.name}/mainImage_v=${timestamp}.png`
       );
     }
 
@@ -115,51 +125,52 @@ export const PATCH = async (request: NextRequest) => {
       const image = Buffer.from(logoBase64, "base64");
       logoUrl = await uploadImageServer(
         image,
-        `projects/${project.userId}/${project.name}/logo.png`
+        `projects/${project.userId}/${project.name}/logo_v=${timestamp}.png`
       );
     }
 
-    // Gestion des images additionnelles
-    // if (additionalImagesBase64 && additionalImagesBase64.length > 0) {
-    //   // Supprimer les anciennes images qui ne sont plus présentes
-    //   const oldImages = project.images || [];
-    //   const newImageUrls = additionalImagesBase64.filter(
-    //     (url) => typeof url === "string"
-    //   );
-    //   const imagesToDelete = oldImages.filter(
-    //     (url) => !newImageUrls.includes(url)
-    //   );
+    // Handle additional images update
+    if (additionalImagesBase64 && additionalImagesBase64.length > 0) {
+      // Delete old images
+      const oldImages = project.images || [];
+      const newImageUrls = additionalImagesBase64.filter(
+        (url: any) => typeof url === "string"
+      );
+      const imagesToDelete = oldImages.filter(
+        (url: any) => !newImageUrls.includes(url)
+      );
 
-    //   await Promise.all(
-    //     imagesToDelete.map(async (url) => {
-    //       const imagePath = url.split("/o/")[1].split("?")[0];
-    //       await admin
-    //         .storage()
-    //         .bucket()
-    //         .file(decodeURIComponent(imagePath))
-    //         .delete();
-    //     })
-    //   );
+      if (imagesToDelete.length > 0) {
+        await Promise.all(
+          imagesToDelete.map(async (image: string) => {
+            const oldImagePath = image.split("/projects/")[1];
+            await admin
+              .storage()
+              .bucket()
+              .file(decodeURIComponent(`projects/${oldImagePath}`))
+              .delete();
+          })
+        );
+      }
 
-    //   // Upload des nouvelles images
-    //   additionalImagesUrls = await Promise.all(
-    //     additionalImagesBase64.map(async (base64: string, index: number) => {
-    //       if (typeof base64 === "string") return base64;
-    //       const image = Buffer.from(base64, "base64");
-    //       return await uploadImageServer(
-    //         image,
-    //         `projects/${project.userId}/${project.name}/additional_${index}.png`
-    //       );
-    //     })
-    //   );
-    // }
+      // Upload new images
+      additionalImagesUrls = await Promise.all(
+        additionalImagesBase64.map(async (base64: string, index: number) => {
+          const image = Buffer.from(base64, "base64");
+          return await uploadImageServer(
+            image,
+            `projects/${project.userId}/${project.name}/additional_${index}_v=${timestamp}.png`
+          );
+        })
+      );
+    }
 
     const projectRef = admin.firestore().collection("projects").doc(project.id);
     await projectRef.update({
       ...dataToUpdate,
       mainImage: mainImageUrl,
       logo: logoUrl,
-      // images: additionalImagesUrls,
+      images: additionalImagesUrls,
     });
 
     return NextResponse.json({ projectId: project.id });

@@ -117,12 +117,6 @@ export default function EditProjectPage() {
     }
   };
 
-  console.log("project", project);
-  // console.log("dataToUpdate", dataToUpdate);
-  console.log("mainImageFile", mainImageFile);
-  console.log("logoFile", logoFile);
-  console.log("imagesFiles", imagesFiles);
-
   if (isProjectLoading || isUserLoading || !project) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -143,7 +137,7 @@ export default function EditProjectPage() {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-12">
-      <BackButton />
+      <BackButton link={`/project/${projectId}`} />
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-4xl font-bold text-white">Edit project</h1>
       </div>

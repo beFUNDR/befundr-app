@@ -99,7 +99,7 @@ const ProjectPage = () => {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-12">
-      <BackButton />
+      <BackButton link={"/projects"} />
       {/* Header */}
       <div className="flex flex-col md:flex-row gap-2 items-start md:items-center mb-2">
         <h1 className="text-4xl font-bold text-white">{project.name}</h1>
