@@ -1,19 +1,17 @@
 import { fileToBase64 } from "@/utils/firebaseClient";
-import { confirmTransaction } from "@/utils/solanaUtils";
-import { PublicKey, SystemProgram } from "@solana/web3.js";
-import { BEFUNDR_PROGRAM_ID } from "../../../../anchor/src";
 import { CreateProjectParams } from "./type";
 
 export const createProject = async ({
-    project,
-    mainImageFile,
-    logoFile,
-    userPublicKey,
+  project,
+  mainImageFile,
+  logoFile,
+  imagesFiles,
+  userPublicKey,
 }: CreateProjectParams): Promise<any> => {
-    if (!userPublicKey) {
-        throw new Error("Connect your wallet");
-    }
-    /*
+  if (!userPublicKey) {
+    throw new Error("Connect your wallet");
+  }
+  /*
         const [configPda] = PublicKey.findProgramAddressSync(
             [Buffer.from("globals")],
             BEFUNDR_PROGRAM_ID
@@ -61,21 +59,27 @@ export const createProject = async ({
         await confirmTransaction(program, createProjectTx);
     
         console.log("Project created", await program.account.project.fetch(projectPda));*/
-    const mainImageBase64 = await fileToBase64(mainImageFile);
-    const logoBase64 = await fileToBase64(logoFile);
+  const mainImageBase64 = await fileToBase64(mainImageFile);
+  const logoBase64 = await fileToBase64(logoFile);
 
-    const response = await fetch("/api/project", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            project: { ...project, userId: userPublicKey },
-            mainImageBase64,
-            logoBase64,
-        }),
-    });
+  // Convertir les images supplémentaires en base64
+  const additionalImagesBase64 = imagesFiles
+    ? await Promise.all(imagesFiles.map((file) => fileToBase64(file)))
+    : [];
 
-    if (!response.ok) {
-        throw new Error("Erreur lors de la création du projet");
-    }
-    return {};
+  const response = await fetch("/api/project", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      project: { ...project, userId: userPublicKey },
+      mainImageBase64,
+      logoBase64,
+      additionalImagesBase64,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Erreur lors de la création du projet");
+  }
+  return {};
 };

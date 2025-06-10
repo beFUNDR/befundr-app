@@ -7,11 +7,16 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useAnchorProvider } from "@/providers/SolanaProvider";
 import { createProject } from "./createProject";
 import { getBefundrProgram } from "../../../../anchor/src";
-import { StartIncubationProjectParams, StartNftMintRoundProjectParams } from "./type";
+import {
+  StartIncubationProjectParams,
+  StartNftMintRoundProjectParams,
+  UpdateProjectParams,
+} from "./type";
 import { approveProject } from "./approveProject";
 import { startNftMintRound } from "./startNftMintRound";
 import { startIncubation } from "./startIncubation";
 import { mintNft } from "./mintNft";
+import { updateProject } from "./updateProject";
 
 // Fonction utilitaire pure
 export const getProjectsByUserId = async (userId: string) => {
@@ -109,12 +114,24 @@ export const useProject = () => {
     },
   });
 
+  const updateProjectMutation = useMutation({
+    mutationFn: (updateProjectParams: UpdateProjectParams) => {
+      return updateProject({
+        ...updateProjectParams,
+        userPublicKey: publicKey,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+    },
+  });
+
   const approveProjectMutation = useMutation({
     mutationFn: (project: Project) => {
       if (!publicKey) {
         throw new Error("Public key is required to perform the action");
       }
-      return approveProject({ project });
+      return approveProject({ project, userPublicKey: publicKey });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
@@ -123,11 +140,20 @@ export const useProject = () => {
 
   const startNftMintRoundProjectMutation = useMutation({
     mutationFn: (startNftMintRoundParams: StartNftMintRoundProjectParams) => {
-      const { project, nftMaxSupply, nftUsdcPrice, nftCollectionName } = startNftMintRoundParams;
+      const { project, nftMaxSupply, nftUsdcPrice, nftCollectionName } =
+        startNftMintRoundParams;
       if (!publicKey) {
         throw new Error("Public key is required to perform the action");
       }
-      return startNftMintRound({ project, nftMaxSupply, nftUsdcPrice, nftCollectionName, authority: publicKey, payer: publicKey, program: befundrProgram });
+      return startNftMintRound({
+        project,
+        nftMaxSupply,
+        nftUsdcPrice,
+        nftCollectionName,
+        authority: publicKey,
+        payer: publicKey,
+        program: befundrProgram,
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
@@ -140,7 +166,12 @@ export const useProject = () => {
       if (!publicKey) {
         throw new Error("Public key is required to perform the action");
       }
-      return startIncubation({ project, authority: publicKey, payer: publicKey, program: befundrProgram });
+      return startIncubation({
+        project,
+        authority: publicKey,
+        payer: publicKey,
+        program: befundrProgram,
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
@@ -153,7 +184,15 @@ export const useProject = () => {
       if (!publicKey) {
         throw new Error("Public key is required to approve the project");
       }
-      return mintNft({ project, quantity, authority: publicKey, payer: publicKey, sendTransaction: sendTransaction, connection, program: befundrProgram });
+      return mintNft({
+        project,
+        quantity,
+        authority: publicKey,
+        payer: publicKey,
+        sendTransaction: sendTransaction,
+        connection,
+        program: befundrProgram,
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
@@ -162,6 +201,8 @@ export const useProject = () => {
 
   return {
     createProject: createProjectMutation.mutateAsync,
+    updateProject: updateProjectMutation.mutateAsync,
+    isUpdatingProject: updateProjectMutation.isPending,
     approveProject: approveProjectMutation.mutateAsync,
     startNftMintRound: startNftMintRoundProjectMutation.mutateAsync,
     startIncubation: startIncubationMutation.mutateAsync,

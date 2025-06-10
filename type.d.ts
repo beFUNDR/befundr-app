@@ -5,8 +5,12 @@ type Project = {
   category: string;
   mainImage: string;
   logo: string;
+  images: string[];
   headLine: string;
   description: string;
+  pitchLink?: string;
+  videoLink?: string;
+  otherLink?: string;
   website?: string;
   twitter?: string;
   discord?: string;
@@ -22,8 +26,12 @@ type ProjectToCreate = {
   category: string;
   mainImage: string;
   logo: string;
+  images: string[];
   headLine: string;
   description: string;
+  pitchLink?: string;
+  videoLink?: string;
+  otherLink?: string;
   website?: string;
   twitter?: string;
   discord?: string;

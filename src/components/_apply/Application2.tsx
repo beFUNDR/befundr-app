@@ -10,18 +10,19 @@ export default function Application2({ project, setProject }: Props) {
     <form className="flex flex-col gap-8">
       <div>
         <h2 className="text-2xl font-bold text-white mb-2">Project details</h2>
-        <p>Define a short headline</p>
+        <p className="text-gray-400 mb-4">
+          Provide as many details as possible to help understand your project.
+        </p>
         <InputField
           label="Headline"
           value={project.headLine || ""}
           onChange={(e) => setProject({ ...project, headLine: e.target.value })}
           placeholder="Your project headline"
+          required
         />
-        <p className="text-gray-400 mb-4">
-          Share your project&apos;s story and vision.
-        </p>
+
         <InputField
-          label="Project description *"
+          label="Project description"
           value={project.description || ""}
           onChange={(e) =>
             setProject({ ...project, description: e.target.value })
@@ -29,6 +30,31 @@ export default function Application2({ project, setProject }: Props) {
           textarea
           required
           placeholder="Write a compelling description of your project.\nClearly explain what you're building, the problem you're solving, and why the community should care."
+        />
+
+        <InputField
+          label="Pitch link"
+          value={project.pitchLink || ""}
+          onChange={(e) =>
+            setProject({ ...project, pitchLink: e.target.value })
+          }
+          placeholder="https://pitch.com/yourproject"
+        />
+        <InputField
+          label="Video link"
+          value={project.videoLink || ""}
+          onChange={(e) =>
+            setProject({ ...project, videoLink: e.target.value })
+          }
+          placeholder="https://youtube.com/yourproject"
+        />
+        <InputField
+          label="Other link"
+          value={project.otherLink || ""}
+          onChange={(e) =>
+            setProject({ ...project, otherLink: e.target.value })
+          }
+          placeholder="https://yourproject.com"
         />
       </div>
       <div>

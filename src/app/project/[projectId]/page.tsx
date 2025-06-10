@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import Loader from "@/components/displayElements/Loader";
 import { useParams } from "next/navigation";
-import Image from "next/image";
 import WaitingForApprovalPhase from "@/components/_projectPage/WaitingForApprovalPhase";
 import { useUser } from "@/hooks/dbData/useUser";
 import CategoryTagBig from "@/components/tags/CategoryTagBig";
@@ -21,6 +20,7 @@ import AdminModal from "@/components/modals/AdminModal";
 import { ProjectStatus } from "@/data/ProjectStatus";
 import PublishedPhase from "@/components/_projectPage/PublishedPhase";
 import NftMintRoundPhase from "@/components/_projectPage/NftMintRoundPhase";
+import ImageCarousel from "@/components/displayElements/ImageCarousel";
 
 const ProjectPage = () => {
   const [activeTab, setActiveTab] = useState("about");
@@ -45,6 +45,12 @@ const ProjectPage = () => {
     );
   }, [publicKey]);
 
+  // Merge mainImage and potentialadditional images
+  const allImages = useMemo(() => {
+    if (!project) return [];
+    return [project.mainImage, ...(project.images || [])].filter(Boolean);
+  }, [project]);
+
   if (isLoading)
     return (
       <div className="flex justify-center items-center h-screen">
@@ -68,6 +74,7 @@ const ProjectPage = () => {
             description={project.description}
             owner={owner}
             isOwner={isOwner}
+            projectId={projectId}
           />
         );
       case "updates":
@@ -84,6 +91,7 @@ const ProjectPage = () => {
             description={project.description}
             owner={owner}
             isOwner={isOwner}
+            projectId={projectId}
           />
         );
     }
@@ -91,9 +99,9 @@ const ProjectPage = () => {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-12">
-      <BackButton />
+      <BackButton link={"/projects"} />
       {/* Header */}
-      <div className="flex gap-2 items-center mb-2">
+      <div className="flex flex-col md:flex-row gap-2 items-start md:items-center mb-2">
         <h1 className="text-4xl font-bold text-white">{project.name}</h1>
         {/* Tags */}
         <CategoryTagBig category={project.category} />
@@ -112,16 +120,7 @@ const ProjectPage = () => {
       {/* Main block */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         {/* Dashboard image */}
-        <div className="relative flex items-center justify-center min-w-[350px] aspect-square ">
-          {project.mainImage && (
-            <Image
-              src={project.mainImage}
-              alt="Dashboard preview"
-              fill
-              className="rounded-2xl border border-custom-gray-600 object-cover aspect-square"
-            />
-          )}
-        </div>
+        <ImageCarousel images={allImages} />
         {/* Project info */}
         {project.status === ProjectStatus.WaitingForApproval && (
           <WaitingForApprovalPhase project={project} owner={owner} />
