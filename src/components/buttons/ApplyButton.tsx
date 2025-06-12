@@ -4,7 +4,7 @@ import ButtonLabelSecondary from "./_ButtonLabelSecondary";
 const ApplyButton = () => {
   return (
     <Link href="/apply">
-      <ButtonLabelSecondary label="Apply as builder" />
+      <ButtonLabelSecondary label="Apply now" />
     </Link>
   );
 };

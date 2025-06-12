@@ -60,19 +60,6 @@ const ProjectsPage = () => {
             {cat}
           </button>
         ))}
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            className={`min-w-26 py-2 rounded-full border text-sm font-semibold transition ${
-              selectedCategory === cat
-                ? "text-accent border-accent"
-                : " text-custom-gray-400 border-custom-gray-400 hover:text-custom-gray-200 hover:border-custom-gray-200 "
-            }`}
-            onClick={() => setSelectedCategory(cat)}
-          >
-            {cat}
-          </button>
-        ))}
       </div>
       {/* Grille de projets */}
       {isLoadingProjects ? (

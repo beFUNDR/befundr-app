@@ -55,7 +55,7 @@ const SkillHubPage = () => {
         {skills.map((skill) => (
           <button
             key={skill}
-            className={`min-w-26 md:py-1 rounded-full border text-sm font-semibold transition ${
+            className={`px-4 py-2 rounded-full border text-sm font-semibold transition whitespace-nowrap ${
               selectedSkill === skill
                 ? "text-accent border-accent"
                 : " text-custom-gray-400 border-custom-gray-400 hover:text-custom-gray-200 hover:border-custom-gray-200 "

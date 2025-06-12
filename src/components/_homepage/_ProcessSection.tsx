@@ -7,7 +7,7 @@ const features = [
   {
     icon: <TrendingUp className="text-accent w-8 h-8 mb-4" />,
     title: "The best projects",
-    desc: "Selected through a rigorous process by leading web3 experts and communities",
+    desc: "The preselection is done by beFUNDR and its partners, but the final decision is made by the community",
   },
   {
     icon: <Users className="text-accent w-8 h-8 mb-4" />,
