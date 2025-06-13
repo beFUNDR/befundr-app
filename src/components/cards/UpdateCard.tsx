@@ -70,16 +70,16 @@ const UpdateCard = ({ update, updateId, isOwner, onClick }: Props) => {
             {isOwner && (
               <div className="flex items-center gap-4">
                 <button
-                  className="text-gray-400 text-sm"
+                  className="text-gray-400 text-sm hover:text-white transition-colors duration-300"
                   onClick={() => setIsEditModalOpen(true)}
                 >
-                  <Pencil size={18} color="white" />
+                  <Pencil size={18} />
                 </button>
                 <button
-                  className="text-gray-400 text-sm"
+                  className="text-gray-400 text-sm hover:text-red-500 transition-colors duration-300"
                   onClick={() => setIsDeleteModalOpen(true)}
                 >
-                  <Trash size={18} color="red" className="hover:scale-110" />
+                  <Trash size={18} />
                 </button>
               </div>
             )}

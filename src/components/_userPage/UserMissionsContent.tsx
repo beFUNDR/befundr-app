@@ -34,7 +34,12 @@ const UserMissionsContent = ({ userId }: { userId: string }) => {
   return (
     <div className="flex flex-col gap-6 mt-4">
       {missions?.map((mission, idx) => (
-        <MissionCard key={idx} mission={mission.data} />
+        <MissionCard
+          key={idx}
+          mission={mission.data}
+          isOwner={false}
+          missionId={mission.id}
+        />
       ))}
     </div>
   );
