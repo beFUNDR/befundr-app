@@ -49,7 +49,7 @@ const MissionCard = ({ mission, isOwner, missionId }: Props) => {
         <div className="bodyStyle mb-2 whitespace-pre-line">
           {mission.description}
         </div>
-        <div className="flex items-center gap-2 mt-2">
+        <div className="flex justify-between items-center w-full gap-2 mt-2">
           {mission.isPaid ? (
             <span className="text-secondary font-semibold text-sm bg-secondary/20 px-2 py-0.5 rounded-full">
               Paid
@@ -57,6 +57,12 @@ const MissionCard = ({ mission, isOwner, missionId }: Props) => {
           ) : (
             <span className="text-custom-gray-400 font-semibold text-sm bg-custom-gray-800 px-2 py-0.5 rounded-full">
               Volunteer
+            </span>
+          )}
+          {mission.status === "open" && (
+            <span className="text-custom-gray-400 font-semibold text-sm bg-custom-gray-800 px-2 py-0.5 rounded-full">
+              {mission.applicants.length} applicant
+              {mission.applicants.length > 1 ? "s" : ""}
             </span>
           )}
         </div>

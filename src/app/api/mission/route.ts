@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
         ...mission,
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
         status: "open",
+        applicants: [],
       });
 
     return NextResponse.json({ missionId: docRef.id });
