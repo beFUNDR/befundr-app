@@ -22,8 +22,9 @@ const MenuComponent = () => {
   const { createUser, signWelcomeMessage, isAdmin } = useLocalContext();
   const currentPathname = usePathname();
   const { connected, publicKey, signMessage } = useWallet();
-  const { data: userData, isLoading: isUserLoading } = useUser(
-    publicKey?.toString()
+  const { useGetUser } = useUser();
+  const { data: userData, isLoading: isUserLoading } = useGetUser(
+    publicKey?.toString() || ""
   );
   const { data: gameProgramData } = useGameProgramByUserId(
     publicKey?.toString() || ""
@@ -79,7 +80,7 @@ const MenuComponent = () => {
 
     if (
       connected &&
-      (!userData || userData === "not_found") &&
+      (!userData || userData.data.wallet === "not_found") &&
       !isUserLoading &&
       publicKey
     ) {

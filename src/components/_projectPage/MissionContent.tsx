@@ -35,6 +35,7 @@ const MissionContent = (props: Props) => {
           mission={mission.data}
           isOwner={props.isOwner}
           missionId={mission.id}
+          projectId={props.projectId}
         />
       ))}
       {isShowModal && (

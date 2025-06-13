@@ -13,15 +13,14 @@ type Props = {
 const AvatarModal = (props: Props) => {
   const { publicKey } = useWallet();
   const { data, isLoading, error } = useUserAssets(publicKey?.toString());
-  const {
-    updateUser,
-    isUpdating,
-    data: user,
-  } = useUser(publicKey?.toString() ?? undefined);
+  const { useGetUser } = useUser();
+  const { data: userData } = useGetUser(publicKey?.toString() ?? "");
+  const { useUpdateUser } = useUser();
+  const { mutateAsync: updateUser, isPending: isUpdating } = useUpdateUser;
 
   const handleSelectAvatar = async (image: string) => {
-    if (!publicKey) return;
-    await updateUser({ ...user, avatar: image });
+    if (!publicKey || !userData) return;
+    await updateUser({ ...userData.data, avatar: image });
     props.onClose();
   };
 

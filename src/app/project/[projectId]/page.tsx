@@ -29,9 +29,12 @@ const ProjectPage = () => {
   const projectId = params.projectId as string;
   const { getProject } = useProject();
   const { data: project, isLoading, error } = getProject(projectId);
-  const { data: owner, isLoading: isOwnerLoading } = useUser(
-    project?.userId ?? ""
-  );
+  const { useGetUser } = useUser();
+  const {
+    data: owner,
+    isLoading: isOwnerLoading,
+    error: ownerError,
+  } = useGetUser(project?.userId ?? "");
   const [isShowManageModal, setIsShowManageModal] = useState(false);
 
   const isOwner = useMemo(() => {
@@ -57,8 +60,10 @@ const ProjectPage = () => {
         <Loader />
       </div>
     );
-  if (error) return <div>Erreur: {error.message}</div>;
+  if (error || ownerError)
+    return <div>Erreur: {error?.message || ownerError?.message}</div>;
   if (!project) return <div>Projet non trouvé</div>;
+  if (!owner) return <div>Propriétaire non trouvé</div>;
   if (isOwnerLoading)
     return (
       <div className="flex justify-center items-center h-screen">
@@ -72,7 +77,7 @@ const ProjectPage = () => {
         return (
           <AboutContent
             description={project.description}
-            owner={owner}
+            owner={owner?.data}
             isOwner={isOwner}
             projectId={projectId}
           />
@@ -89,7 +94,7 @@ const ProjectPage = () => {
         return (
           <AboutContent
             description={project.description}
-            owner={owner}
+            owner={owner?.data}
             isOwner={isOwner}
             projectId={projectId}
           />
@@ -123,13 +128,13 @@ const ProjectPage = () => {
         <ImageCarousel images={allImages} />
         {/* Project info */}
         {project.status === ProjectStatus.WaitingForApproval && (
-          <WaitingForApprovalPhase project={project} owner={owner} />
+          <WaitingForApprovalPhase project={project} owner={owner?.data} />
         )}
         {project.status === ProjectStatus.Published && (
-          <PublishedPhase project={project} owner={owner} />
+          <PublishedPhase project={project} owner={owner?.data} />
         )}
         {project.status === ProjectStatus.NftMintRound && (
-          <NftMintRoundPhase project={project} owner={owner} />
+          <NftMintRoundPhase project={project} owner={owner?.data} />
         )}
       </div>
 

@@ -39,6 +39,7 @@ const UserMissionsContent = ({ userId }: { userId: string }) => {
           mission={mission.data}
           isOwner={false}
           missionId={mission.id}
+          projectId={mission.data.projectId}
         />
       ))}
     </div>

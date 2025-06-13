@@ -25,7 +25,8 @@ export default function EditProjectPage() {
   const { getProject, updateProject, isUpdatingProject } = useProject();
   const { data: projectData, isLoading: isProjectLoading } =
     getProject(projectId);
-  const { data: user, isLoading: isUserLoading } = useUser(
+  const { useGetUser } = useUser();
+  const { data: user, isLoading: isUserLoading } = useGetUser(
     projectData?.userId ?? ""
   );
 
@@ -162,7 +163,9 @@ export default function EditProjectPage() {
         <Application2 project={project} setProject={handleLocalProjectUpdate} />
       )}
 
-      {currentStep === 3 && <Application3 project={project} user={user!} />}
+      {currentStep === 3 && user?.data && (
+        <Application3 project={project} user={user.data} />
+      )}
       <div className="flex flex-col md:flex-row justify-start mt-4 gap-4">
         {currentStep > 1 && (
           <button

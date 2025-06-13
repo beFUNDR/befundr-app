@@ -14,13 +14,13 @@ import BackButton from "@/components/buttons/BackButton";
 const UserPage = () => {
   const params = useParams();
   const userId = params.userId as string;
-  const { getUser } = useUser(userId);
+  const { useGetUser } = useUser();
   const {
     data: gameProgramData,
     isLoading: isGameProgramLoading,
     error: gameProgramError,
   } = useGameProgramByUserId(userId);
-  const { data: user, isLoading, error } = getUser(userId);
+  const { data: user, isLoading, error } = useGetUser(userId);
   const [activeTab, setActiveTab] = useState("projects");
 
   if (isLoading || isGameProgramLoading)
@@ -49,7 +49,7 @@ const UserPage = () => {
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-12">
       <BackButton />
-      <UserProfileHeader user={user} gameProgramData={gameProgramData} />
+      <UserProfileHeader user={user.data} gameProgramData={gameProgramData} />
       <UserTabs activeTab={activeTab} onTabChange={setActiveTab} />
       {renderTabContent()}
     </div>
