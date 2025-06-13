@@ -78,7 +78,7 @@ const ProjectPage = () => {
           />
         );
       case "updates":
-        return <UpdateContent isOwner={isOwner} />;
+        return <UpdateContent isOwner={isOwner} projectId={projectId} />;
       case "missionHub":
         return <MissionContent isOwner={isOwner} projectId={projectId} />;
       case "faq":

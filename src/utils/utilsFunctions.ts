@@ -61,3 +61,13 @@ export function capitalizeFirstLetter(string: string) {
   if (!string) return "";
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
+
+export const formatDate = (
+  date: string | { seconds: number; nanoseconds: number }
+) => {
+  if (typeof date === "string") {
+    return new Date(date);
+  }
+  const milliseconds = date.seconds * 1000 + date.nanoseconds / 1000000;
+  return new Date(milliseconds);
+};

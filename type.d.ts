@@ -88,12 +88,13 @@ type User = {
 };
 
 type Update = {
+  projectId: string;
   title: string;
   authorId: string;
   date: string; // format: YYYY-MM-DD
   message: string;
-  commentsCount: number;
-  likesCount: number;
+  likesCount: string[];
+  edited?: string; // format: YYYY-MM-DD
 };
 
 type Mission = {
