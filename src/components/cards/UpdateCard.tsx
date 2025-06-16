@@ -18,7 +18,8 @@ interface Props {
 }
 
 const UpdateCard = ({ update, updateId, isOwner, onClick }: Props) => {
-  const { data: user } = useUser(update.authorId);
+  const { useGetUser } = useUser();
+  const { data: user } = useGetUser(update.authorId);
   const { publicKey } = useWallet();
   const { useLikeUpdate } = useUpdate();
   const { mutateAsync: likeUpdate, isPending: isLiking } = useLikeUpdate;
@@ -55,8 +56,8 @@ const UpdateCard = ({ update, updateId, isOwner, onClick }: Props) => {
       <div className="flex items-center gap-4 mb-1">
         {user && (
           <Image
-            src={user?.avatar}
-            alt={user?.name}
+            src={user?.data.avatar}
+            alt={user?.data.name}
             width={48}
             height={48}
             className="rounded-full border border-gray-700"
@@ -70,22 +71,22 @@ const UpdateCard = ({ update, updateId, isOwner, onClick }: Props) => {
             {isOwner && (
               <div className="flex items-center gap-4">
                 <button
-                  className="text-gray-400 text-sm"
+                  className="text-gray-400 text-sm hover:text-white transition-colors duration-300"
                   onClick={() => setIsEditModalOpen(true)}
                 >
-                  <Pencil size={18} color="white" />
+                  <Pencil size={18} />
                 </button>
                 <button
-                  className="text-gray-400 text-sm"
+                  className="text-gray-400 text-sm hover:text-red-500 transition-colors duration-300"
                   onClick={() => setIsDeleteModalOpen(true)}
                 >
-                  <Trash size={18} color="red" className="hover:scale-110" />
+                  <Trash size={18} />
                 </button>
               </div>
             )}
           </div>
           <div className="flex items-center gap-2 text-gray-400 text-sm">
-            <span className="font-semibold text-white">{user?.name}</span>
+            <span className="font-semibold text-white">{user?.data.name}</span>
             <span>•</span>
             <span>
               {formatDate(update.date).toLocaleDateString(undefined, {

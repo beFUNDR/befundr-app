@@ -29,7 +29,7 @@ const ModalLayout = (props: Props) => {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="fixed inset-0 backdrop-blur-sm bg-black/50 flex justify-center items-center z-50 p-10 min-h-screen"
+          className="fixed inset-0 backdrop-blur-sm bg-black/50 flex justify-center items-center z-50 p-4 md:p-10 min-h-screen"
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.98 }}

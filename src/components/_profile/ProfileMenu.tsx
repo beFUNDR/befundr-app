@@ -4,6 +4,7 @@ const menuItems = [
   "My profile",
   "My projects",
   "My missions",
+  "My applications",
   "My communities",
   "My investments",
 ];

@@ -22,9 +22,10 @@ const MenuComponent = () => {
   const { createUser, isAdmin } = useLocalContext();
   const { user } = useAuth();
   const currentPathname = usePathname();
-  const { connected, publicKey } = useWallet()
-  const { data: userData, isLoading: isUserLoading } = useUser(
-    publicKey?.toString()
+  const { connected, publicKey, signMessage } = useWallet();
+  const { useGetUser } = useUser();
+  const { data: userData, isLoading: isUserLoading } = useGetUser(
+    publicKey?.toString() || ""
   );
   const { data: gameProgramData } = useGameProgramByUserId(
     publicKey?.toString() || ""
@@ -63,7 +64,7 @@ const MenuComponent = () => {
 
     if (
       connected &&
-      (!userData || userData === "not_found") &&
+      (!userData || userData.data.wallet === "not_found") &&
       !isUserLoading &&
       publicKey
     ) {
@@ -99,7 +100,9 @@ const MenuComponent = () => {
             <ButtonLabelSecondarySmall label="Admin action 2" />
           </button>
         )}
-        {gameProgramData && <PointCardSmall points={gameProgramData.points} />}
+        {gameProgramData && (
+          <PointCardSmall points={gameProgramData.data.points} />
+        )}
         {connected ? <ProfilButton /> : <WalletButton />}
       </div>
 

@@ -13,7 +13,8 @@ const ProfilButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const { disconnect, publicKey } = useWallet();
-  const { data: userData } = useUser(publicKey?.toString());
+  const { useGetUser } = useUser();
+  const { data: userData } = useGetUser(publicKey?.toString());
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -39,9 +40,9 @@ const ProfilButton = () => {
   return (
     <div className="relative" ref={menuRef} onClick={toggleMenu}>
       <button className="flex items-center space-x-2">
-        {userData?.avatar ? (
+        {userData?.data.avatar ? (
           <Image
-            src={userData?.avatar}
+            src={userData?.data.avatar}
             alt="Avatar"
             className="rounded-full"
             width={40}
@@ -52,9 +53,9 @@ const ProfilButton = () => {
             <DefaultAvatar size={10} publicKey={publicKey?.toString()} />
           )
         )}
-        <span>
-          {userData?.name
-            ? userData?.name
+        <span className="whitespace-nowrap">
+          {userData?.data.name
+            ? userData?.data.name
             : concatAddress(publicKey?.toString())}
         </span>
       </button>
@@ -70,9 +71,9 @@ const ProfilButton = () => {
           >
             <div className="p-4 border-b border-gray-700">
               <div className="flex items-center space-x-2">
-                {userData?.avatar ? (
+                {userData?.data.avatar ? (
                   <Image
-                    src={userData?.avatar}
+                    src={userData?.data.avatar}
                     alt="Avatar"
                     className="rounded-full"
                     width={40}
@@ -87,7 +88,7 @@ const ProfilButton = () => {
                   )
                 )}
                 <div>
-                  <div>{userData?.name}</div>
+                  <div className="whitespace-nowrap">{userData?.data.name}</div>
                   <div className=" text-gray-400">
                     {concatAddress(publicKey?.toString())}
                   </div>
@@ -120,6 +121,15 @@ const ProfilButton = () => {
                 >
                   <DollarSign size={16} color="gray" />
                   <span>My missions</span>
+                </li>
+              </Link>
+              <Link href="/myprofile?tab=My applications">
+                <li
+                  className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2"
+                  onClick={closeMenu}
+                >
+                  <DollarSign size={16} color="gray" />
+                  <span>My applications</span>
                 </li>
               </Link>
               <Link href="/myprofile?tab=My communities">

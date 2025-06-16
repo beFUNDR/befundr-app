@@ -18,6 +18,21 @@ import { startIncubation } from "./startIncubation";
 import { mintNft } from "./mintNft";
 import { updateProject } from "./updateProject";
 
+//* QUERIES
+// Get a project by id
+const getProjectById = async (projectId: string) => {
+  const { result, error } = await getDocument<Project>("projects", projectId);
+  if (error) throw error;
+  return result;
+};
+
+const useGetProjectById = (projectId: string) =>
+  useQuery({
+    queryKey: ["project", projectId],
+    queryFn: () => getProjectById(projectId),
+    enabled: !!projectId,
+  });
+
 // Fonction utilitaire pure
 export const getProjectsByUserId = async (userId: string) => {
   try {
@@ -200,6 +215,7 @@ export const useProject = () => {
   });
 
   return {
+    useGetProjectById,
     createProject: createProjectMutation.mutateAsync,
     updateProject: updateProjectMutation.mutateAsync,
     isUpdatingProject: updateProjectMutation.isPending,

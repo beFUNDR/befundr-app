@@ -1,3 +1,4 @@
+"use client";
 /**
  * LOCAL CONTEXT PROVIDER
  *
@@ -8,7 +9,7 @@ import { useUser } from "@/hooks/dbData/useUser";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { useQueryClient } from "@tanstack/react-query";
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 
 // Context type
@@ -35,16 +36,20 @@ export const LocalContextProvider = ({
 }) => {
   const queryClient = useQueryClient();
   const { publicKey } = useWallet();
-  const { data: userData, isLoading: isUserLoading } = useUser(
-    publicKey?.toString() || ""
-  );
-
+  const { useGetUser } = useUser();
+  const { data: userData } = useGetUser(publicKey?.toString() || "");
   const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    if (userData) {
+      setUser(userData.data);
+    }
+  }, [userData]);
 
   const isAdmin = useMemo(() => {
     return (
-      userData?.wallet === process.env.NEXT_PUBLIC_ADMIN_1 ||
-      userData?.wallet === process.env.NEXT_PUBLIC_ADMIN_2
+      userData?.data.wallet === process.env.NEXT_PUBLIC_ADMIN_1 ||
+      userData?.data.wallet === process.env.NEXT_PUBLIC_ADMIN_2
     );
   }, [userData]);
 

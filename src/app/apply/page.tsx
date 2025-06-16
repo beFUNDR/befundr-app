@@ -10,7 +10,7 @@ import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletButton } from "@/providers/SolanaProvider";
 import toast from "react-hot-toast";
-import ApplicationValidationModal from "@/components/modals/ApplicationValidationModal";
+import MissionApplicationValidationModal from "@/components/modals/MissionApplicationValidationModal";
 import { useUser } from "@/hooks/dbData/useUser";
 import Loader from "@/components/displayElements/Loader";
 import { useProject } from "@/hooks/dbData/project/useProject";
@@ -39,7 +39,8 @@ export default function ApplyPage() {
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [imagesFiles, setImagesFiles] = useState<(File | string)[]>([]);
   const [isApplicationValidated, setIsApplicationValidated] = useState(false);
-  const { data: user, isLoading: isUserLoading } = useUser(
+  const { useGetUser } = useUser();
+  const { data: user, isLoading: isUserLoading } = useGetUser(
     publicKey?.toString() || ""
   );
 
@@ -121,7 +122,7 @@ export default function ApplyPage() {
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12 ">
       <h1 className="h1Style my-6 ">Apply for your project 🚀</h1>
-      {!user.isCompleteProfil && (
+      {!user.data.isCompleteProfil && (
         <p className="bodyStyle !text-red-600 mb-6">
           Your profile is not set. Please set it before applying.
         </p>
@@ -140,7 +141,7 @@ export default function ApplyPage() {
       {currentStep === 2 && (
         <Application2 project={project} setProject={setProject} />
       )}
-      {currentStep === 3 && <Application3 project={project} user={user} />}
+      {currentStep === 3 && <Application3 project={project} user={user.data} />}
       <div className="flex flex-col md:flex-row justify-start mt-4 gap-4">
         {currentStep > 1 && (
           <button
@@ -168,7 +169,7 @@ export default function ApplyPage() {
         )}
       </div>
       {isApplicationValidated && project.logo && project.name && (
-        <ApplicationValidationModal
+        <MissionApplicationValidationModal
           image={project.logo}
           projectName={project.name}
           onClose={() => setIsApplicationValidated(false)}

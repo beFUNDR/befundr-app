@@ -10,6 +10,7 @@ import ProfilContent from "@/components/_myProfile.tsx/ProfilContent";
 import UserProjectsContent from "@/components/_userPage/UserProjectsContent";
 import UserMissionsContent from "@/components/_userPage/UserMissionsContent";
 import UserCommunitiesContent from "@/components/_userPage/UserCommunitiesContent";
+import UserApplicationsContent from "@/components/_userPage/UserApplicationsContent";
 
 function MyProfilePage() {
   //* GLOBAL STATE
@@ -17,12 +18,13 @@ function MyProfilePage() {
   const searchParams = useSearchParams();
   const initialTab = searchParams.get("tab") || "My profile";
   const { publicKey, connected } = useWallet();
+  const { useGetUser, useUpdateUser } = useUser();
   const {
     data: user,
     isLoading,
-    updateUser,
-    isUpdating,
-  } = useUser(publicKey?.toString() ?? undefined);
+    error,
+  } = useGetUser(publicKey?.toString() ?? undefined);
+  const { mutate: updateUser, isPending: isUpdating } = useUpdateUser;
 
   //* LOCAL STATE
   const [profilePic, setProfilePic] = useState("");
@@ -37,14 +39,14 @@ function MyProfilePage() {
 
   useEffect(() => {
     if (user) {
-      setPseudo(user.name || "");
-      setBio(user.bio || "");
-      setTelegram(user.telegram || "");
-      setTwitter(user.twitter || "");
-      setWebsite(user.website || "");
-      setDiscord(user.discord || "");
-      if (user.avatar) setProfilePic(user.avatar);
-      setSelectedSkills(user.skills || []);
+      setPseudo(user.data.name || "");
+      setBio(user.data.bio || "");
+      setTelegram(user.data.telegram || "");
+      setTwitter(user.data.twitter || "");
+      setWebsite(user.data.website || "");
+      setDiscord(user.data.discord || "");
+      if (user.data.avatar) setProfilePic(user.data.avatar);
+      setSelectedSkills(user.data.skills || []);
     }
   }, [user]);
 
@@ -133,7 +135,7 @@ function MyProfilePage() {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
-      <h1 className="h1Style my-6 text-white">Welcome, {user?.name} 👋</h1>
+      <h1 className="h1Style my-6 text-white">Welcome, {user?.data.name} 👋</h1>
       <ProfileMenu active={activeSection} onSelect={setActiveSection} />
 
       {activeSection === "My profile" && (
@@ -144,6 +146,11 @@ function MyProfilePage() {
       )}
       {activeSection === "My missions" && (
         <UserMissionsContent userId={publicKey?.toString() ?? ""} />
+      )}
+      {activeSection === "My applications" && (
+        <div className="text-white mt-8">
+          <UserApplicationsContent />
+        </div>
       )}
       {activeSection === "My investments" && (
         <div className="text-white mt-8">in progress</div>

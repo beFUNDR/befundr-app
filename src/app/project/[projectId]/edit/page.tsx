@@ -25,8 +25,9 @@ export default function EditProjectPage() {
   const { getProject, updateProject, isUpdatingProject } = useProject();
   const { data: projectData, isLoading: isProjectLoading } =
     getProject(projectId);
-  const { data: user, isLoading: isUserLoading } = useUser(
-    projectData?.userId ?? ""
+  const { useGetUser } = useUser();
+  const { data: user, isLoading: isUserLoading } = useGetUser(
+    projectData?.data.userId ?? ""
   );
 
   //* LOCAL STATE
@@ -43,22 +44,22 @@ export default function EditProjectPage() {
   useEffect(() => {
     if (projectData) {
       setProject({
-        name: projectData.name,
-        category: projectData.category,
-        mainImage: projectData.mainImage,
-        logo: projectData.logo,
-        images: projectData.images || [],
-        headLine: projectData.headLine,
-        description: projectData.description,
-        pitchLink: projectData.pitchLink,
-        videoLink: projectData.videoLink,
-        otherLink: projectData.otherLink,
-        website: projectData.website,
-        twitter: projectData.twitter,
-        discord: projectData.discord,
-        telegram: projectData.telegram,
-        userId: projectData.userId,
-        status: projectData.status,
+        name: projectData.data.name,
+        category: projectData.data.category,
+        mainImage: projectData.data.mainImage,
+        logo: projectData.data.logo,
+        images: projectData.data.images || [],
+        headLine: projectData.data.headLine,
+        description: projectData.data.description,
+        pitchLink: projectData.data.pitchLink,
+        videoLink: projectData.data.videoLink,
+        otherLink: projectData.data.otherLink,
+        website: projectData.data.website,
+        twitter: projectData.data.twitter,
+        discord: projectData.data.discord,
+        telegram: projectData.data.telegram,
+        userId: projectData.data.userId,
+        status: projectData.data.status,
         id: projectData.id,
       });
     }
@@ -82,7 +83,7 @@ export default function EditProjectPage() {
     ] as const;
 
     fieldsToCheck.forEach((field) => {
-      if (project[field] !== projectData[field]) {
+      if (project[field] !== projectData.data[field]) {
         dataToUpdate[field] = project[field];
       }
     });
@@ -125,7 +126,7 @@ export default function EditProjectPage() {
     );
   }
 
-  if (!publicKey || publicKey.toString() !== projectData?.userId) {
+  if (!publicKey || publicKey.toString() !== projectData?.data.userId) {
     return (
       <div className="flex justify-center items-center h-screen">
         <p className="text-white">
@@ -162,7 +163,9 @@ export default function EditProjectPage() {
         <Application2 project={project} setProject={handleLocalProjectUpdate} />
       )}
 
-      {currentStep === 3 && <Application3 project={project} user={user!} />}
+      {currentStep === 3 && user?.data && (
+        <Application3 project={project} user={user.data} />
+      )}
       <div className="flex flex-col md:flex-row justify-start mt-4 gap-4">
         {currentStep > 1 && (
           <button

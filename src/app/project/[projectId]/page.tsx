@@ -29,13 +29,16 @@ const ProjectPage = () => {
   const projectId = params.projectId as string;
   const { getProject } = useProject();
   const { data: project, isLoading, error } = getProject(projectId);
-  const { data: owner, isLoading: isOwnerLoading } = useUser(
-    project?.userId ?? ""
-  );
+  const { useGetUser } = useUser();
+  const {
+    data: owner,
+    isLoading: isOwnerLoading,
+    error: ownerError,
+  } = useGetUser(project?.data.userId ?? "");
   const [isShowManageModal, setIsShowManageModal] = useState(false);
 
   const isOwner = useMemo(() => {
-    return publicKey?.toString() === project?.userId;
+    return publicKey?.toString() === project?.data.userId;
   }, [project, publicKey]);
 
   const isAdmin = useMemo(() => {
@@ -48,7 +51,9 @@ const ProjectPage = () => {
   // Merge mainImage and potentialadditional images
   const allImages = useMemo(() => {
     if (!project) return [];
-    return [project.mainImage, ...(project.images || [])].filter(Boolean);
+    return [project.data.mainImage, ...(project.data.images || [])].filter(
+      Boolean
+    );
   }, [project]);
 
   if (isLoading)
@@ -57,8 +62,10 @@ const ProjectPage = () => {
         <Loader />
       </div>
     );
-  if (error) return <div>Erreur: {error.message}</div>;
+  if (error || ownerError)
+    return <div>Erreur: {error?.message || ownerError?.message}</div>;
   if (!project) return <div>Projet non trouvé</div>;
+  if (!owner) return <div>Propriétaire non trouvé</div>;
   if (isOwnerLoading)
     return (
       <div className="flex justify-center items-center h-screen">
@@ -71,8 +78,8 @@ const ProjectPage = () => {
       case "about":
         return (
           <AboutContent
-            description={project.description}
-            owner={owner}
+            description={project.data.description}
+            owner={owner?.data}
             isOwner={isOwner}
             projectId={projectId}
           />
@@ -88,8 +95,8 @@ const ProjectPage = () => {
       default:
         return (
           <AboutContent
-            description={project.description}
-            owner={owner}
+            description={project.data.description}
+            owner={owner?.data}
             isOwner={isOwner}
             projectId={projectId}
           />
@@ -102,9 +109,9 @@ const ProjectPage = () => {
       <BackButton link={"/projects"} />
       {/* Header */}
       <div className="flex flex-col md:flex-row gap-2 items-start md:items-center mb-2">
-        <h1 className="text-4xl font-bold text-white">{project.name}</h1>
+        <h1 className="text-4xl font-bold text-white">{project.data.name}</h1>
         {/* Tags */}
-        <CategoryTagBig category={project.category} />
+        <CategoryTagBig category={project.data.category} />
         {/* Ajouter d'autres tags si besoin */}
         <div className="flex-grow" />
         {isAdmin && (
@@ -114,7 +121,7 @@ const ProjectPage = () => {
         )}
       </div>
       <p className="text-lg text-gray-300 mb-6">
-        {project.headLine || project.description}
+        {project.data.headLine || project.data.description}
       </p>
 
       {/* Main block */}
@@ -122,14 +129,14 @@ const ProjectPage = () => {
         {/* Dashboard image */}
         <ImageCarousel images={allImages} />
         {/* Project info */}
-        {project.status === ProjectStatus.WaitingForApproval && (
-          <WaitingForApprovalPhase project={project} owner={owner} />
+        {project.data.status === ProjectStatus.WaitingForApproval && (
+          <WaitingForApprovalPhase project={project.data} owner={owner?.data} />
         )}
-        {project.status === ProjectStatus.Published && (
-          <PublishedPhase project={project} owner={owner} />
+        {project.data.status === ProjectStatus.Published && (
+          <PublishedPhase project={project.data} owner={owner?.data} />
         )}
-        {project.status === ProjectStatus.NftMintRound && (
-          <NftMintRoundPhase project={project} owner={owner} />
+        {project.data.status === ProjectStatus.NftMintRound && (
+          <NftMintRoundPhase project={project.data} owner={owner?.data} />
         )}
       </div>
 
@@ -141,7 +148,7 @@ const ProjectPage = () => {
 
       {isShowManageModal && (
         <AdminModal
-          project={project}
+          project={project.data}
           onClose={() => setIsShowManageModal(false)}
         />
       )}

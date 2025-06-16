@@ -93,7 +93,7 @@ type Update = {
   authorId: string;
   date: string; // format: YYYY-MM-DD
   message: string;
-  likesCount: string[];
+  likesCount: string[]; // array of userIds
   edited?: string; // format: YYYY-MM-DD
 };
 
@@ -106,6 +106,15 @@ type Mission = {
   status: "open" | "onGoing" | "done" | "cancelled";
   createdAt: Date;
   doneBy?: string;
+  applicants: string[]; // array of userIds
+};
+
+type MissionApplication = {
+  missionId: string;
+  userId: string;
+  text: string;
+  status: "pending" | "accepted" | "rejected";
+  createdAt: Date;
 };
 
 interface MissionToCreate {

@@ -7,7 +7,12 @@ import Link from "next/link";
 import { useState } from "react";
 
 const SkillHubPage = () => {
-  const { users, isLoadingUsers, usersError } = useUser(undefined);
+  const { useGetAllUsers } = useUser();
+  const {
+    data: users,
+    isLoading: isLoadingUsers,
+    error: usersError,
+  } = useGetAllUsers();
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
 
   // Récupérer toutes les compétences uniques

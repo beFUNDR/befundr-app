@@ -18,7 +18,9 @@ const CreateMissionModal = ({
   onClose,
   projectId,
 }: CreateMissionModalProps) => {
-  const { createAMission, isCreating } = useMission();
+  const { useCreateMission } = useMission();
+  const { mutateAsync: createMission, isPending: isCreating } =
+    useCreateMission;
   const [title, setTitle] = useState("");
   const [skill, setSkill] = useState(skills[0]);
   const [description, setDescription] = useState("");
@@ -31,7 +33,7 @@ const CreateMissionModal = ({
     setError(null);
     setSuccess(false);
     try {
-      await createAMission({
+      await createMission({
         projectId,
         title,
         skill,
