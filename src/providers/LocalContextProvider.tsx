@@ -4,8 +4,8 @@
  *
  * This provider is used to manage the local state of the application.
  */
+//TODO refactor this provider as it's too generic
 import { useUser } from "@/hooks/dbData/useUser";
-import { concatAddress } from "@/utils/utilsFunctions";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { useQueryClient } from "@tanstack/react-query";
@@ -17,16 +17,14 @@ type LocalContextProviderType = {
   user: User | null;
   setUser: (user: User) => void;
   createUser: (publicKey: PublicKey) => Promise<boolean>;
-  signWelcomeMessage: (publicKey: PublicKey) => Promise<void>;
   isAdmin: boolean;
 };
 
 // Create the default context
 const LocalContext = createContext<LocalContextProviderType>({
   user: null,
-  setUser: () => {},
+  setUser: () => { },
   createUser: async () => false,
-  signWelcomeMessage: async () => {},
   isAdmin: false,
 });
 
@@ -37,10 +35,9 @@ export const LocalContextProvider = ({
   children: React.ReactNode;
 }) => {
   const queryClient = useQueryClient();
-  const { signMessage, publicKey } = useWallet();
+  const { publicKey } = useWallet();
   const { useGetUser } = useUser();
   const { data: userData } = useGetUser(publicKey?.toString() || "");
-
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -56,28 +53,6 @@ export const LocalContextProvider = ({
     );
   }, [userData]);
 
-  const signWelcomeMessage = async (publicKey: PublicKey) => {
-    if (!signMessage || !publicKey)
-      throw new Error("No sign message function or public key");
-
-    const message = new TextEncoder().encode(
-      `Welcome to beFUNDR ! Please sign this message to prove ownership of the wallet : ${concatAddress(
-        publicKey.toBase58()
-      )}`
-    );
-
-    try {
-      const signature = await signMessage(message);
-      // Store the signature in session storage to avoid signing again
-      if (signature && signature.length > 0) {
-        sessionStorage.setItem("befundr_signed", publicKey.toString());
-      }
-    } catch (err) {
-      toast.error("Something went wrong while signing the message");
-      console.error("Signature refusée ou erreur:", err);
-    }
-  };
-
   const createUser = async (publicKey: PublicKey): Promise<boolean> => {
     try {
       const res = await fetch("/api/user", {
@@ -88,8 +63,9 @@ export const LocalContextProvider = ({
         body: JSON.stringify({ wallet: publicKey.toString() }),
       });
 
-      if (!res.ok) throw new Error("Erreur création utilisateur");
+      if (!res.ok) throw new Error("Error while creating user");
 
+      //TODO this should be done in the /api/user route for better performance
       const resGameProgram = await fetch("/api/gameprogram", {
         method: "POST",
         headers: {
@@ -98,7 +74,7 @@ export const LocalContextProvider = ({
         body: JSON.stringify({ userId: publicKey.toString() }),
       });
 
-      if (!resGameProgram.ok) throw new Error("Erreur création game program");
+      if (!resGameProgram.ok) throw new Error("Error while creating game program");
 
       // Invalidate the user and game queries
       queryClient.invalidateQueries({
@@ -118,7 +94,7 @@ export const LocalContextProvider = ({
 
   return (
     <LocalContext.Provider
-      value={{ user, setUser, createUser, signWelcomeMessage, isAdmin }}
+      value={{ user, setUser, createUser, isAdmin }}
     >
       {children}
     </LocalContext.Provider>

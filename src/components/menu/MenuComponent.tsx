@@ -9,17 +9,18 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import ProfilButton from "../buttons/ProfilButton";
 import { useEffect, useState } from "react";
 import WelcomeModal from "../modals/WelcomeModal";
-import { useUser } from "@/hooks/dbData/useUser";
 import { useGameProgramByUserId } from "@/hooks/dbData/useGameProgram";
 import PointCardSmall from "../cards/PointCardSmall";
 import ButtonLabelSecondarySmall from "../buttons/_ButtonLabelSecondarySmall";
 import { useLocalContext } from "@/providers/LocalContextProvider";
-import { PublicKey } from "@solana/web3.js";
 import { Menu as MenuIcon, X } from "lucide-react";
+import { useAuth } from "@/providers/AuthProvider";
+import { useUser } from "@/hooks/dbData/useUser";
 
 const MenuComponent = () => {
   //* GLOBAL STATE
-  const { createUser, signWelcomeMessage, isAdmin } = useLocalContext();
+  const { createUser, isAdmin } = useLocalContext();
+  const { user } = useAuth();
   const currentPathname = usePathname();
   const { connected, publicKey, signMessage } = useWallet();
   const { useGetUser } = useUser();
@@ -33,24 +34,7 @@ const MenuComponent = () => {
   //* LOCAL STATE
   const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [localHasSigned, setLocalHasSigned] = useState(false);
 
-  useEffect(() => {
-    if (!publicKey) return;
-
-    const hasSigned =
-      typeof window !== "undefined" &&
-      sessionStorage.getItem("befundr_signed") === publicKey?.toString();
-
-    const handleSignWelcomeMessage = async (publicKey: PublicKey) => {
-      await signWelcomeMessage(publicKey);
-      setLocalHasSigned(true);
-    };
-
-    if (connected && !hasSigned && publicKey) {
-      handleSignWelcomeMessage(publicKey);
-    }
-  }, [connected, signMessage, publicKey]);
 
   //* FUNCTIONS
   const isActive = (pathname: string) => {
@@ -68,7 +52,7 @@ const MenuComponent = () => {
 
   useEffect(() => {
     // avoid user creation before signature
-    if (!localHasSigned) return;
+    if (!user) return;
 
     const handleCreateUser = async () => {
       if (!publicKey) return;
@@ -86,7 +70,7 @@ const MenuComponent = () => {
     ) {
       handleCreateUser();
     }
-  }, [connected, publicKey, userData, isUserLoading, localHasSigned]);
+  }, [connected, publicKey, userData, isUserLoading, user]);
 
   return (
     <>
@@ -100,11 +84,10 @@ const MenuComponent = () => {
           {links.map((link) => (
             <Link
               href={link.href}
-              className={`px-4 py-1 border-b-2 text-neutral-500 ${
-                isActive(link.href)
-                  ? " border-accentColor"
-                  : "border-transparent"
-              } transition-all ease-in-out duration-300 text-white hover:text-accent`}
+              className={`px-4 py-1 border-b-2 text-neutral-500 ${isActive(link.href)
+                ? " border-accentColor"
+                : "border-transparent"
+                } transition-all ease-in-out duration-300 text-white hover:text-accent`}
               key={link.href}
             >
               {link.label}
@@ -137,16 +120,14 @@ const MenuComponent = () => {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`md:hidden fixed inset-y-20 left-0 flex flex-col justify-start items-center gap-10 pt-10 bg-black h4Style w-full h-full transform transition-all duration-300 ease-in-out ${
-          isMenuOpen ? "translate-x-0" : "-translate-x-full"
-        } z-20`}
+        className={`md:hidden fixed inset-y-20 left-0 flex flex-col justify-start items-center gap-10 pt-10 bg-black h4Style w-full h-full transform transition-all duration-300 ease-in-out ${isMenuOpen ? "translate-x-0" : "-translate-x-full"
+          } z-20`}
       >
         <Link
           href={"/"}
           onClick={handleLinkClick}
-          className={`px-4 py-1 border-b-2 ${
-            isActive("/") ? "border-accentColor" : "border-transparent"
-          } transition-all`}
+          className={`px-4 py-1 border-b-2 ${isActive("/") ? "border-accentColor" : "border-transparent"
+            } transition-all`}
           key={"/"}
         >
           Home
@@ -155,9 +136,8 @@ const MenuComponent = () => {
           <Link
             href={link.href}
             onClick={handleLinkClick}
-            className={`px-4 py-1 border-b-2 ${
-              isActive(link.href) ? "border-accentColor" : "border-transparent"
-            } transition-all`}
+            className={`px-4 py-1 border-b-2 ${isActive(link.href) ? "border-accentColor" : "border-transparent"
+              } transition-all`}
             key={link.href}
           >
             {link.label}

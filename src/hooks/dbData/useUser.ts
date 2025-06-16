@@ -25,6 +25,7 @@ export function useUser(userId?: string) {
     });
 
   // Get a single user
+  //TODO Refactor this code
   const getUser = async (userId: string) => {
     try {
       const { results, error } = await getAllDocumentsFromCollection<User>(
@@ -58,7 +59,7 @@ export function useUser(userId?: string) {
       throw error;
     }
   };
-
+  
   const useGetUsers = (userIds: string[]) =>
     useQuery({
       queryKey: ["users", userIds],
@@ -104,7 +105,7 @@ export const getUserAssets = async (wallet: string) => {
     body: JSON.stringify({ wallet }),
   });
   if (!res.ok) {
-    throw new Error("Erreur lors de la récupération des assets utilisateur");
+    throw new Error("Error while fetching user assets");
   }
   return await res.json();
 };
