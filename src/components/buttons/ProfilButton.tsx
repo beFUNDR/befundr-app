@@ -123,6 +123,15 @@ const ProfilButton = () => {
                   <span>My missions</span>
                 </li>
               </Link>
+              <Link href="/myprofile?tab=My applications">
+                <li
+                  className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2"
+                  onClick={closeMenu}
+                >
+                  <DollarSign size={16} color="gray" />
+                  <span>My applications</span>
+                </li>
+              </Link>
               <Link href="/myprofile?tab=My communities">
                 <li
                   className="px-4 py-2 hover:bg-custom-gray-600 cursor-pointer flex items-center space-x-2"

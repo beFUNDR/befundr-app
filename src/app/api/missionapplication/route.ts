@@ -52,7 +52,7 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    const applicationData = applicationDoc.data() as Application;
+    const applicationData = applicationDoc.data() as MissionApplication;
     if (!applicationData) {
       return NextResponse.json(
         { error: "Invalid application data" },
@@ -101,6 +101,47 @@ export async function PATCH(request: NextRequest) {
     console.error("Error updating application:", error);
     return NextResponse.json(
       { error: "Failed to update application" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const { applicationId, missionId, userId } = await request.json();
+
+    // Delete the application from Firestore
+    try {
+      await admin
+        .firestore()
+        .collection("applications")
+        .doc(applicationId)
+        .delete();
+    } catch (error) {
+      console.error("Error deleting application:", error);
+      throw error;
+    }
+
+    // Remove the user from the mission's applicants array
+    try {
+      await admin
+        .firestore()
+        .collection("missions")
+        .doc(missionId)
+        .update({ applicants: admin.firestore.FieldValue.arrayRemove(userId) });
+    } catch (error) {
+      console.error(
+        "Error removing user from mission's applicants array:",
+        error
+      );
+      throw error;
+    }
+
+    return NextResponse.json({ message: "Application deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting application:", error);
+    return NextResponse.json(
+      { error: "Failed to delete application" },
       { status: 500 }
     );
   }

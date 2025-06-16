@@ -49,7 +49,10 @@ const UserPage = () => {
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-12">
       <BackButton />
-      <UserProfileHeader user={user.data} gameProgramData={gameProgramData} />
+      <UserProfileHeader
+        user={user.data}
+        gameProgramData={gameProgramData.data}
+      />
       <UserTabs activeTab={activeTab} onTabChange={setActiveTab} />
       {renderTabContent()}
     </div>

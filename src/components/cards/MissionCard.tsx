@@ -7,7 +7,7 @@ import DefaultAvatar from "../displayElements/DefaultAvatar";
 import { useMemo, useState } from "react";
 import EditMissionModal from "../modals/EditMissionModal";
 import DeleteMissionModal from "../modals/DeleteMissionModal";
-import ApplyMissionModal from "../modals/ApplyMissionModal";
+import MissionApplicationModal from "../modals/MissionApplicationModal";
 import { useWallet } from "@solana/wallet-adapter-react";
 import ViewApplicantsModal from "../modals/ViewApplicantsModal";
 
@@ -34,8 +34,6 @@ const MissionCard = ({ mission, isOwner, missionId, projectId }: Props) => {
       publicKey ? mission.applicants.includes(publicKey.toString()) : false,
     [mission.applicants, publicKey]
   );
-
-  console.log(user);
 
   return (
     <div className="bg-custom-gray-900 rounded-2xl p-6 flex flex-col items-center justify-between gap-4 border border-custom-gray-800 w-full md:max-w-2xl mx-auto">
@@ -177,7 +175,7 @@ const MissionCard = ({ mission, isOwner, missionId, projectId }: Props) => {
         />
       )}
       {isApplyModalOpen && (
-        <ApplyMissionModal
+        <MissionApplicationModal
           missionId={missionId}
           projectId={projectId}
           onClose={() => setIsApplyModalOpen(false)}

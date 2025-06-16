@@ -4,7 +4,7 @@ import DefaultAvatar from "../displayElements/DefaultAvatar";
 
 type Props = {
   user: User;
-  application: Application;
+  application: MissionApplication;
   applicationId: string;
 };
 

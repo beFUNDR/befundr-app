@@ -117,7 +117,9 @@ const MenuComponent = () => {
             <ButtonLabelSecondarySmall label="Admin action 2" />
           </button>
         )}
-        {gameProgramData && <PointCardSmall points={gameProgramData.points} />}
+        {gameProgramData && (
+          <PointCardSmall points={gameProgramData.data.points} />
+        )}
         {connected ? <ProfilButton /> : <WalletButton />}
       </div>
 

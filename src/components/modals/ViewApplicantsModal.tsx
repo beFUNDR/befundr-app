@@ -1,5 +1,5 @@
 "use client";
-import { useApplication } from "@/hooks/dbData/useApplication";
+import { useMissionApplication } from "@/hooks/dbData/useMissionApplication";
 import ModalLayout from "./_ModalLayout";
 import LoaderSmall from "../displayElements/LoaderSmall";
 import { useUser } from "@/hooks/dbData/useUser";
@@ -13,12 +13,12 @@ type Props = {
 };
 
 const ViewApplicantsModal = ({ onClose, missionId }: Props) => {
-  const { useGetApplicationByMissionId } = useApplication();
+  const { useGetMissionApplicationsByMission } = useMissionApplication();
   const {
     data: applications,
     isLoading,
     error,
-  } = useGetApplicationByMissionId(missionId);
+  } = useGetMissionApplicationsByMission(missionId);
 
   // fetch all the users from the applications
   const userIds =
@@ -28,7 +28,7 @@ const ViewApplicantsModal = ({ onClose, missionId }: Props) => {
   const [isViewApplicationModalOpen, setIsViewApplicationModalOpen] =
     useState(false);
   const [selectedApplication, setSelectedApplication] =
-    useState<Application | null>(null);
+    useState<MissionApplication | null>(null);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [selectedApplicationId, setSelectedApplicationId] = useState<
     string | null

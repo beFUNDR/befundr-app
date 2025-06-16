@@ -6,13 +6,13 @@ import Divider from "../displayElements/Divider";
 import ButtonLabelAsync from "../buttons/_ButtonLabelAsync";
 import ButtonLabelSecondaryAsync from "../buttons/_ButtonLabelSecondaryAsync";
 import Link from "next/link";
-import { useApplication } from "@/hooks/dbData/useApplication";
+import { useMissionApplication } from "@/hooks/dbData/useMissionApplication";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 type Props = {
   onClose: () => void;
-  application: Application;
+  application: MissionApplication;
   applicationId: string;
   user: User;
 };
@@ -29,7 +29,7 @@ const ViewApplicationModal = ({
     error: gameProgramError,
   } = useGameProgramByUserId(user.wallet);
 
-  const { useUpdateApplicationStatus } = useApplication();
+  const { useUpdateApplicationStatus } = useMissionApplication();
   const { mutateAsync: updateApplicationStatus } = useUpdateApplicationStatus;
 
   const [isRejecting, setIsRejecting] = useState(false);
@@ -77,7 +77,7 @@ const ViewApplicationModal = ({
 
   return (
     <ModalLayout justify="center" item="center" onClose={onClose}>
-      <UserProfileHeader user={user} gameProgramData={gameProgramData} />
+      <UserProfileHeader user={user} gameProgramData={gameProgramData.data} />
       <Link href={`/skillshub/${user.wallet}`}>
         <p className="text-accent underline font-semibold text-base mb-2 w-fit">
           See full profile →

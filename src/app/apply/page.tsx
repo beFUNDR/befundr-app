@@ -10,7 +10,7 @@ import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletButton } from "@/providers/SolanaProvider";
 import toast from "react-hot-toast";
-import ApplicationValidationModal from "@/components/modals/ApplicationValidationModal";
+import MissionApplicationValidationModal from "@/components/modals/MissionApplicationValidationModal";
 import { useUser } from "@/hooks/dbData/useUser";
 import Loader from "@/components/displayElements/Loader";
 import { useProject } from "@/hooks/dbData/project/useProject";
@@ -169,7 +169,7 @@ export default function ApplyPage() {
         )}
       </div>
       {isApplicationValidated && project.logo && project.name && (
-        <ApplicationValidationModal
+        <MissionApplicationValidationModal
           image={project.logo}
           projectName={project.name}
           onClose={() => setIsApplicationValidated(false)}

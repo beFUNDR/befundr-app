@@ -1,4 +1,7 @@
-import { getAllDocumentsFromCollection } from "@/utils/firebaseClient";
+import {
+  getAllDocumentsFromCollection,
+  getDocument,
+} from "@/utils/firebaseClient";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
@@ -6,6 +9,20 @@ export function useMission() {
   const queryClient = useQueryClient();
 
   //* QUERIES
+  // Get a mission by id
+  const getMissionById = async (missionId: string) => {
+    const { result, error } = await getDocument<Mission>("missions", missionId);
+    if (error) throw error;
+    return result;
+  };
+
+  const useGetMissionById = (missionId: string) =>
+    useQuery({
+      queryKey: ["mission", missionId],
+      queryFn: () => getMissionById(missionId),
+      enabled: !!missionId,
+    });
+
   // Get all missions by projectId
   const getMissionsByProjectId = async (projectId: string) => {
     try {
@@ -143,6 +160,7 @@ export function useMission() {
   });
 
   return {
+    useGetMissionById,
     useGetMissionsByProjectId,
     useMissionsByDoneByUserId,
     useCreateMission,

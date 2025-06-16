@@ -10,7 +10,7 @@ type Props = {
   projectName: string;
 };
 
-const ApplicationValidationModal = (props: Props) => {
+const MissionApplicationValidationModal = (props: Props) => {
   return (
     <ModalLayout item="start" justify="center" onClose={props.onClose}>
       <div className="flex justify-center items-center bg-custom-gray-600 rounded-full p-3 w-16 h-16">
@@ -39,4 +39,4 @@ const ApplicationValidationModal = (props: Props) => {
   );
 };
 
-export default ApplicationValidationModal;
+export default MissionApplicationValidationModal;

@@ -1,10 +1,12 @@
 import {
   collection,
   doc,
+  DocumentData,
   DocumentSnapshot,
   getDoc,
   getDocs,
   getFirestore,
+  Query,
 } from "firebase/firestore";
 import firebase_app from "@/lib/firebase/firebaseInit";
 
@@ -26,11 +28,11 @@ export function fileToBase64(file: File): Promise<string> {
 export async function getDocument<T>(
   collection: string,
   id: string
-): Promise<{ result: T | null; error: Error | null }> {
+): Promise<{ result: { data: T; id: string } | null; error: Error | null }> {
   // Create a document reference using the provided collection and ID
   const docRef = doc(db, collection, id);
   // Variable to store the result of the operation
-  let result: T | null = null;
+  let result: { data: T; id: string } | null = null;
   // Variable to store any error that occurs during the operation
   let error: Error | null = null;
 
@@ -39,7 +41,7 @@ export async function getDocument<T>(
     const docSnapshot: DocumentSnapshot = await getDoc(docRef);
     if (docSnapshot.exists()) {
       // Use the data in the document
-      result = docSnapshot.data() as T; // This is already of type T
+      result = { data: docSnapshot.data() as T, id: docSnapshot.id }; // This is already of type T
     } else {
       // Handle the case where the document does not exist
       console.log("No such document!");
@@ -81,5 +83,24 @@ export async function getAllDocumentsFromCollection<T>(
   }
 
   // Return the results and any error as an object
+  return { results, error };
+}
+
+// function to fetch documents based on a query
+export async function getDocumentsWithQuery<T extends DocumentData>(
+  query: Query<T>
+): Promise<{ results: T[]; error: Error | null }> {
+  let results: T[] = [];
+  let error: Error | null = null;
+
+  try {
+    const querySnapshot = await getDocs(query);
+    results = querySnapshot.docs.map(
+      (doc) => ({ ...doc.data(), id: doc.id } as T)
+    );
+  } catch (e) {
+    error = e instanceof Error ? e : new Error("An unknown error occurred");
+  }
+
   return { results, error };
 }

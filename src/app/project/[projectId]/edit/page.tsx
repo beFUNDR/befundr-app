@@ -27,7 +27,7 @@ export default function EditProjectPage() {
     getProject(projectId);
   const { useGetUser } = useUser();
   const { data: user, isLoading: isUserLoading } = useGetUser(
-    projectData?.userId ?? ""
+    projectData?.data.userId ?? ""
   );
 
   //* LOCAL STATE
@@ -44,22 +44,22 @@ export default function EditProjectPage() {
   useEffect(() => {
     if (projectData) {
       setProject({
-        name: projectData.name,
-        category: projectData.category,
-        mainImage: projectData.mainImage,
-        logo: projectData.logo,
-        images: projectData.images || [],
-        headLine: projectData.headLine,
-        description: projectData.description,
-        pitchLink: projectData.pitchLink,
-        videoLink: projectData.videoLink,
-        otherLink: projectData.otherLink,
-        website: projectData.website,
-        twitter: projectData.twitter,
-        discord: projectData.discord,
-        telegram: projectData.telegram,
-        userId: projectData.userId,
-        status: projectData.status,
+        name: projectData.data.name,
+        category: projectData.data.category,
+        mainImage: projectData.data.mainImage,
+        logo: projectData.data.logo,
+        images: projectData.data.images || [],
+        headLine: projectData.data.headLine,
+        description: projectData.data.description,
+        pitchLink: projectData.data.pitchLink,
+        videoLink: projectData.data.videoLink,
+        otherLink: projectData.data.otherLink,
+        website: projectData.data.website,
+        twitter: projectData.data.twitter,
+        discord: projectData.data.discord,
+        telegram: projectData.data.telegram,
+        userId: projectData.data.userId,
+        status: projectData.data.status,
         id: projectData.id,
       });
     }
@@ -83,7 +83,7 @@ export default function EditProjectPage() {
     ] as const;
 
     fieldsToCheck.forEach((field) => {
-      if (project[field] !== projectData[field]) {
+      if (project[field] !== projectData.data[field]) {
         dataToUpdate[field] = project[field];
       }
     });
@@ -126,7 +126,7 @@ export default function EditProjectPage() {
     );
   }
 
-  if (!publicKey || publicKey.toString() !== projectData?.userId) {
+  if (!publicKey || publicKey.toString() !== projectData?.data.userId) {
     return (
       <div className="flex justify-center items-center h-screen">
         <p className="text-white">

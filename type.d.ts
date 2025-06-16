@@ -109,7 +109,7 @@ type Mission = {
   applicants: string[]; // array of userIds
 };
 
-type Application = {
+type MissionApplication = {
   missionId: string;
   userId: string;
   text: string;

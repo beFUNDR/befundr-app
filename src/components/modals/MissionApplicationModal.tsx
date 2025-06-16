@@ -4,7 +4,7 @@ import ModalLayout from "./_ModalLayout";
 import ButtonLabelAsync from "../buttons/_ButtonLabelAsync";
 import toast from "react-hot-toast";
 import InputField from "../displayElements/InputField";
-import { useApplication } from "@/hooks/dbData/useApplication";
+import { useMissionApplication } from "@/hooks/dbData/useMissionApplication";
 import { useWallet } from "@solana/wallet-adapter-react";
 
 interface ApplyMissionModalProps {
@@ -13,13 +13,13 @@ interface ApplyMissionModalProps {
   onClose: () => void;
 }
 
-const ApplyMissionModal = ({
+const MissionApplicationModal = ({
   missionId,
   projectId,
   onClose,
 }: ApplyMissionModalProps) => {
   const { publicKey } = useWallet();
-  const { useCreateApplication } = useApplication();
+  const { useCreateApplication } = useMissionApplication();
   const { mutateAsync: createApplication, isPending: isApplying } =
     useCreateApplication;
 
@@ -79,4 +79,4 @@ const ApplyMissionModal = ({
   );
 };
 
-export default ApplyMissionModal;
+export default MissionApplicationModal;

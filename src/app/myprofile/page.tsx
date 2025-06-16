@@ -10,6 +10,7 @@ import ProfilContent from "@/components/_myProfile.tsx/ProfilContent";
 import UserProjectsContent from "@/components/_userPage/UserProjectsContent";
 import UserMissionsContent from "@/components/_userPage/UserMissionsContent";
 import UserCommunitiesContent from "@/components/_userPage/UserCommunitiesContent";
+import UserApplicationsContent from "@/components/_userPage/UserApplicationsContent";
 
 function MyProfilePage() {
   //* GLOBAL STATE
@@ -145,6 +146,11 @@ function MyProfilePage() {
       )}
       {activeSection === "My missions" && (
         <UserMissionsContent userId={publicKey?.toString() ?? ""} />
+      )}
+      {activeSection === "My applications" && (
+        <div className="text-white mt-8">
+          <UserApplicationsContent />
+        </div>
       )}
       {activeSection === "My investments" && (
         <div className="text-white mt-8">in progress</div>
