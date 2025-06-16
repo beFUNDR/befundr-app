@@ -23,7 +23,7 @@ export const useUser = (wallet: string | undefined) => {
       }
       return results;
     } catch (error) {
-      console.error("Erreur lors de la récupération des utilisateurs:", error);
+      console.error("Error while fetching users list:", error);
       throw error;
     }
   };
@@ -44,11 +44,12 @@ export const useUser = (wallet: string | undefined) => {
       }
       return result;
     } catch (error) {
-      console.error("Erreur lors de la récupération de l'utilisateur:", error);
+      console.error("Error while fetching user:", error);
       throw error;
     }
   };
 
+  //TODO this should be removed as this logic is not clean, and the "user" query key is already used below
   const useUserQuery = (userId: string) =>
     useQuery({
       queryKey: ["user", userId],
@@ -66,11 +67,11 @@ export const useUser = (wallet: string | undefined) => {
         return "not_found";
       }
       if (!res.ok) {
-        throw new Error("Erreur lors de la récupération de l'utilisateur");
+        throw new Error("Error while fetching user");
       }
       return await res.json();
     },
-    enabled: !!wallet, // Ne lance la requête que si le wallet est défini
+    enabled: !!wallet,
     retry: 1,
   });
 
@@ -82,7 +83,7 @@ export const useUser = (wallet: string | undefined) => {
         body: JSON.stringify(data),
       });
       if (!res.ok) {
-        throw new Error("Erreur lors de la mise à jour de l'utilisateur");
+        throw new Error("Error while updating user");
       }
       return await res.json();
     },
@@ -110,7 +111,7 @@ export const getUserAssets = async (wallet: string) => {
     body: JSON.stringify({ wallet }),
   });
   if (!res.ok) {
-    throw new Error("Erreur lors de la récupération des assets utilisateur");
+    throw new Error("Error while fetching user assets");
   }
   return await res.json();
 };

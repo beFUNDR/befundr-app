@@ -44,3 +44,10 @@ next-env.d.ts
 .anchor
 
 test-ledger
+
+# Firebase emulator folders
+firebase-data/
+.firebase/
+firebase-exports/
+
+*.log

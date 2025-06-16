@@ -1,9 +1,5 @@
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import admin from "@/lib/firebase/firebaseAdmin";
-import { getFirestore } from "firebase/firestore";
-import firebase_app from "@/lib/firebase/firebaseInit";
-
-const db = getFirestore(firebase_app);
 
 export const uploadImage = async (
   file: File,
