@@ -27,7 +27,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
             />
           </LocalContextProvider>
         </QueryProvider>
-      //</AuthProvider>
+      </AuthProvider>
     </SolanaProvider>
   );
 };
