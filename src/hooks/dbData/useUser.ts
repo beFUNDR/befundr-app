@@ -16,8 +16,16 @@ import toast from "react-hot-toast";
 //* QUERIES
 // Get all users
 const getAllUsers = async () => {
-  const { results, error } = await getAllDocumentsFromCollection<User>("users");
-  return results;
+  try {
+    const { results, error } = await getAllDocumentsFromCollection<User>(
+      "users"
+    );
+    if (error) throw error;
+    return results;
+  } catch (error) {
+    console.error("Error while getting all users:", error);
+    throw error;
+  }
 };
 
 export const useGetAllUsers = () =>
