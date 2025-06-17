@@ -98,6 +98,10 @@ export const useUpdateUser = () => {
       });
       toast.success("User updated successfully");
     },
+    onError: (error) => {
+      console.error("Error while updating user:", error);
+      toast.error("Error while updating user");
+    },
   });
 };
 
