@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, Suspense } from "react";
 import ProfileMenu from "@/components/_profile/ProfileMenu";
-import { useUser } from "@/hooks/dbData/useUser";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Loader from "@/components/displayElements/Loader";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -11,6 +10,7 @@ import UserProjectsContent from "@/components/_userPage/UserProjectsContent";
 import UserMissionsContent from "@/components/_userPage/UserMissionsContent";
 import UserCommunitiesContent from "@/components/_userPage/UserCommunitiesContent";
 import UserApplicationsContent from "@/components/_userPage/UserApplicationsContent";
+import { useGetUser, useUpdateUser } from "@/hooks/dbData/useUser";
 
 function MyProfilePage() {
   //* GLOBAL STATE
@@ -18,13 +18,12 @@ function MyProfilePage() {
   const searchParams = useSearchParams();
   const initialTab = searchParams.get("tab") || "My profile";
   const { publicKey, connected } = useWallet();
-  const { useGetUser, useUpdateUser } = useUser();
   const {
     data: user,
     isLoading,
     error,
   } = useGetUser(publicKey?.toString() ?? undefined);
-  const { mutate: updateUser, isPending: isUpdating } = useUpdateUser;
+  const { mutateAsync: updateUser, isPending: isUpdating } = useUpdateUser();
 
   //* LOCAL STATE
   const [profilePic, setProfilePic] = useState("");

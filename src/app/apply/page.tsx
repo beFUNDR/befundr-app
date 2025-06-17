@@ -11,9 +11,9 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletButton } from "@/providers/SolanaProvider";
 import toast from "react-hot-toast";
 import MissionApplicationValidationModal from "@/components/modals/MissionApplicationValidationModal";
-import { useUser } from "@/hooks/dbData/useUser";
 import Loader from "@/components/displayElements/Loader";
 import { useProject } from "@/hooks/dbData/project/useProject";
+import { useGetUser } from "@/hooks/dbData/useUser";
 
 export default function ApplyPage() {
   const { publicKey } = useWallet();
@@ -39,7 +39,6 @@ export default function ApplyPage() {
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [imagesFiles, setImagesFiles] = useState<(File | string)[]>([]);
   const [isApplicationValidated, setIsApplicationValidated] = useState(false);
-  const { useGetUser } = useUser();
   const { data: user, isLoading: isUserLoading } = useGetUser(
     publicKey?.toString() || ""
   );

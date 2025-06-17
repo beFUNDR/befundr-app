@@ -12,11 +12,15 @@ import {
 import firebase_app from "@/lib/firebase/firebaseInit";
 import { connectAuthEmulator, getAuth } from "firebase/auth";
 
-
 const db = getFirestore(firebase_app);
 
-if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_USE_EMULATOR === 'true') {
-  connectFirestoreEmulator(db, 'localhost', 8080);
+export { db };
+
+if (
+  typeof window !== "undefined" &&
+  process.env.NEXT_PUBLIC_USE_EMULATOR === "true"
+) {
+  connectFirestoreEmulator(db, "localhost", 8080);
 }
 
 export function fileToBase64(file: File): Promise<string> {
@@ -112,13 +116,13 @@ export async function getDocumentsWithQuery<T extends DocumentData>(
   return { results, error };
 }
 export const getFirebaseAuth = () => {
-  const firebaseAuth = getAuth(firebase_app)
+  const firebaseAuth = getAuth(firebase_app);
   if (process.env.NEXT_PUBLIC_USE_EMULATOR == "true") {
     connectAuthEmulator(firebaseAuth, `http://localhost:9099`, {
       disableWarnings: true,
-    })
+    });
   }
   return firebaseAuth;
-}
+};
 
 export const auth = getFirebaseAuth();

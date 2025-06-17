@@ -1,11 +1,11 @@
 "use client";
+import { useGetUser } from "@/hooks/dbData/useUser";
 /**
  * LOCAL CONTEXT PROVIDER
  *
  * This provider is used to manage the local state of the application.
  */
 //TODO refactor this provider as it's too generic
-import { useUser } from "@/hooks/dbData/useUser";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { useQueryClient } from "@tanstack/react-query";
@@ -23,7 +23,7 @@ type LocalContextProviderType = {
 // Create the default context
 const LocalContext = createContext<LocalContextProviderType>({
   user: null,
-  setUser: () => { },
+  setUser: () => {},
   createUser: async () => false,
   isAdmin: false,
 });
@@ -36,7 +36,6 @@ export const LocalContextProvider = ({
 }) => {
   const queryClient = useQueryClient();
   const { publicKey } = useWallet();
-  const { useGetUser } = useUser();
   const { data: userData } = useGetUser(publicKey?.toString() || "");
   const [user, setUser] = useState<User | null>(null);
 
@@ -74,7 +73,8 @@ export const LocalContextProvider = ({
         body: JSON.stringify({ userId: publicKey.toString() }),
       });
 
-      if (!resGameProgram.ok) throw new Error("Error while creating game program");
+      if (!resGameProgram.ok)
+        throw new Error("Error while creating game program");
 
       // Invalidate the user and game queries
       queryClient.invalidateQueries({
@@ -93,9 +93,7 @@ export const LocalContextProvider = ({
   };
 
   return (
-    <LocalContext.Provider
-      value={{ user, setUser, createUser, isAdmin }}
-    >
+    <LocalContext.Provider value={{ user, setUser, createUser, isAdmin }}>
       {children}
     </LocalContext.Provider>
   );

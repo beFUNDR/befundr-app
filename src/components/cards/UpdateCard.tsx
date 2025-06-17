@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { Heart, Pencil, Trash } from "lucide-react";
-import { useUser } from "@/hooks/dbData/useUser";
 import toast from "react-hot-toast";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useUpdate } from "@/hooks/dbData/useUpdate";
@@ -9,6 +8,7 @@ import { useMemo, useState } from "react";
 import DeleteUpdateModal from "../modals/DeleteUpdateModal";
 import EditUpdateModal from "../modals/EditUpdateModal";
 import { formatDate } from "@/utils/utilsFunctions";
+import { useGetUser } from "@/hooks/dbData/useUser";
 
 interface Props {
   update: Update;
@@ -18,7 +18,6 @@ interface Props {
 }
 
 const UpdateCard = ({ update, updateId, isOwner, onClick }: Props) => {
-  const { useGetUser } = useUser();
   const { data: user } = useGetUser(update.authorId);
   const { publicKey } = useWallet();
   const { useLikeUpdate } = useUpdate();

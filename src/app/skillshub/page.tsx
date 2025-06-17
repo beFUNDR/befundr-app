@@ -1,13 +1,12 @@
 "use client";
 
-import { useUser } from "@/hooks/dbData/useUser";
 import UserSkillCard from "@/components/cards/UserSkillsCard";
 import Loader from "@/components/displayElements/Loader";
+import { useGetAllUsers } from "@/hooks/dbData/useUser";
 import Link from "next/link";
 import { useState } from "react";
 
 const SkillHubPage = () => {
-  const { useGetAllUsers } = useUser();
   const {
     data: users,
     isLoading: isLoadingUsers,
