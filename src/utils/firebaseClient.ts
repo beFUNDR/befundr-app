@@ -12,11 +12,13 @@ import {
 import firebase_app from "@/lib/firebase/firebaseInit";
 import { connectAuthEmulator, getAuth } from "firebase/auth";
 
-
 const db = getFirestore(firebase_app);
 
-if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_USE_EMULATOR === 'true') {
-  connectFirestoreEmulator(db, 'localhost', 8080);
+if (
+  typeof window !== "undefined" &&
+  process.env.NEXT_PUBLIC_USE_EMULATOR === "true"
+) {
+  connectFirestoreEmulator(db, "localhost", 8080);
 }
 
 export function fileToBase64(file: File): Promise<string> {
@@ -103,7 +105,7 @@ export async function getDocumentsWithQuery<T extends DocumentData>(
   try {
     const querySnapshot = await getDocs(query);
     results = querySnapshot.docs.map(
-      (doc) => ({ ...doc.data(), id: doc.id } as T)
+      (doc) => ({ ...doc.data(), id: doc.id }) as T
     );
   } catch (e) {
     error = e instanceof Error ? e : new Error("An unknown error occurred");
@@ -112,13 +114,13 @@ export async function getDocumentsWithQuery<T extends DocumentData>(
   return { results, error };
 }
 export const getFirebaseAuth = () => {
-  const firebaseAuth = getAuth(firebase_app)
+  const firebaseAuth = getAuth(firebase_app);
   if (process.env.NEXT_PUBLIC_USE_EMULATOR == "true") {
     connectAuthEmulator(firebaseAuth, `http://localhost:9099`, {
       disableWarnings: true,
-    })
+    });
   }
   return firebaseAuth;
-}
+};
 
 export const auth = getFirebaseAuth();

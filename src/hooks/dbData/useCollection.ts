@@ -4,9 +4,8 @@ import { getAllDocumentsFromCollection } from "@/utils/firebaseClient";
 // Fonction utilitaire pure pour récupérer tous les documents de la collection "collections"
 export const getAllCollections = async () => {
   try {
-    const { results, error } = await getAllDocumentsFromCollection<Collection>(
-      "collections"
-    );
+    const { results, error } =
+      await getAllDocumentsFromCollection<Collection>("collections");
     if (error) {
       throw error;
     }

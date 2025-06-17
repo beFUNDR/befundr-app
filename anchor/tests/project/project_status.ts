@@ -10,9 +10,11 @@ type ProjectStatusType =
   | { publicSale: string }
   | { live: string }
   | { failed: string };
-  
+
 export class ProjectStatus extends Enum {
-  static WaitingForApproval = new ProjectStatus({ waitingForApproval: "WaitingForApproval" });
+  static WaitingForApproval = new ProjectStatus({
+    waitingForApproval: "WaitingForApproval",
+  });
   static Published = new ProjectStatus({ published: "Published" });
   static NftMintRound = new ProjectStatus({ nftMintRound: "NftMintRound" });
   static Incubation = new ProjectStatus({ incubation: "Incubation" });

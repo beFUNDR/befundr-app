@@ -36,9 +36,8 @@ const useGetProjectById = (projectId: string) =>
 // Fonction utilitaire pure
 export const getProjectsByUserId = async (userId: string) => {
   try {
-    const { results, error } = await getAllDocumentsFromCollection<Project>(
-      "projects"
-    );
+    const { results, error } =
+      await getAllDocumentsFromCollection<Project>("projects");
     if (error) {
       throw error;
     }
@@ -73,9 +72,8 @@ export const useProject = () => {
   //* QUERY
   const getAllProjects = async () => {
     try {
-      const { results, error } = await getAllDocumentsFromCollection<Project>(
-        "projects"
-      );
+      const { results, error } =
+        await getAllDocumentsFromCollection<Project>("projects");
       if (error) {
         throw error;
       }

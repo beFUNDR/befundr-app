@@ -11,9 +11,9 @@ import { PublicKey } from "@solana/web3.js";
  * @returns A 8-byte Buffer representing the discriminator.
  */
 function getAnchorDiscriminator(accountName: string): Buffer {
-    // Replace with actual logic if needed:
-    // return createHash('sha256').update(`account:${accountName}`).digest().slice(0, 8);
-    return Buffer.from([0, 0, 0, 0, 0, 0, 0, 0]);
+  // Replace with actual logic if needed:
+  // return createHash('sha256').update(`account:${accountName}`).digest().slice(0, 8);
+  return Buffer.from([0, 0, 0, 0, 0, 0, 0, 0]);
 }
 
 /**
@@ -21,50 +21,53 @@ function getAnchorDiscriminator(accountName: string): Buffer {
  * This class is used for Borsh serialization.
  */
 class BaseCollectionV1 {
+  key: number;
+  updateAuthority: Uint8Array;
+  name: string;
+  uri: string;
+  numMinted: number;
+  currentSize: number;
+
+  /**
+   * Creates a new instance of BaseCollectionV1.
+   *
+   * @param args - The fields for the collection account.
+   */
+  constructor(args: {
     key: number;
     updateAuthority: Uint8Array;
     name: string;
     uri: string;
     numMinted: number;
     currentSize: number;
-
-    /**
-     * Creates a new instance of BaseCollectionV1.
-     *
-     * @param args - The fields for the collection account.
-     */
-    constructor(args: {
-        key: number;
-        updateAuthority: Uint8Array;
-        name: string;
-        uri: string;
-        numMinted: number;
-        currentSize: number;
-    }) {
-        this.key = args.key;
-        this.updateAuthority = args.updateAuthority;
-        this.name = args.name;
-        this.uri = args.uri;
-        this.numMinted = args.numMinted;
-        this.currentSize = args.currentSize;
-    }
+  }) {
+    this.key = args.key;
+    this.updateAuthority = args.updateAuthority;
+    this.name = args.name;
+    this.uri = args.uri;
+    this.numMinted = args.numMinted;
+    this.currentSize = args.currentSize;
+  }
 }
 
 /**
  * Borsh schema definition for the BaseCollectionV1 account.
  */
 const BaseCollectionSchema: Schema = new Map([
-    [BaseCollectionV1, {
-        kind: 'struct',
-        fields: [
-            ['key', 'u8'],
-            ['updateAuthority', [32]],
-            ['name', 'string'],
-            ['uri', 'string'],
-            ['numMinted', 'u32'],
-            ['currentSize', 'u32'],
-        ],
-    }],
+  [
+    BaseCollectionV1,
+    {
+      kind: "struct",
+      fields: [
+        ["key", "u8"],
+        ["updateAuthority", [32]],
+        ["name", "string"],
+        ["uri", "string"],
+        ["numMinted", "u32"],
+        ["currentSize", "u32"],
+      ],
+    },
+  ],
 ]);
 
 /**
@@ -76,23 +79,23 @@ const BaseCollectionSchema: Schema = new Map([
  * @returns A Buffer containing the serialized account data.
  */
 export function encodeBaseCollectionV1(args: {
-    updateAuthority: PublicKey;
-    name: string;
-    uri: string;
-    numMinted: number;
-    currentSize: number;
+  updateAuthority: PublicKey;
+  name: string;
+  uri: string;
+  numMinted: number;
+  currentSize: number;
 }): Buffer {
-    const disc = getAnchorDiscriminator("BaseCollectionV1");
+  const disc = getAnchorDiscriminator("BaseCollectionV1");
 
-    const account = new BaseCollectionV1({
-        key: 5, // 5 = Key::CollectionV1 in Metaplex Core
-        updateAuthority: args.updateAuthority.toBuffer(),
-        name: args.name,
-        uri: args.uri,
-        numMinted: args.numMinted,
-        currentSize: args.currentSize,
-    });
+  const account = new BaseCollectionV1({
+    key: 5, // 5 = Key::CollectionV1 in Metaplex Core
+    updateAuthority: args.updateAuthority.toBuffer(),
+    name: args.name,
+    uri: args.uri,
+    numMinted: args.numMinted,
+    currentSize: args.currentSize,
+  });
 
-    const body = Buffer.from(serialize(BaseCollectionSchema, account));
-    return Buffer.concat([body]); // If needed: Buffer.concat([disc, body]);
+  const body = Buffer.from(serialize(BaseCollectionSchema, account));
+  return Buffer.concat([body]); // If needed: Buffer.concat([disc, body]);
 }

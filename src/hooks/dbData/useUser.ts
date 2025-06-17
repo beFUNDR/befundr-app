@@ -12,9 +12,8 @@ export function useUser(userId?: string) {
   //* QUERIES
   // Get all users
   const getAllUsers = async () => {
-    const { results, error } = await getAllDocumentsFromCollection<User>(
-      "users"
-    );
+    const { results, error } =
+      await getAllDocumentsFromCollection<User>("users");
     return results;
   };
 
@@ -28,9 +27,8 @@ export function useUser(userId?: string) {
   //TODO Refactor this code
   const getUser = async (userId: string) => {
     try {
-      const { results, error } = await getAllDocumentsFromCollection<User>(
-        "users"
-      );
+      const { results, error } =
+        await getAllDocumentsFromCollection<User>("users");
       if (error) throw error;
       return results.find((u) => u.data.wallet === userId);
     } catch (error) {
@@ -49,9 +47,8 @@ export function useUser(userId?: string) {
   // Get multiple users
   const getUsers = async (userIds: string[]) => {
     try {
-      const { results, error } = await getAllDocumentsFromCollection<User>(
-        "users"
-      );
+      const { results, error } =
+        await getAllDocumentsFromCollection<User>("users");
       if (error) throw error;
       return results.filter((u) => userIds.includes(u.data.wallet));
     } catch (error) {
@@ -59,7 +56,7 @@ export function useUser(userId?: string) {
       throw error;
     }
   };
-  
+
   const useGetUsers = (userIds: string[]) =>
     useQuery({
       queryKey: ["users", userIds],
@@ -72,7 +69,9 @@ export function useUser(userId?: string) {
   const updateUser = async (user: User) => {
     const response = await fetch("/api/user", {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(user),
     });
     if (!response.ok) {
@@ -101,7 +100,9 @@ export function useUser(userId?: string) {
 export const getUserAssets = async (wallet: string) => {
   const res = await fetch("/api/user/getAssets", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ wallet }),
   });
   if (!res.ok) {

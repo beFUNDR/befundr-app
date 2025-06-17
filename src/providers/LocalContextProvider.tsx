@@ -23,7 +23,7 @@ type LocalContextProviderType = {
 // Create the default context
 const LocalContext = createContext<LocalContextProviderType>({
   user: null,
-  setUser: () => { },
+  setUser: () => {},
   createUser: async () => false,
   isAdmin: false,
 });
@@ -74,7 +74,8 @@ export const LocalContextProvider = ({
         body: JSON.stringify({ userId: publicKey.toString() }),
       });
 
-      if (!resGameProgram.ok) throw new Error("Error while creating game program");
+      if (!resGameProgram.ok)
+        throw new Error("Error while creating game program");
 
       // Invalidate the user and game queries
       queryClient.invalidateQueries({
@@ -93,9 +94,7 @@ export const LocalContextProvider = ({
   };
 
   return (
-    <LocalContext.Provider
-      value={{ user, setUser, createUser, isAdmin }}
-    >
+    <LocalContext.Provider value={{ user, setUser, createUser, isAdmin }}>
       {children}
     </LocalContext.Provider>
   );

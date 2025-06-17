@@ -5,7 +5,7 @@ if (!admin.apps.length) {
 
   const credential = admin.credential.cert({
     projectId,
-    privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY?.replace(/\\n/g, "\n"),
     clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
   });
 
@@ -17,8 +17,8 @@ if (!admin.apps.length) {
 
   const firestore = admin.firestore();
 
-  if (process.env.USE_EMULATOR === 'true') {
-    firestore.settings({ host: 'localhost:8080', ssl: false });
+  if (process.env.USE_EMULATOR === "true") {
+    firestore.settings({ host: "localhost:8080", ssl: false });
   }
 }
 

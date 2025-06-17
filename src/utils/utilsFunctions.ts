@@ -4,9 +4,7 @@ export function delay(duration: number): Promise<void> {
 
 export function concatAddress(address: string | undefined) {
   if (address) {
-    return `${address.substring(0, 4)}...${address.substring(
-      address.length - 3
-    )}`;
+    return `${address.substring(0, 4)}...${address.substring(address.length - 3)}`;
   }
 }
 

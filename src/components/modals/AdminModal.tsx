@@ -13,15 +13,14 @@ type Props = {
   onStatusChange?: (newStatus: ProjectStatus) => void;
 };
 
-const AdminModal = ({
-  project,
-  onClose,
-  onStatusChange,
-}: Props) => {
-  const [status, setStatus] = useState<ProjectStatus>(project.status as ProjectStatus);
+const AdminModal = ({ project, onClose, onStatusChange }: Props) => {
+  const [status, setStatus] = useState<ProjectStatus>(
+    project.status as ProjectStatus
+  );
   const [maxSupply, setMaxSupply] = useState<number>(200);
   const [usdcPrice, setUsdcPrice] = useState<number>(500);
-  const [collectionName, setCollectionName] = useState<string>("Awesome Collection");
+  const [collectionName, setCollectionName] =
+    useState<string>("Awesome Collection");
   const currentStepIndex = projectSteps.findIndex(
     (step) => step.key === status
   );
@@ -54,7 +53,12 @@ const AdminModal = ({
         break;
     }
 
-    const result = await handleProjectStepAction(current, project, updateFun, params);
+    const result = await handleProjectStepAction(
+      current,
+      project,
+      updateFun,
+      params
+    );
 
     if (result === "proceed") {
       const nextStatus = projectSteps[currentStepIndex + 1].key;
@@ -84,12 +88,13 @@ const AdminModal = ({
               <div className="flex flex-col items-center">
                 <div
                   className={`w-8 h-8 flex items-center justify-center rounded-full font-bold text-sm
-      ${isCompleted
-                      ? "bg-green-500 text-white"
-                      : isActive
-                        ? "bg-accent text-gray-900"
-                        : "bg-gray-300 text-gray-600"
-                    }`}
+      ${
+        isCompleted
+          ? "bg-green-500 text-white"
+          : isActive
+            ? "bg-accent text-gray-900"
+            : "bg-gray-300 text-gray-600"
+      }`}
                 >
                   {idx + 1}
                 </div>
@@ -107,28 +112,31 @@ const AdminModal = ({
       </div>
 
       <div className="mt-10 flex justify-end">
-        {project.status == ProjectStatus.Published && <><InputField
-          type="number"
-          label="NFT Max Supply"
-          value={maxSupply}
-          onChange={(e) => setMaxSupply(Number(e.target.value))}
-          placeholder="Enter the max supply"
-        />
-          <InputField
-            type="number"
-            label="NFT USDC Price"
-            value={usdcPrice}
-            onChange={(e) => setUsdcPrice(Number(e.target.value))}
-            placeholder="Enter the price in USDC"
-          />
-          <InputField
-            type="text"
-            label=" Collection Name"
-            value={collectionName}
-            onChange={(e) => setCollectionName(e.target.value)}
-            placeholder="Enter the collection name"
-          />
-        </>}
+        {project.status == ProjectStatus.Published && (
+          <>
+            <InputField
+              type="number"
+              label="NFT Max Supply"
+              value={maxSupply}
+              onChange={(e) => setMaxSupply(Number(e.target.value))}
+              placeholder="Enter the max supply"
+            />
+            <InputField
+              type="number"
+              label="NFT USDC Price"
+              value={usdcPrice}
+              onChange={(e) => setUsdcPrice(Number(e.target.value))}
+              placeholder="Enter the price in USDC"
+            />
+            <InputField
+              type="text"
+              label=" Collection Name"
+              value={collectionName}
+              onChange={(e) => setCollectionName(e.target.value)}
+              placeholder="Enter the collection name"
+            />
+          </>
+        )}
         <button
           onClick={handleNext}
           disabled={!projectSteps[currentStepIndex]?.nextAction}

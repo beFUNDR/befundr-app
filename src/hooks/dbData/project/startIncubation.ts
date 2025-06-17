@@ -6,12 +6,12 @@ import { StartIncubationProjectParams } from "./type";
 import { BN } from "@coral-xyz/anchor";
 
 export const startIncubation = async ({
-    project,
-    authority,
-    payer,
-    program
+  project,
+  authority,
+  payer,
+  program,
 }: StartIncubationProjectParams): Promise<any> => {
-    /*const [configPda] = PublicKey.findProgramAddressSync(
+  /*const [configPda] = PublicKey.findProgramAddressSync(
         [Buffer.from("globals")],
         BEFUNDR_PROGRAM_ID
     );
@@ -31,19 +31,17 @@ export const startIncubation = async ({
 
     await confirmTransaction(program, startNftMintRoundProjectTx);
 */
-    const response = await fetch("/api/project", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            project: { ...project, status: ProjectStatus.Incubation },
-        }),
-    });
+  const response = await fetch("/api/project", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      project: { ...project, status: ProjectStatus.Incubation },
+    }),
+  });
 
-    if (!response.ok) {
-        throw new Error("Error while updating the project status");
-    }
+  if (!response.ok) {
+    throw new Error("Error while updating the project status");
+  }
 
-
-
-    return {};
+  return {};
 };

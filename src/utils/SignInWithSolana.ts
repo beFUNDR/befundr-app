@@ -1,8 +1,11 @@
-import { SolanaSignInInput, SolanaSignInOutput } from '@solana/wallet-standard-features'
-import { signInWithCustomToken } from 'firebase/auth';
-import { auth } from './firebaseClient';
-import { SignInMessageSignerWalletAdapterProps } from '@solana/wallet-adapter-base';
-import { PublicKey } from '@solana/web3.js';
+import {
+  SolanaSignInInput,
+  SolanaSignInOutput,
+} from "@solana/wallet-standard-features";
+import { signInWithCustomToken } from "firebase/auth";
+import { auth } from "./firebaseClient";
+import { SignInMessageSignerWalletAdapterProps } from "@solana/wallet-adapter-base";
+import { PublicKey } from "@solana/web3.js";
 
 /**
  * Initiates a Sign-In With Solana (SIWS) authentication flow,
@@ -15,60 +18,64 @@ import { PublicKey } from '@solana/web3.js';
  * @throws If any step fails (e.g., message generation, signing, or token exchange)
  */
 export async function signInWithSolana(
-    signIn: SignInMessageSignerWalletAdapterProps['signIn'],
-    publicKey: PublicKey
+  signIn: SignInMessageSignerWalletAdapterProps["signIn"],
+  publicKey: PublicKey
 ): Promise<string> {
-    // Ensure Firebase Auth is initialized
-    if (!auth) {
-        throw new Error('Firebase auth is not initialized');
+  // Ensure Firebase Auth is initialized
+  if (!auth) {
+    throw new Error("Firebase auth is not initialized");
+  }
+
+  // 1. Request a SIWS-compliant message from the backend, including a nonce
+  const createRes = await fetch(
+    `/api/auth/siws-message?publicKey=${publicKey.toBase58()}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
     }
+  );
+  if (!createRes.ok) throw new Error("Failed to get sign-in input");
 
-    // 1. Request a SIWS-compliant message from the backend, including a nonce
-    const createRes = await fetch(`/api/auth/siws-message?publicKey=${publicKey.toBase58()}`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
-    if (!createRes.ok) throw new Error('Failed to get sign-in input');
+  const { signInData }: { signInData: SolanaSignInInput } =
+    await createRes.json();
 
-    const { signInData }: { signInData: SolanaSignInInput } = await createRes.json();
+  // 2. Ask the wallet to sign the generated message
+  let signInResult;
+  try {
+    signInResult = await signIn(signInData);
+  } catch (error: any) {
+    throw new Error(`signIn error: ${error.error.code}`);
+  }
 
-    // 2. Ask the wallet to sign the generated message
-    let signInResult;
-    try {
-        signInResult = await signIn(signInData);
-    } catch (error: any) {
-        throw new Error(`signIn error: ${error.error.code}`);
-    }
+  // 3. Format the result into a valid SolanaSignInOutput payload
+  const output: SolanaSignInOutput = {
+    ...signInResult,
+    account: {
+      address: signInResult.account.address,
+      publicKey: signInResult.account.publicKey,
+      chains: signInResult.account.chains,
+      features: signInResult.account.features,
+      label: signInResult.account.label,
+      icon: signInResult.account.icon,
+    },
+  };
 
-    // 3. Format the result into a valid SolanaSignInOutput payload
-    const output: SolanaSignInOutput = {
-        ...signInResult,
-        account: {
-            address: signInResult.account.address,
-            publicKey: signInResult.account.publicKey,
-            chains: signInResult.account.chains,
-            features: signInResult.account.features,
-            label: signInResult.account.label,
-            icon: signInResult.account.icon,
-        },
-    };
+  // 4. Send the signed message to the backend to verify and issue a Firebase custom token
+  const verifyRes = await fetch("/api/auth/verify-siws", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ input: signInData, output }),
+  });
 
-    // 4. Send the signed message to the backend to verify and issue a Firebase custom token
-    const verifyRes = await fetch('/api/auth/verify-siws', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ input: signInData, output }),
-    });
+  const result = await verifyRes.json();
 
-    const result = await verifyRes.json();
+  if (!verifyRes.ok) throw new Error(result.error);
 
-    if (!verifyRes.ok) throw new Error(result.error);
+  // 5. Authenticate with Firebase using the issued custom token
+  await signInWithCustomToken(auth, result.token);
 
-    // 5. Authenticate with Firebase using the issued custom token
-    await signInWithCustomToken(auth, result.token);
-
-    // Return the token in case it's needed for other client-side logic
-    return result.token;
+  // Return the token in case it's needed for other client-side logic
+  return result.token;
 }
