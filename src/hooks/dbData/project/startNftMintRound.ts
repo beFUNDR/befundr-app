@@ -6,76 +6,91 @@ import { StartNftMintRoundProjectParams } from "./type";
 import { BN } from "@coral-xyz/anchor";
 
 export const startNftMintRound = async ({
-    project,
-    nftMaxSupply,
-    nftUsdcPrice,
-    nftCollectionName,
-    authority,
-    payer,
-    program
+  project,
+  nftMaxSupply,
+  nftUsdcPrice,
+  nftCollectionName,
+  authority,
+  payer,
+  program,
 }: StartNftMintRoundProjectParams): Promise<any> => {
-    const [configPda] = PublicKey.findProgramAddressSync(
-        [Buffer.from("globals")],
-        BEFUNDR_PROGRAM_ID
-    );
+  const [configPda] = PublicKey.findProgramAddressSync(
+    [Buffer.from("globals")],
+    BEFUNDR_PROGRAM_ID
+  );
 
-    const collection = new Keypair();
-    let config;
-    try {
-        console.log("Fetching config");
-        config = await program.account.globals.fetch(configPda);
-    } catch (error) {
-        console.log("Config not found, creating it");
+  const collection = new Keypair();
+  let config;
+  try {
+    console.log("Fetching config");
+    config = await program.account.globals.fetch(configPda);
+  } catch (error) {
+    console.log("Config not found, creating it");
 
-        //Admin not initialized yet, then we create it with the current user for test purposes
-        const tx = await program.methods
-            .updateAdmin([authority])
-            .accountsPartial({
-                config: configPda,
-                payer: authority,
-                authority: authority,
-                systemProgram: SystemProgram.programId,
-            })
-            .rpc({ skipPreflight: true });
+    //Admin not initialized yet, then we create it with the current user for test purposes
+    const tx = await program.methods
+      .updateAdmin([authority])
+      .accountsPartial({
+        config: configPda,
+        payer: authority,
+        authority: authority,
+        systemProgram: SystemProgram.programId,
+      })
+      .rpc({ skipPreflight: true });
 
-        await confirmTransaction(program, tx);
-        config = await program.account.globals.fetch(configPda);
-    }
+    await confirmTransaction(program, tx);
+    config = await program.account.globals.fetch(configPda);
+  }
 
-    const [projectPda] = PublicKey.findProgramAddressSync(
-        [Buffer.from("project"), config.createdProjectCounter.toArrayLike(Buffer, 'le', 8)],
-        program.programId
-    );
+  const [projectPda] = PublicKey.findProgramAddressSync(
+    [
+      Buffer.from("project"),
+      config.createdProjectCounter.toArrayLike(Buffer, "le", 8),
+    ],
+    program.programId
+  );
 
-    const startNftMintRoundProjectTx = await program.methods
-        .startNftMintRound(new BN(nftMaxSupply), new BN(nftUsdcPrice * 10 ** 6), nftCollectionName)
-        .accountsPartial({
-            project: projectPda,
-            mplCoreProgram: new PublicKey("CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d"),
-            globals: configPda,
-            collection: collection.publicKey,
-            authority: authority,
-            payer: payer,
-            systemProgram: SystemProgram.programId,
-        })
-        .signers([collection])
-        .rpc({ skipPreflight: true });
+  const startNftMintRoundProjectTx = await program.methods
+    .startNftMintRound(
+      new BN(nftMaxSupply),
+      new BN(nftUsdcPrice * 10 ** 6),
+      nftCollectionName
+    )
+    .accountsPartial({
+      project: projectPda,
+      mplCoreProgram: new PublicKey(
+        "CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d"
+      ),
+      globals: configPda,
+      collection: collection.publicKey,
+      authority: authority,
+      payer: payer,
+      systemProgram: SystemProgram.programId,
+    })
+    .signers([collection])
+    .rpc({ skipPreflight: true });
 
-    await confirmTransaction(program, startNftMintRoundProjectTx);
+  await confirmTransaction(program, startNftMintRoundProjectTx);
 
-    const response = await fetch("/api/project", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            project: { ...project, status: ProjectStatus.NftMintRound, projectPda: projectPda, nftCollection: collection.publicKey, nftUsdcPrice: nftUsdcPrice, nftMaxSupply: nftMaxSupply, nftCollectionName: nftCollectionName },
-        }),
-    });
+  const response = await fetch("/api/project", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      project: {
+        ...project,
+        status: ProjectStatus.NftMintRound,
+        projectPda: projectPda,
+        nftCollection: collection.publicKey,
+        nftUsdcPrice: nftUsdcPrice,
+        nftMaxSupply: nftMaxSupply,
+        nftCollectionName: nftCollectionName,
+      },
+    }),
+  });
 
-    if (!response.ok) {
-        throw new Error("Error while updating the project status");
-    }
+  if (!response.ok) {
+    throw new Error("Error while updating the project status");
+  }
 
-
-
-    return {};
+  return {};
 };

@@ -5,7 +5,8 @@ import { UpdateProjectParams } from "./type";
 import { ProjectStatus } from "@/data/ProjectStatus";
 
 export const approveProject = async ({
-  project }: UpdateProjectParams): Promise<any> => {
+  project,
+}: UpdateProjectParams): Promise<any> => {
   /* const [configPda] = PublicKey.findProgramAddressSync(
      [Buffer.from("globals")],
      BEFUNDR_PROGRAM_ID
@@ -38,7 +39,7 @@ export const approveProject = async ({
       },
       dataToUpdate: {
         status: ProjectStatus.Published,
-      }
+      },
     }),
   });
 

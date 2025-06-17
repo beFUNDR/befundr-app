@@ -49,7 +49,11 @@ const BuyNftModal = (props: Props) => {
             value={quantity}
             onChange={setQuantity as any}
             trackStyle={{ backgroundColor: "#08f7e7", height: 6 }}
-            handleStyle={{ borderColor: "#08f7e7", height: 20, width: 20 }}
+            handleStyle={{
+              borderColor: "#08f7e7",
+              height: 20,
+              width: 20,
+            }}
             railStyle={{ backgroundColor: "#222", height: 6 }}
           />
         </div>

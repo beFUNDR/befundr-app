@@ -128,7 +128,9 @@ export async function DELETE(request: NextRequest) {
         .firestore()
         .collection("missions")
         .doc(missionId)
-        .update({ applicants: admin.firestore.FieldValue.arrayRemove(userId) });
+        .update({
+          applicants: admin.firestore.FieldValue.arrayRemove(userId),
+        });
     } catch (error) {
       console.error(
         "Error removing user from mission's applicants array:",
@@ -137,7 +139,9 @@ export async function DELETE(request: NextRequest) {
       throw error;
     }
 
-    return NextResponse.json({ message: "Application deleted successfully" });
+    return NextResponse.json({
+      message: "Application deleted successfully",
+    });
   } catch (error) {
     console.error("Error deleting application:", error);
     return NextResponse.json(

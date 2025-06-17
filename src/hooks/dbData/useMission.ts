@@ -26,9 +26,8 @@ export function useMission() {
   // Get all missions by projectId
   const getMissionsByProjectId = async (projectId: string) => {
     try {
-      const { results, error } = await getAllDocumentsFromCollection<Mission>(
-        "missions"
-      );
+      const { results, error } =
+        await getAllDocumentsFromCollection<Mission>("missions");
       if (error) throw error;
       return results.filter((m) => m.data.projectId === projectId);
     } catch (error) {
@@ -68,9 +67,8 @@ export function useMission() {
 
   const getAllMissionsByDoneByUserId = async (userId: string) => {
     try {
-      const { results, error } = await getAllDocumentsFromCollection<Mission>(
-        "missions"
-      );
+      const { results, error } =
+        await getAllDocumentsFromCollection<Mission>("missions");
       if (error) throw error;
       return results.filter((m) => m.data.doneBy === userId);
     } catch (error) {

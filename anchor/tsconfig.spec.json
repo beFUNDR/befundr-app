@@ -7,8 +7,5 @@
     "types": ["jest", "node"],
     "lib": ["ESNext"]
   },
-  "include": [
-    "jest.config.ts",
-    "tests/**/*.ts",
-  ]
+  "include": ["jest.config.ts", "tests/**/*.ts"]
 }

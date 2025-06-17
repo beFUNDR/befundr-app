@@ -107,7 +107,7 @@ export async function getDocumentsWithQuery<T extends DocumentData>(
   try {
     const querySnapshot = await getDocs(query);
     results = querySnapshot.docs.map(
-      (doc) => ({ ...doc.data(), id: doc.id } as T)
+      (doc) => ({ ...doc.data(), id: doc.id }) as T
     );
   } catch (e) {
     error = e instanceof Error ? e : new Error("An unknown error occurred");

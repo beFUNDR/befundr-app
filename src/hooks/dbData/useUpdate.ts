@@ -9,9 +9,8 @@ export function useUpdate() {
   // Get all updates by projectId
   const getUpdatesByProjectId = async (projectId: string) => {
     try {
-      const { results, error } = await getAllDocumentsFromCollection<Update>(
-        "updates"
-      );
+      const { results, error } =
+        await getAllDocumentsFromCollection<Update>("updates");
       if (error) throw error;
       return results.filter((m) => m.data.projectId === projectId);
     } catch (error) {

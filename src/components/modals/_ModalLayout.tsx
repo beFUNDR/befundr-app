@@ -37,12 +37,8 @@ const ModalLayout = (props: Props) => {
         >
           <div
             className={` 
-              relative flex flex-col justify-${props.justify} items-${
-              props.item
-            } gap-4 
-              p-8 rounded-md ${
-                props.dark ? "bg-custom-gray-900" : "bg-custom-gray-900"
-              }
+              relative flex flex-col justify-${props.justify} items-${props.item} gap-4 
+              p-8 rounded-md ${props.dark ? "bg-custom-gray-900" : "bg-custom-gray-900"}
             border border-custom-gray-800
             min-h-30 max-h-full overflow-auto mt-20 md:mt-0
               w-full md:w-1/2 rounded-xl

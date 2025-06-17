@@ -110,8 +110,8 @@ const MultiImageSelector = (props: Props) => {
                     props.objectFit === "cover"
                       ? "object-cover"
                       : props.objectFit === "contain"
-                      ? "object-contain"
-                      : ""
+                        ? "object-contain"
+                        : ""
                   }`}
                   alt={`Image ${index + 1}`}
                   fill
