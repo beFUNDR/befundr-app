@@ -5,7 +5,7 @@ import LoaderSmall from "../displayElements/LoaderSmall";
 import UserApplicationCard from "../cards/UserApplicationCard";
 import { useState } from "react";
 import ViewApplicationModal from "./ViewApplicationModal";
-import { useGetUsers } from "@/hooks/dbData/useUser";
+import { useGetUsers } from "@/features/users/hooks/useUser";
 
 type Props = {
   onClose: () => void;

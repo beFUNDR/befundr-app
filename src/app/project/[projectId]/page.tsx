@@ -20,7 +20,7 @@ import { ProjectStatus } from "@/data/ProjectStatus";
 import PublishedPhase from "@/components/_projectPage/PublishedPhase";
 import NftMintRoundPhase from "@/components/_projectPage/NftMintRoundPhase";
 import ImageCarousel from "@/components/displayElements/ImageCarousel";
-import { useGetUser } from "@/hooks/dbData/useUser";
+import { useGetUser } from "@/features/users/hooks/useUser";
 
 const ProjectPage = () => {
   const [activeTab, setActiveTab] = useState("about");

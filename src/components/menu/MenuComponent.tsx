@@ -15,7 +15,7 @@ import ButtonLabelSecondarySmall from "../buttons/_ButtonLabelSecondarySmall";
 import { useLocalContext } from "@/providers/LocalContextProvider";
 import { Menu as MenuIcon, X } from "lucide-react";
 import { useAuth } from "@/providers/AuthProvider";
-import { useGetUser } from "@/hooks/dbData/useUser";
+import { useGetUser } from "@/features/users/hooks/useUser";
 
 const MenuComponent = () => {
   //* GLOBAL STATE

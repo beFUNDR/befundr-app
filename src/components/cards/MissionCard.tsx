@@ -9,7 +9,7 @@ import DeleteMissionModal from "../modals/DeleteMissionModal";
 import MissionApplicationModal from "../modals/MissionApplicationModal";
 import { useWallet } from "@solana/wallet-adapter-react";
 import ViewApplicantsModal from "../modals/ViewApplicantsModal";
-import { useGetUser } from "@/hooks/dbData/useUser";
+import { useGetUser } from "@/features/users/hooks/useUser";
 
 type Props = {
   mission: Mission;
@@ -86,7 +86,7 @@ const MissionCard = ({ mission, isOwner, missionId, projectId }: Props) => {
       {mission.status === "open" &&
         !isOwner &&
         user &&
-        user.data.isCompleteProfil && (
+        user.data.isCompleteProfile && (
           <button
             className="w-full md:w-1/3"
             onClick={() => setIsApplyModalOpen(true)}
@@ -101,7 +101,7 @@ const MissionCard = ({ mission, isOwner, missionId, projectId }: Props) => {
       {mission.status === "open" &&
         !isOwner &&
         user &&
-        !user.data.isCompleteProfil && (
+        !user.data.isCompleteProfile && (
           <Link
             className="w-full md:w-1/3 flex flex-col items-center gap-2"
             href={`/myprofile?tab=My profile`}

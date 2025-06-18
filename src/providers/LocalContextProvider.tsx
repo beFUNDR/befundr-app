@@ -1,5 +1,5 @@
 "use client";
-import { useGetUser } from "@/hooks/dbData/useUser";
+import { useGetUser } from "@/features/users/hooks/useUser";
 /**
  * LOCAL CONTEXT PROVIDER
  *

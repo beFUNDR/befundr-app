@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 import MissionApplicationValidationModal from "@/components/modals/MissionApplicationValidationModal";
 import Loader from "@/components/displayElements/Loader";
 import { useProject } from "@/hooks/dbData/project/useProject";
-import { useGetUser } from "@/hooks/dbData/useUser";
+import { useGetUser } from "@/features/users/hooks/useUser";
 
 export default function ApplyPage() {
   const { publicKey } = useWallet();
@@ -121,7 +121,7 @@ export default function ApplyPage() {
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12 ">
       <h1 className="h1Style my-6 ">Apply for your project 🚀</h1>
-      {!user.data.isCompleteProfil && (
+      {!user.data.isCompleteProfile && (
         <p className="bodyStyle !text-red-600 mb-6">
           Your profile is not set. Please set it before applying.
         </p>

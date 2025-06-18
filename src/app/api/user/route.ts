@@ -2,7 +2,7 @@ import admin from "@/lib/firebase/firebaseAdmin";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 
-const isCompleteProfil = (user: User): boolean => {
+const isCompleteProfile = (user: User): boolean => {
   // required field
   const hasRequiredFields = user.name?.trim() !== "" && user.bio?.trim() !== "";
 
@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
       website: "",
       discord: "",
       skills: [],
-      isCompleteProfil: false,
+      isCompleteProfile: false,
     };
 
     await admin.firestore().collection("users").doc(wallet).set(newUser);
@@ -112,12 +112,12 @@ export async function PATCH(req: NextRequest) {
     };
 
     // Vérifier si le profil est complet
-    const isComplete = isCompleteProfil(updatedUser);
+    const isComplete = isCompleteProfile(updatedUser);
 
     // Mettre à jour avec le statut de complétion
     await userRef.update({
       ...fields,
-      isCompleteProfil: isComplete,
+      isCompleteProfile: isComplete,
     });
 
     const updatedDoc = await userRef.get();

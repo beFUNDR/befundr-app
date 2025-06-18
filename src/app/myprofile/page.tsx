@@ -10,7 +10,7 @@ import UserProjectsContent from "@/components/_userPage/UserProjectsContent";
 import UserMissionsContent from "@/components/_userPage/UserMissionsContent";
 import UserCommunitiesContent from "@/components/_userPage/UserCommunitiesContent";
 import UserApplicationsContent from "@/components/_userPage/UserApplicationsContent";
-import { useGetUser, useUpdateUser } from "@/hooks/dbData/useUser";
+import { useGetUser, useUpdateUser } from "@/features/users/hooks/useUser";
 
 function MyProfilePage() {
   //* GLOBAL STATE
@@ -62,7 +62,7 @@ function MyProfilePage() {
   };
 
   // check if the profile is complete
-  const isCompleteProfil = () => {
+  const isCompleteProfile = () => {
     // required field
     const hasRequiredFields = pseudo.trim() !== "" && bio.trim() !== "";
 
@@ -91,7 +91,7 @@ function MyProfilePage() {
       discord,
       avatar: profilePic,
       skills: selectedSkills,
-      isCompleteProfil: isCompleteProfil(),
+      isCompleteProfile: isCompleteProfile(),
     });
   };
 
@@ -121,7 +121,7 @@ function MyProfilePage() {
     setDiscord,
     handleSave,
     isUpdating,
-    isCompleteProfil: isCompleteProfil(),
+    isCompleteProfile: isCompleteProfile(),
   };
 
   if (isLoading || !user) {

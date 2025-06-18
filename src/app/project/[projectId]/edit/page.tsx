@@ -14,7 +14,7 @@ import ButtonLabel from "@/components/buttons/_ButtonLabel";
 import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
 import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
 import toast from "react-hot-toast";
-import { useGetUser } from "@/hooks/dbData/useUser";
+import { useGetUser } from "@/features/users/hooks/useUser";
 
 export default function EditProjectPage() {
   //* GLOBAL STATE

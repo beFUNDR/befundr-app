@@ -7,7 +7,7 @@ import { concatAddress } from "@/utils/utilsFunctions";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import DefaultAvatar from "../displayElements/DefaultAvatar";
-import { useGetUser } from "@/hooks/dbData/useUser";
+import { useGetUser } from "@/features/users/hooks/useUser";
 
 const ProfilButton = () => {
   const [isOpen, setIsOpen] = useState(false);

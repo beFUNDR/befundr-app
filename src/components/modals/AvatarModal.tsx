@@ -5,7 +5,7 @@ import {
   useGetUser,
   useUpdateUser,
   useGetUserAssets,
-} from "@/hooks/dbData/useUser";
+} from "@/features/users/hooks/useUser";
 import Loader from "../displayElements/Loader";
 import NftCard from "../cards/NftCard";
 import Link from "next/link";

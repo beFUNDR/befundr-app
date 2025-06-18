@@ -8,7 +8,7 @@ import { useMemo, useState } from "react";
 import DeleteUpdateModal from "../modals/DeleteUpdateModal";
 import EditUpdateModal from "../modals/EditUpdateModal";
 import { formatDate } from "@/utils/utilsFunctions";
-import { useGetUser } from "@/hooks/dbData/useUser";
+import { useGetUser } from "@/features/users/hooks/useUser";
 
 interface Props {
   update: Update;

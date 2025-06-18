@@ -22,7 +22,7 @@ type ProfilContentProps = {
   setDiscord: (v: string) => void;
   handleSave: () => void;
   isUpdating: boolean;
-  isCompleteProfil: boolean;
+  isCompleteProfile: boolean;
 };
 
 const ProfilContent = ({
@@ -45,7 +45,7 @@ const ProfilContent = ({
   setDiscord,
   handleSave,
   isUpdating,
-  isCompleteProfil,
+  isCompleteProfile,
 }: ProfilContentProps) => {
   return (
     <>
@@ -124,7 +124,7 @@ const ProfilContent = ({
           <ButtonLabelAsync label="Save" isLoading={isUpdating} />
         </button>
       </div>
-      {isCompleteProfil && (
+      {isCompleteProfile && (
         <p className="bodyStyle my-4 !text-green-400 text-center">
           Your profile is complete.
           <br /> You can now create a project and be displayed on the skills

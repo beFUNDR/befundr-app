@@ -9,7 +9,7 @@ import UserMissionsContent from "@/components/_userPage/UserMissionsContent";
 import UserProjectsContent from "@/components/_userPage/UserProjectsContent";
 import { useGameProgramByUserId } from "@/hooks/dbData/useGameProgram";
 import BackButton from "@/components/buttons/BackButton";
-import { useGetUser } from "@/hooks/dbData/useUser";
+import { useGetUser } from "@/features/users/hooks/useUser";
 
 const UserPage = () => {
   const params = useParams();
