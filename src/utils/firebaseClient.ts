@@ -14,6 +14,8 @@ import { connectAuthEmulator, getAuth } from "firebase/auth";
 
 const db = getFirestore(firebase_app);
 
+export { db };
+
 if (
   typeof window !== "undefined" &&
   process.env.NEXT_PUBLIC_USE_EMULATOR === "true"

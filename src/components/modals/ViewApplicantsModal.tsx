@@ -2,10 +2,10 @@
 import { useMissionApplication } from "@/hooks/dbData/useMissionApplication";
 import ModalLayout from "./_ModalLayout";
 import LoaderSmall from "../displayElements/LoaderSmall";
-import { useUser } from "@/hooks/dbData/useUser";
 import UserApplicationCard from "../cards/UserApplicationCard";
 import { useState } from "react";
 import ViewApplicationModal from "./ViewApplicationModal";
+import { useGetUsers } from "@/hooks/dbData/useUser";
 
 type Props = {
   onClose: () => void;
@@ -23,7 +23,7 @@ const ViewApplicantsModal = ({ onClose, missionId }: Props) => {
   // fetch all the users from the applications
   const userIds =
     applications?.map((application) => application.data.userId) || [];
-  const { data: users } = useUser().useGetUsers(userIds);
+  const { data: users } = useGetUsers(userIds);
 
   const [isViewApplicationModalOpen, setIsViewApplicationModalOpen] =
     useState(false);
@@ -57,9 +57,7 @@ const ViewApplicantsModal = ({ onClose, missionId }: Props) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full justify-center items-center justify-items-center">
         {applications?.map((application) => {
           if (application.data.status === "rejected") return null;
-          const user = users?.find(
-            (u) => u.data.wallet === application.data.userId
-          );
+          const user = users?.find((u) => u.wallet === application.data.userId);
           if (!user) return null;
 
           return (
@@ -67,13 +65,13 @@ const ViewApplicantsModal = ({ onClose, missionId }: Props) => {
               key={application.id}
               onClick={() => {
                 setSelectedApplication(application.data);
-                setSelectedUser(user.data);
+                setSelectedUser(user);
                 setSelectedApplicationId(application.id);
                 setIsViewApplicationModalOpen(true);
               }}
             >
               <UserApplicationCard
-                user={user.data}
+                user={user}
                 application={application.data}
                 applicationId={application.id}
               />

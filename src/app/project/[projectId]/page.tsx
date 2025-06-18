@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import Loader from "@/components/displayElements/Loader";
 import { useParams } from "next/navigation";
 import WaitingForApprovalPhase from "@/components/_projectPage/WaitingForApprovalPhase";
-import { useUser } from "@/hooks/dbData/useUser";
 import CategoryTagBig from "@/components/tags/CategoryTagBig";
 import Tabs from "@/components/_projectPage/Tabs";
 import AboutContent from "@/components/_projectPage/AboutContent";
@@ -21,6 +20,7 @@ import { ProjectStatus } from "@/data/ProjectStatus";
 import PublishedPhase from "@/components/_projectPage/PublishedPhase";
 import NftMintRoundPhase from "@/components/_projectPage/NftMintRoundPhase";
 import ImageCarousel from "@/components/displayElements/ImageCarousel";
+import { useGetUser } from "@/hooks/dbData/useUser";
 
 const ProjectPage = () => {
   const [activeTab, setActiveTab] = useState("about");
@@ -29,7 +29,6 @@ const ProjectPage = () => {
   const projectId = params.projectId as string;
   const { getProject } = useProject();
   const { data: project, isLoading, error } = getProject(projectId);
-  const { useGetUser } = useUser();
   const {
     data: owner,
     isLoading: isOwnerLoading,

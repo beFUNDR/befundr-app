@@ -51,7 +51,7 @@ const UserProfileHeader = ({
             <SkillTag key={idx} skill={skill} />
           ))}
         </div>
-        <div className="bodyStyle mt-2">{user.bio}</div>
+        <div className="bodyStyle mt-2 whitespace-pre-line">{user.bio}</div>
         <div className="flex gap-8 mt-4 text-white text-lg">
           <div className="flex flex-col items-center">
             <span className="font-bold text-2xl">{contributions}</span>

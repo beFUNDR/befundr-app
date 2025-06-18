@@ -1,7 +1,11 @@
 "use client";
 import ModalLayout from "./_ModalLayout";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useUser, useUserAssets } from "@/hooks/dbData/useUser";
+import {
+  useGetUser,
+  useUpdateUser,
+  useGetUserAssets,
+} from "@/hooks/dbData/useUser";
 import Loader from "../displayElements/Loader";
 import NftCard from "../cards/NftCard";
 import Link from "next/link";
@@ -12,11 +16,9 @@ type Props = {
 
 const AvatarModal = (props: Props) => {
   const { publicKey } = useWallet();
-  const { data, isLoading, error } = useUserAssets(publicKey?.toString());
-  const { useGetUser } = useUser();
+  const { data, isLoading, error } = useGetUserAssets(publicKey?.toString());
   const { data: userData } = useGetUser(publicKey?.toString() ?? "");
-  const { useUpdateUser } = useUser();
-  const { mutateAsync: updateUser, isPending: isUpdating } = useUpdateUser;
+  const { mutateAsync: updateUser, isPending: isUpdating } = useUpdateUser();
 
   const handleSelectAvatar = async (image: string) => {
     if (!publicKey || !userData) return;

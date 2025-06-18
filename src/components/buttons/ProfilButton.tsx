@@ -4,16 +4,15 @@ import { User, FileText, Users, LogOut, DollarSign } from "lucide-react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Image from "next/image";
 import { concatAddress } from "@/utils/utilsFunctions";
-import { useUser } from "@/hooks/dbData/useUser";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import DefaultAvatar from "../displayElements/DefaultAvatar";
+import { useGetUser } from "@/hooks/dbData/useUser";
 
 const ProfilButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const { disconnect, publicKey } = useWallet();
-  const { useGetUser } = useUser();
   const { data: userData } = useGetUser(publicKey?.toString());
 
   const toggleMenu = () => {

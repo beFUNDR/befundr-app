@@ -1,6 +1,5 @@
 "use client";
 import Loader from "@/components/displayElements/Loader";
-import { useUser } from "@/hooks/dbData/useUser";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import UserProfileHeader from "@/components/_userPage/UserProfileHeader";
@@ -10,11 +9,11 @@ import UserMissionsContent from "@/components/_userPage/UserMissionsContent";
 import UserProjectsContent from "@/components/_userPage/UserProjectsContent";
 import { useGameProgramByUserId } from "@/hooks/dbData/useGameProgram";
 import BackButton from "@/components/buttons/BackButton";
+import { useGetUser } from "@/hooks/dbData/useUser";
 
 const UserPage = () => {
   const params = useParams();
   const userId = params.userId as string;
-  const { useGetUser } = useUser();
   const {
     data: gameProgramData,
     isLoading: isGameProgramLoading,

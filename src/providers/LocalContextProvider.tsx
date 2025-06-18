@@ -1,11 +1,11 @@
 "use client";
+import { useGetUser } from "@/hooks/dbData/useUser";
 /**
  * LOCAL CONTEXT PROVIDER
  *
  * This provider is used to manage the local state of the application.
  */
 //TODO refactor this provider as it's too generic
-import { useUser } from "@/hooks/dbData/useUser";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { useQueryClient } from "@tanstack/react-query";
@@ -36,7 +36,6 @@ export const LocalContextProvider = ({
 }) => {
   const queryClient = useQueryClient();
   const { publicKey } = useWallet();
-  const { useGetUser } = useUser();
   const { data: userData } = useGetUser(publicKey?.toString() || "");
   const [user, setUser] = useState<User | null>(null);
 

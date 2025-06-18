@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useProject } from "@/hooks/dbData/project/useProject";
-import { useUser } from "@/hooks/dbData/useUser";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Application1 from "@/components/_apply/Application1";
 import Application2 from "@/components/_apply/Application2";
@@ -15,6 +14,7 @@ import ButtonLabel from "@/components/buttons/_ButtonLabel";
 import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
 import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
 import toast from "react-hot-toast";
+import { useGetUser } from "@/hooks/dbData/useUser";
 
 export default function EditProjectPage() {
   //* GLOBAL STATE
@@ -25,7 +25,6 @@ export default function EditProjectPage() {
   const { getProject, updateProject, isUpdatingProject } = useProject();
   const { data: projectData, isLoading: isProjectLoading } =
     getProject(projectId);
-  const { useGetUser } = useUser();
   const { data: user, isLoading: isUserLoading } = useGetUser(
     projectData?.data.userId ?? ""
   );

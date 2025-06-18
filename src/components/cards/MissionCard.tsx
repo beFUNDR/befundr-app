@@ -1,6 +1,5 @@
 import { Ban, Pencil, RefreshCcw, Trash } from "lucide-react";
 import ButtonLabelSecondarySmall from "../buttons/_ButtonLabelSecondarySmall";
-import { useUser } from "@/hooks/dbData/useUser";
 import Image from "next/image";
 import Link from "next/link";
 import DefaultAvatar from "../displayElements/DefaultAvatar";
@@ -10,6 +9,7 @@ import DeleteMissionModal from "../modals/DeleteMissionModal";
 import MissionApplicationModal from "../modals/MissionApplicationModal";
 import { useWallet } from "@solana/wallet-adapter-react";
 import ViewApplicantsModal from "../modals/ViewApplicantsModal";
+import { useGetUser } from "@/hooks/dbData/useUser";
 
 type Props = {
   mission: Mission;
@@ -19,7 +19,6 @@ type Props = {
 };
 
 const MissionCard = ({ mission, isOwner, missionId, projectId }: Props) => {
-  const { useGetUser } = useUser();
   const { data: doneBy } = useGetUser(mission.doneBy);
   const { publicKey } = useWallet();
   const { data: user } = useGetUser(publicKey?.toString());

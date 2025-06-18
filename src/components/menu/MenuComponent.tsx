@@ -15,7 +15,7 @@ import ButtonLabelSecondarySmall from "../buttons/_ButtonLabelSecondarySmall";
 import { useLocalContext } from "@/providers/LocalContextProvider";
 import { Menu as MenuIcon, X } from "lucide-react";
 import { useAuth } from "@/providers/AuthProvider";
-import { useUser } from "@/hooks/dbData/useUser";
+import { useGetUser } from "@/hooks/dbData/useUser";
 
 const MenuComponent = () => {
   //* GLOBAL STATE
@@ -23,7 +23,6 @@ const MenuComponent = () => {
   const { user } = useAuth();
   const currentPathname = usePathname();
   const { connected, publicKey, signMessage } = useWallet();
-  const { useGetUser } = useUser();
   const { data: userData, isLoading: isUserLoading } = useGetUser(
     publicKey?.toString() || ""
   );

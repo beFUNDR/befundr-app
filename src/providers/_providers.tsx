@@ -8,6 +8,11 @@ import QueryProvider from "./QueryProvider";
 import { LocalContextProvider } from "./LocalContextProvider";
 import { SolanaProvider } from "./SolanaProvider";
 import { AuthProvider } from "./AuthProvider";
+import dynamic from "next/dynamic";
+
+const ReactQueryDevtools = dynamic(() =>
+  import("@tanstack/react-query-devtools").then((mod) => mod.ReactQueryDevtools)
+);
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -26,6 +31,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
               }}
             />
           </LocalContextProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryProvider>
       </AuthProvider>
     </SolanaProvider>
