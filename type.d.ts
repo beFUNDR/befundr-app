@@ -1,4 +1,4 @@
-// Type Project (mocké pour les besoins de la démo)
+//TODO Remove this file once all the types are fully declared in their respective folders
 type Project = {
   userId: string;
   name: string;

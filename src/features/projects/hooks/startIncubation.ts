@@ -1,9 +1,5 @@
-import { confirmTransaction } from "@/utils/solanaUtils";
-import { Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
-import { BEFUNDR_PROGRAM_ID } from "../../../../anchor/src";
-import { ProjectStatus } from "@/data/ProjectStatus";
-import { StartIncubationProjectParams } from "./type";
-import { BN } from "@coral-xyz/anchor";
+import { ProjectStatus } from "@/features/projects/constants/projectStatus";
+import { StartIncubationProjectParams } from "@/features/projects/types";
 
 export const startIncubation = async ({
   project,

@@ -2,9 +2,9 @@
 import { Camera } from "lucide-react";
 import Image from "next/image";
 import React, { useRef, useState } from "react";
-import AvatarModal from "../modals/AvatarModal";
-import DefaultAvatar from "../displayElements/DefaultAvatar";
 import { useWallet } from "@solana/wallet-adapter-react";
+import DefaultAvatar from "@/components/displayElements/DefaultAvatar";
+import AvatarModal from "@/components/modals/AvatarModal";
 
 type Props = {
   imageUrl: string;

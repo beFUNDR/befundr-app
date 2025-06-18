@@ -1,6 +1,7 @@
+import DefaultAvatar from "@/components/displayElements/DefaultAvatar";
+import SkillTag from "@/components/tags/SkillTag";
+import { User } from "@/features/users/types";
 import Image from "next/image";
-import SkillTag from "../tags/SkillTag";
-import DefaultAvatar from "../displayElements/DefaultAvatar";
 
 type Props = {
   user: User;

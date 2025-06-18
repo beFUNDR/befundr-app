@@ -5,13 +5,13 @@ import {
   createUserWalletWithSol,
   startNftMintRound,
   updateAdmins,
-} from "../../utils/testUtils";
+} from "@/utils/testUtils";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import { Provider, Program } from "@coral-xyz/anchor";
 import { fromWorkspace, LiteSVMProvider } from "anchor-litesvm";
 import { LiteSVM } from "litesvm";
-import { Befundr } from "../../../target/types/befundr";
-import BefundrIDL from "../../../target/idl/befundr.json";
+import { Befundr } from "@/target/types/befundr";
+import BefundrIDL from "@/target/idl/befundr.json";
 import { MPL_CORE_PROGRAM_ID } from "@metaplex-foundation/mpl-core";
 import { mintNft } from "tests/utils/testUtils";
 import {

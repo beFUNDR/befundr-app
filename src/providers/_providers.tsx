@@ -4,11 +4,12 @@
 
 "use client";
 import { Toaster } from "react-hot-toast";
-import QueryProvider from "./QueryProvider";
-import { LocalContextProvider } from "./LocalContextProvider";
-import { SolanaProvider } from "./SolanaProvider";
-import { AuthProvider } from "./AuthProvider";
+
 import dynamic from "next/dynamic";
+import { AuthProvider } from "@/providers/AuthProvider";
+import { LocalContextProvider } from "@/providers/LocalContextProvider";
+import QueryProvider from "@/providers/QueryProvider";
+import { SolanaProvider } from "@/providers/SolanaProvider";
 
 const ReactQueryDevtools = dynamic(() =>
   import("@tanstack/react-query-devtools").then((mod) => mod.ReactQueryDevtools)

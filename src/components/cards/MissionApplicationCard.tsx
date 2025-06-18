@@ -1,15 +1,15 @@
 "use client";
 
 import { useMission } from "@/hooks/dbData/useMission";
-import LoaderSmall from "../displayElements/LoaderSmall";
-import { useProject } from "@/hooks/dbData/project/useProject";
+import { useProject } from "@/features/projects/hooks/useProject";
 import Image from "next/image";
-import MissionStatusTag from "../tags/MissionStatusTag";
 import Link from "next/link";
-import ButtonLabelSecondarySmall from "../buttons/_ButtonLabelSecondarySmall";
-import ButtonLabelAlertSmall from "../buttons/_ButtonLabelAlertSmall";
 import { useState } from "react";
-import CancelMissionApplicationModal from "../modals/CancelMissionApplicationModal";
+import ButtonLabelAlertSmall from "@/components/buttons/_ButtonLabelAlertSmall";
+import ButtonLabelSecondarySmall from "@/components/buttons/_ButtonLabelSecondarySmall";
+import LoaderSmall from "@/components/displayElements/LoaderSmall";
+import CancelMissionApplicationModal from "@/components/modals/CancelMissionApplicationModal";
+import MissionStatusTag from "@/components/tags/MissionStatusTag";
 
 type Props = {
   application: MissionApplication;

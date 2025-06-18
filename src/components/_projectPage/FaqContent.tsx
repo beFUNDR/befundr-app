@@ -1,4 +1,4 @@
-import FaqQuestionCard from "../cards/FaqQuestionCard";
+import FaqQuestionCard from "@/components/cards/FaqQuestionCard";
 
 const FaqContent = () => {
   return (

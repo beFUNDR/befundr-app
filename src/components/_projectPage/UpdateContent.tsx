@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import ButtonLabelSecondary from "../buttons/_ButtonLabelSecondary";
-import UpdateCard from "../cards/UpdateCard";
-import CreateUpdateModal from "../modals/CreateUpdateModal";
 import { useUpdate } from "@/hooks/dbData/useUpdate";
+import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
+import UpdateCard from "@/components/cards/UpdateCard";
+import CreateUpdateModal from "@/components/modals/CreateUpdateModal";
 
 type Props = {
   isOwner: boolean;

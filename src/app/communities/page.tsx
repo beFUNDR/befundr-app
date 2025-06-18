@@ -1,7 +1,7 @@
 "use client";
 import CommunityCard from "@/components/cards/CommunityCard";
 import Loader from "@/components/displayElements/Loader";
-import { useGetAllCollections } from "@/hooks/dbData/useCollection";
+import { useGetAllCollections } from "@/features/nftItems/hooks/useCollection";
 
 const CommunitiesPage = () => {
   const {

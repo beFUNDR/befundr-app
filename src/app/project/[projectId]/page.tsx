@@ -13,10 +13,10 @@ import VoteContent from "@/components/_projectPage/VoteContent";
 import FaqContent from "@/components/_projectPage/FaqContent";
 import BackButton from "@/components/buttons/BackButton";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useProject } from "@/hooks/dbData/project/useProject";
+import { useProject } from "@/features/projects/hooks/useProject";
 import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
 import AdminModal from "@/components/modals/AdminModal";
-import { ProjectStatus } from "@/data/ProjectStatus";
+import { ProjectStatus } from "@/features/projects/constants/projectStatus";
 import PublishedPhase from "@/components/_projectPage/PublishedPhase";
 import NftMintRoundPhase from "@/components/_projectPage/NftMintRoundPhase";
 import ImageCarousel from "@/components/displayElements/ImageCarousel";
@@ -78,7 +78,7 @@ const ProjectPage = () => {
         return (
           <AboutContent
             description={project.data.description}
-            owner={owner?.data}
+            owner={owner}
             isOwner={isOwner}
             projectId={projectId}
           />
@@ -95,7 +95,7 @@ const ProjectPage = () => {
         return (
           <AboutContent
             description={project.data.description}
-            owner={owner?.data}
+            owner={owner}
             isOwner={isOwner}
             projectId={projectId}
           />
@@ -129,13 +129,13 @@ const ProjectPage = () => {
         <ImageCarousel images={allImages} />
         {/* Project info */}
         {project.data.status === ProjectStatus.WaitingForApproval && (
-          <WaitingForApprovalPhase project={project.data} owner={owner?.data} />
+          <WaitingForApprovalPhase project={project.data} owner={owner} />
         )}
         {project.data.status === ProjectStatus.Published && (
-          <PublishedPhase project={project.data} owner={owner?.data} />
+          <PublishedPhase project={project.data} owner={owner} />
         )}
         {project.data.status === ProjectStatus.NftMintRound && (
-          <NftMintRoundPhase project={project.data} owner={owner?.data} />
+          <NftMintRoundPhase project={project.data} owner={owner} />
         )}
       </div>
 

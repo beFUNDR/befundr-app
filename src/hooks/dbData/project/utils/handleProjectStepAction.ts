@@ -1,4 +1,4 @@
-import { ProjectStatus } from "@/data/ProjectStatus";
+import { ProjectStatus } from "@/features/projects/constants/projectStatus";
 
 type UpdateFunction = (...args: any[]) => Promise<any>;
 

@@ -1,5 +1,6 @@
 "use client";
 import { useGetUser } from "@/features/users/hooks/useUser";
+import { User } from "@/features/users/types/user.types";
 /**
  * LOCAL CONTEXT PROVIDER
  *
@@ -41,14 +42,14 @@ export const LocalContextProvider = ({
 
   useEffect(() => {
     if (userData) {
-      setUser(userData.data);
+      setUser(userData);
     }
   }, [userData]);
 
   const isAdmin = useMemo(() => {
     return (
-      userData?.data.wallet === process.env.NEXT_PUBLIC_ADMIN_1 ||
-      userData?.data.wallet === process.env.NEXT_PUBLIC_ADMIN_2
+      userData?.wallet === process.env.NEXT_PUBLIC_ADMIN_1 ||
+      userData?.wallet === process.env.NEXT_PUBLIC_ADMIN_2
     );
   }, [userData]);
 

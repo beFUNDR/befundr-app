@@ -5,10 +5,10 @@ import toast from "react-hot-toast";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useUpdate } from "@/hooks/dbData/useUpdate";
 import { useMemo, useState } from "react";
-import DeleteUpdateModal from "../modals/DeleteUpdateModal";
-import EditUpdateModal from "../modals/EditUpdateModal";
-import { formatDate } from "@/utils/utilsFunctions";
+import { formatDate } from "@/shared/utils/utilsFunctions";
 import { useGetUser } from "@/features/users/hooks/useUser";
+import DeleteUpdateModal from "@/components/modals/DeleteUpdateModal";
+import EditUpdateModal from "@/components/modals/EditUpdateModal";
 
 interface Props {
   update: Update;
@@ -55,8 +55,8 @@ const UpdateCard = ({ update, updateId, isOwner, onClick }: Props) => {
       <div className="flex items-center gap-4 mb-1">
         {user && (
           <Image
-            src={user?.data.avatar}
-            alt={user?.data.name}
+            src={user?.avatar}
+            alt={user?.name}
             width={48}
             height={48}
             className="rounded-full border border-gray-700"
@@ -85,7 +85,7 @@ const UpdateCard = ({ update, updateId, isOwner, onClick }: Props) => {
             )}
           </div>
           <div className="flex items-center gap-2 text-gray-400 text-sm">
-            <span className="font-semibold text-white">{user?.data.name}</span>
+            <span className="font-semibold text-white">{user?.name}</span>
             <span>•</span>
             <span>
               {formatDate(update.date).toLocaleDateString(undefined, {

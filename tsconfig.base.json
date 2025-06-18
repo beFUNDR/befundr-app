@@ -10,14 +10,27 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "lib": [
+      "es2020",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@befundr/anchor": ["anchor/src/index.ts"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@befundr/anchor": [
+        "anchor/src/index.ts"
+      ],
+      "@public/*": [
+        "./public/*"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

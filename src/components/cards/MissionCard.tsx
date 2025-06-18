@@ -1,15 +1,15 @@
 import { Ban, Pencil, RefreshCcw, Trash } from "lucide-react";
-import ButtonLabelSecondarySmall from "../buttons/_ButtonLabelSecondarySmall";
 import Image from "next/image";
 import Link from "next/link";
-import DefaultAvatar from "../displayElements/DefaultAvatar";
 import { useMemo, useState } from "react";
-import EditMissionModal from "../modals/EditMissionModal";
-import DeleteMissionModal from "../modals/DeleteMissionModal";
-import MissionApplicationModal from "../modals/MissionApplicationModal";
 import { useWallet } from "@solana/wallet-adapter-react";
-import ViewApplicantsModal from "../modals/ViewApplicantsModal";
 import { useGetUser } from "@/features/users/hooks/useUser";
+import ButtonLabelSecondarySmall from "@/components/buttons/_ButtonLabelSecondarySmall";
+import DefaultAvatar from "@/components/displayElements/DefaultAvatar";
+import DeleteMissionModal from "@/components/modals/DeleteMissionModal";
+import EditMissionModal from "@/components/modals/EditMissionModal";
+import MissionApplicationModal from "@/components/modals/MissionApplicationModal";
+import ViewApplicantsModal from "@/components/modals/ViewApplicantsModal";
 
 type Props = {
   mission: Mission;
@@ -86,7 +86,7 @@ const MissionCard = ({ mission, isOwner, missionId, projectId }: Props) => {
       {mission.status === "open" &&
         !isOwner &&
         user &&
-        user.data.isCompleteProfile && (
+        user.isCompleteProfile && (
           <button
             className="w-full md:w-1/3"
             onClick={() => setIsApplyModalOpen(true)}
@@ -101,7 +101,7 @@ const MissionCard = ({ mission, isOwner, missionId, projectId }: Props) => {
       {mission.status === "open" &&
         !isOwner &&
         user &&
-        !user.data.isCompleteProfile && (
+        !user.isCompleteProfile && (
           <Link
             className="w-full md:w-1/3 flex flex-col items-center gap-2"
             href={`/myprofile?tab=My profile`}
@@ -132,23 +132,23 @@ const MissionCard = ({ mission, isOwner, missionId, projectId }: Props) => {
       )}
       {mission.status === "done" && (
         <Link
-          href={`/skillshub/${doneBy?.data.wallet}`}
+          href={`/skillshub/${doneBy?.wallet}`}
           className="flex justify-start items-center gap-4 "
         >
-          {doneBy?.data.avatar ? (
+          {doneBy?.avatar ? (
             <Image
-              src={doneBy.data.avatar}
-              alt={doneBy.data.name}
+              src={doneBy.avatar}
+              alt={doneBy.name}
               width={40}
               height={40}
               className="rounded-full"
             />
           ) : (
-            <DefaultAvatar size={12} publicKey={doneBy?.data.wallet ?? ""} />
+            <DefaultAvatar size={12} publicKey={doneBy?.wallet ?? ""} />
           )}
           <div>
             <div className="text-xs text-gray-400">Done by</div>
-            <div className="font-bold text-white">{doneBy?.data.name}</div>
+            <div className="font-bold text-white">{doneBy?.name}</div>
           </div>
         </Link>
       )}

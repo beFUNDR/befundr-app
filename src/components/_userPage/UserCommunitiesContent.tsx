@@ -1,7 +1,7 @@
 "use client";
-import { useGetAllCollections } from "@/hooks/dbData/useCollection";
-import Loader from "../displayElements/Loader";
-import CommunityCard from "../cards/CommunityCard";
+import CommunityCard from "@/components/cards/CommunityCard";
+import Loader from "@/components/displayElements/Loader";
+import { useGetAllCollections } from "@/features/nftItems/hooks/useCollection";
 
 const UserCommunitiesContent = () => {
   const { data: collections, isLoading, error } = useGetAllCollections();

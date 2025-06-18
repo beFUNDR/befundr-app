@@ -1,5 +1,6 @@
+import DefaultAvatar from "@/components/displayElements/DefaultAvatar";
+import { User } from "@/features/users/types";
 import Image from "next/image";
-import DefaultAvatar from "../displayElements/DefaultAvatar";
 
 type Props = { user: User };
 

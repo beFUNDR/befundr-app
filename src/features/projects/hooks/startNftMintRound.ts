@@ -1,9 +1,9 @@
-import { confirmTransaction } from "@/utils/solanaUtils";
+import { confirmTransaction } from "@/shared/utils/solanaUtils";
 import { Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
-import { BEFUNDR_PROGRAM_ID } from "../../../../anchor/src";
-import { ProjectStatus } from "@/data/ProjectStatus";
-import { StartNftMintRoundProjectParams } from "./type";
+import { BEFUNDR_PROGRAM_ID } from "@befundr/anchor";
+import { ProjectStatus } from "@/features/projects/constants/projectStatus";
 import { BN } from "@coral-xyz/anchor";
+import { StartNftMintRoundProjectParams } from "@/features/projects/types";
 
 export const startNftMintRound = async ({
   project,

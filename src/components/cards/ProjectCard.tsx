@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { BadgeCheck } from "lucide-react";
-import CommunityLogo from "../displayElements/CommunityLogo";
-import StatusTag from "../tags/StatusTag";
+import CommunityLogo from "@/components/displayElements/CommunityLogo";
+import StatusTag from "@/components/tags/StatusTag";
 
 const ProjectCard = ({ project }: { project: Project }) => {
   return (

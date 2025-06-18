@@ -1,8 +1,8 @@
 "use client";
+import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
+import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
+import ModalLayout from "@/components/modals/_ModalLayout";
 import { useMission } from "@/hooks/dbData/useMission";
-import ButtonLabelAsync from "../buttons/_ButtonLabelAsync";
-import ButtonLabelSecondary from "../buttons/_ButtonLabelSecondary";
-import ModalLayout from "./_ModalLayout";
 
 type Props = {
   missionId: string;

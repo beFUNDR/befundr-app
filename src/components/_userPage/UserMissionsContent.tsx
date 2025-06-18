@@ -1,6 +1,6 @@
+import MissionCard from "@/components/cards/MissionCard";
+import LoaderSmall from "@/components/displayElements/LoaderSmall";
 import { useMission } from "@/hooks/dbData/useMission";
-import MissionCard from "../cards/MissionCard";
-import LoaderSmall from "../displayElements/LoaderSmall";
 
 const mockContributions = [
   {

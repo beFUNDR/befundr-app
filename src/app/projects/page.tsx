@@ -4,7 +4,7 @@ import { useState } from "react";
 import ProjectCard from "@/components/cards/ProjectCard";
 import Loader from "@/components/displayElements/Loader";
 import Link from "next/link";
-import { useProject } from "@/hooks/dbData/project/useProject";
+import { useProject } from "@/features/projects/hooks/useProject";
 import ApplyButton from "@/components/buttons/ApplyButton";
 
 const ProjectsPage = () => {

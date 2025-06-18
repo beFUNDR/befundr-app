@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import admin from "@/lib/firebase/firebaseAdmin";
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
   try {
-    const { wallet } = await req.json();
+    const wallet = req.nextUrl.searchParams.get("wallet");
     if (!wallet) {
       return NextResponse.json(
         { error: "Wallet is required" },

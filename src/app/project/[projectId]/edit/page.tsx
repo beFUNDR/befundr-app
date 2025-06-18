@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { useProject } from "@/hooks/dbData/project/useProject";
+import { useProject } from "@/features/projects/hooks/useProject";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Application1 from "@/components/_apply/Application1";
 import Application2 from "@/components/_apply/Application2";
@@ -15,6 +15,7 @@ import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
 import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
 import toast from "react-hot-toast";
 import { useGetUser } from "@/features/users/hooks/useUser";
+import { Project, ProjectToCreate } from "@/features/projects/types";
 
 export default function EditProjectPage() {
   //* GLOBAL STATE
@@ -162,8 +163,8 @@ export default function EditProjectPage() {
         <Application2 project={project} setProject={handleLocalProjectUpdate} />
       )}
 
-      {currentStep === 3 && user?.data && (
-        <Application3 project={project} user={user.data} />
+      {currentStep === 3 && user && (
+        <Application3 project={project} user={user} />
       )}
       <div className="flex flex-col md:flex-row justify-start mt-4 gap-4">
         {currentStep > 1 && (

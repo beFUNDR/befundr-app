@@ -1,4 +1,4 @@
-import admin from "./firebaseAdmin";
+import admin from "@/lib/firebase/firebaseAdmin";
 import { getApps } from "firebase/app";
 
 export function testFirebaseInitialization() {

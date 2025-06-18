@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import links from "./menu/links";
 import Image from "next/image";
+import links from "@/components/menu/links";
 
 // Icônes Lucide custom pour Discord et Telegram (SVG inline)
 const DiscordIcon = (props: React.SVGProps<SVGSVGElement>) => (

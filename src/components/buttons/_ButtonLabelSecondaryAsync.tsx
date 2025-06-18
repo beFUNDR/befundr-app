@@ -1,4 +1,4 @@
-import LoaderSmall from "../displayElements/LoaderSmall";
+import LoaderSmall from "@/components/displayElements/LoaderSmall";
 
 type Props = {
   label: string;

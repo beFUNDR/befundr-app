@@ -1,0 +1,64 @@
+import { z } from "zod";
+import { BN } from "@coral-xyz/anchor";
+import { bnSchema } from "@/shared/schemas/common.schema";
+
+export const ProjectSchema = z.object({
+  userId: z.string(),
+  name: z.string(),
+  category: z.string(),
+  mainImage: z.string(),
+  logo: z.string(),
+  images: z.array(z.string()),
+  headLine: z.string(),
+  description: z.string(),
+  pitchLink: z.string().optional(),
+  videoLink: z.string().optional(),
+  otherLink: z.string().optional(),
+  website: z.string().optional(),
+  twitter: z.string().optional(),
+  discord: z.string().optional(),
+  telegram: z.string().optional(),
+  status: z.string(),
+  supportedBy: z.array(z.string()).optional(),
+  id: z.string(),
+});
+
+export const ProjectDocumentSchema = z.object({
+  userId: z.string(),
+  name: z.string(),
+  category: z.string(),
+  mainImage: z.string(),
+  logo: z.string(),
+  images: z.array(z.string()),
+  headLine: z.string(),
+  description: z.string(),
+  pitchLink: z.string().optional(),
+  videoLink: z.string().optional(),
+  otherLink: z.string().optional(),
+  website: z.string().optional(),
+  twitter: z.string().optional(),
+  discord: z.string().optional(),
+  telegram: z.string().optional(),
+  status: z.string(),
+  supportedBy: z.array(z.string()).optional(),
+  id: z.string(),
+});
+
+export const ProjectToCreateSchema = z.object({
+  userId: z.string(),
+  name: z.string(),
+  category: z.string(),
+  mainImage: z.string(),
+  logo: z.string(),
+  images: z.array(z.string()),
+  headLine: z.string(),
+  description: z.string(),
+  pitchLink: z.string().optional(),
+  videoLink: z.string().optional(),
+  otherLink: z.string().optional(),
+  website: z.string().optional(),
+  twitter: z.string().optional(),
+  discord: z.string().optional(),
+  telegram: z.string().optional(),
+  status: z.string(),
+});

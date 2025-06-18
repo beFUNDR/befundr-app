@@ -1,5 +1,5 @@
-import { Connection, PublicKey } from "@solana/web3.js";
-import type { Befundr } from "../../../../anchor/src/index";
+/*import { Connection, PublicKey } from "@solana/web3.js";
+import type { Befundr } from "@/anchor/src/index";
 import { Program } from "@coral-xyz/anchor";
 
 interface CreateProjectParams {
@@ -46,3 +46,4 @@ interface MintNftParams {
   sendTransaction: WalletAdapterProps["sendTransaction"];
   program: Program<Befundr>;
 }
+*/

@@ -1,4 +1,4 @@
-import { getAllDocumentsFromCollection } from "@/utils/firebaseClient";
+import { getAllDocumentsFromCollection } from "@/shared/utils/firebaseClient";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 

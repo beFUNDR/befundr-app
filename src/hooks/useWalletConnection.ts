@@ -1,4 +1,4 @@
-import { useWallet } from "@solana/wallet-adapter-react";
+/*import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect } from "react";
 import { useLocalContext } from "@/providers/LocalContextProvider";
 import toast from "react-hot-toast";
@@ -48,3 +48,4 @@ export const useWalletConnection = () => {
 
   return { connected, publicKey };
 };
+*/

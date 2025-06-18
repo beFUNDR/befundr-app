@@ -2,20 +2,20 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import links from "./links";
 import { WalletButton } from "@/providers/SolanaProvider";
 import "@/app/customStyles.css";
 import { useWallet } from "@solana/wallet-adapter-react";
-import ProfilButton from "../buttons/ProfilButton";
 import { useEffect, useState } from "react";
-import WelcomeModal from "../modals/WelcomeModal";
 import { useGameProgramByUserId } from "@/hooks/dbData/useGameProgram";
-import PointCardSmall from "../cards/PointCardSmall";
-import ButtonLabelSecondarySmall from "../buttons/_ButtonLabelSecondarySmall";
 import { useLocalContext } from "@/providers/LocalContextProvider";
 import { Menu as MenuIcon, X } from "lucide-react";
 import { useAuth } from "@/providers/AuthProvider";
 import { useGetUser } from "@/features/users/hooks/useUser";
+import ButtonLabelSecondarySmall from "@/components/buttons/_ButtonLabelSecondarySmall";
+import ProfilButton from "@/components/buttons/ProfilButton";
+import PointCardSmall from "@/components/cards/PointCardSmall";
+import links from "@/components/menu/links";
+import WelcomeModal from "@/components/modals/WelcomeModal";
 
 const MenuComponent = () => {
   //* GLOBAL STATE
@@ -62,7 +62,7 @@ const MenuComponent = () => {
 
     if (
       connected &&
-      (!userData || userData.data.wallet === "not_found") &&
+      (!userData || userData.wallet === "not_found") &&
       !isUserLoading &&
       publicKey
     ) {

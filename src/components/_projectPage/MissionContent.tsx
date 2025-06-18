@@ -1,9 +1,9 @@
 "use client";
+import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
+import MissionCard from "@/components/cards/MissionCard";
+import CreateMissionModal from "@/components/modals/CreateMissionModal";
 import { useMission } from "@/hooks/dbData/useMission";
-import ButtonLabelSecondary from "../buttons/_ButtonLabelSecondary";
-import MissionCard from "../cards/MissionCard";
 import { useState } from "react";
-import CreateMissionModal from "../modals/CreateMissionModal";
 
 type Props = {
   isOwner: boolean;

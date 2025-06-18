@@ -1,11 +1,11 @@
 "use client";
-import StatsGrid from "./StatsGrid";
-import FeaturesList from "./FeaturesList";
-import { AnimatedBlock } from "../displayElements/AnimatedBlock";
-import { useEffect, useState } from "react";
-import ExploreProjectButton from "../buttons/ExploreProjectButton";
-import ApplyButton from "../buttons/ApplyButton";
+import FeaturesList from "@/components/_homepage/FeaturesList";
+import StatsGrid from "@/components/_homepage/StatsGrid";
+import ApplyButton from "@/components/buttons/ApplyButton";
+import ExploreProjectButton from "@/components/buttons/ExploreProjectButton";
+import { AnimatedBlock } from "@/components/displayElements/AnimatedBlock";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 const HeroSection = () => {
   const [videoVisible, setVideoVisible] = useState(false);

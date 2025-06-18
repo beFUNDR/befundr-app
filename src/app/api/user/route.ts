@@ -1,3 +1,4 @@
+import { User, UserDocument } from "@/features/users/types/user.types";
 import admin from "@/lib/firebase/firebaseAdmin";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
@@ -65,7 +66,8 @@ export async function POST(req: NextRequest) {
     }
 
     // Créer un nouveau document utilisateur avec des valeurs par défaut
-    const newUser: User = {
+    const newUser: UserDocument = {
+      id: wallet,
       wallet,
       name: "",
       avatar: "",
@@ -103,7 +105,7 @@ export async function PATCH(req: NextRequest) {
     // Récupérer les données actuelles de l'utilisateur
     const userRef = admin.firestore().collection("users").doc(wallet);
     const currentUser = await userRef.get();
-    const currentData = currentUser.data() as User;
+    const currentData = currentUser.data() as UserDocument;
 
     // Fusionner les données actuelles avec les nouvelles données
     const updatedUser = {

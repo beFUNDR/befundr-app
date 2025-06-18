@@ -1,5 +1,5 @@
+import ButtonLabel from "@/components/buttons/_ButtonLabel";
 import Link from "next/link";
-import ButtonLabel from "./_ButtonLabel";
 
 const ExploreProjectButton = () => {
   return (

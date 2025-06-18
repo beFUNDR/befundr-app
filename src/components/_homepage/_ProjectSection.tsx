@@ -1,11 +1,11 @@
 "use client";
 
 import "@/app/customStyles.css";
-import { AnimatedBlock } from "../displayElements/AnimatedBlock";
-import ExploreProjectButton from "../buttons/ExploreProjectButton";
-import ProjectCard from "../cards/ProjectCard";
 import Link from "next/link";
-import { useProject } from "@/hooks/dbData/project/useProject";
+import { useProject } from "@/features/projects/hooks/useProject";
+import ExploreProjectButton from "@/components/buttons/ExploreProjectButton";
+import ProjectCard from "@/components/cards/ProjectCard";
+import { AnimatedBlock } from "@/components/displayElements/AnimatedBlock";
 
 const ProjectSection = () => {
   const { projects, isLoadingProjects, projectsError } = useProject();

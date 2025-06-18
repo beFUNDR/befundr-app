@@ -1,5 +1,5 @@
-import { fileToBase64 } from "@/utils/firebaseClient";
-import { UpdateProjectParams } from "./type";
+/*import { fileToBase64 } from "@/shared/utils/firebaseClient";
+import { UpdateProjectParams } from "@/features/projects/type";
 
 export const updateProject = async ({
   project,
@@ -56,3 +56,4 @@ export const updateProject = async ({
 
   return {};
 };
+*/

@@ -1,8 +1,8 @@
-import { AnimatedBlock } from "../displayElements/AnimatedBlock";
-import FaqQuestionCard from "../cards/FaqQuestionCard";
-import ButtonLabelSecondary from "../buttons/_ButtonLabelSecondary";
 import Link from "next/link";
 import Image from "next/image";
+import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
+import FaqQuestionCard from "@/components/cards/FaqQuestionCard";
+import { AnimatedBlock } from "@/components/displayElements/AnimatedBlock";
 
 const FaqSection = () => {
   return (

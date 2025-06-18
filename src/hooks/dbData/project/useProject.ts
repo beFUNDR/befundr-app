@@ -1,22 +1,22 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+/*import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getAllDocumentsFromCollection,
   getDocument,
-} from "@/utils/firebaseClient";
+} from "@/shared/utils/firebaseClient";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useAnchorProvider } from "@/providers/SolanaProvider";
-import { createProject } from "./createProject";
-import { getBefundrProgram } from "../../../../anchor/src";
+import { createProject } from "@/features/projects/hooks/createProject";
+import { getBefundrProgram } from "@/anchor/src";
 import {
   StartIncubationProjectParams,
   StartNftMintRoundProjectParams,
   UpdateProjectParams,
-} from "./type";
-import { approveProject } from "./approveProject";
-import { startNftMintRound } from "./startNftMintRound";
-import { startIncubation } from "./startIncubation";
-import { mintNft } from "./mintNft";
-import { updateProject } from "./updateProject";
+} from "@/features/projects/type";
+import { approveProject } from "@/features/projects/hooks/approveProject";
+import { startNftMintRound } from "@/features/projects/hooks/startNftMintRound";
+import { startIncubation } from "@/features/projects/hooks/startIncubation";
+import { mintNft } from "@/features/projects/hooks/mintNft";
+import { updateProject } from "@/features/projects/hooks/updateProject";
 
 //* QUERIES
 // Get a project by id
@@ -229,3 +229,4 @@ export const useProject = () => {
     getProject: useProjectQuery,
   };
 };
+*/

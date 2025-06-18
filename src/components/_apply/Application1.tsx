@@ -1,12 +1,13 @@
 "use client";
+import ImageSelector from "@/components/displayElements/ImageSelector";
 import InputField from "@/components/displayElements/InputField";
-import ImageSelector from "../displayElements/ImageSelector";
-import MultiImageSelector from "../displayElements/MultiImageSelector";
+import MultiImageSelector from "@/components/displayElements/MultiImageSelector";
+import { Project, ProjectToCreate } from "@/features/projects/types";
 import { usePathname } from "next/navigation";
 
 type Props = {
   project: ProjectToCreate;
-  setProject: (p: ProjectToCreate | Project) => void;
+  setProject: (p: ProjectToCreate) => void;
   setMainImageFile: (file: File) => void;
   setLogoFile: (file: File) => void;
   setImagesFiles: (files: (File | string)[]) => void;

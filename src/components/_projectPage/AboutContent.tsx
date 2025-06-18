@@ -1,6 +1,7 @@
+import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
+import DefaultAvatar from "@/components/displayElements/DefaultAvatar";
+import { User } from "@/features/users/types";
 import Image from "next/image";
-import ButtonLabelSecondary from "../buttons/_ButtonLabelSecondary";
-import DefaultAvatar from "../displayElements/DefaultAvatar";
 import Link from "next/link";
 
 type Props = {

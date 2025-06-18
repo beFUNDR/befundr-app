@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
-import ModalLayout from "./_ModalLayout";
-import ButtonLabelAsync from "../buttons/_ButtonLabelAsync";
 import toast from "react-hot-toast";
-import InputField from "../displayElements/InputField";
 import { useMission } from "@/hooks/dbData/useMission";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { skills } from "@/data/localData";
-import Selector from "../displayElements/Selector";
+import { skills } from "@/shared/constants/skills";
+import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
+import InputField from "@/components/displayElements/InputField";
+import Selector from "@/components/displayElements/Selector";
+import ModalLayout from "@/components/modals/_ModalLayout";
 
 interface EditMissionModalProps {
   missionId: string;

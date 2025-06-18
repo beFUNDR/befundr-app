@@ -6,7 +6,7 @@ import {
   SignatureResult,
   TransactionSignature,
 } from "@solana/web3.js";
-import { Befundr } from "../../anchor/src";
+import { Befundr } from "@befundr/anchor";
 
 export const confirmTransaction = async (
   program: Program<Befundr>,

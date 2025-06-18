@@ -19,8 +19,8 @@ const SkillHubPage = () => {
     ? Array.from(
         new Set(
           users
-            .filter((user) => user.data.isCompleteProfile)
-            .flatMap((user) => user.data.skills || [])
+            .filter((user) => user.isCompleteProfile)
+            .flatMap((user) => user.skills || [])
         )
       )
     : [];
@@ -29,9 +29,8 @@ const SkillHubPage = () => {
   const filteredUsers = users
     ? users.filter((user) =>
         selectedSkill
-          ? user.data.isCompleteProfile &&
-            user.data.skills?.includes(selectedSkill)
-          : user.data.isCompleteProfile
+          ? user.isCompleteProfile && user.skills?.includes(selectedSkill)
+          : user.isCompleteProfile
       )
     : [];
 
@@ -89,7 +88,7 @@ const SkillHubPage = () => {
         >
           {filteredUsers.map((user, idx) => (
             <Link key={idx} href={`/skillshub/${user.id}`}>
-              <UserSkillCard user={user.data} />
+              <UserSkillCard user={user} />
             </Link>
           ))}
         </div>

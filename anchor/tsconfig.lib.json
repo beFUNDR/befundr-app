@@ -3,11 +3,21 @@
   "compilerOptions": {
     "outDir": "../dist/out-tsc",
     "declaration": true,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["ESNext"]
+    "lib": [
+      "ESNext"
+    ]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "jest.config.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ]
 }

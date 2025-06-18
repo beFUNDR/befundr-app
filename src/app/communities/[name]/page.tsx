@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetAllCollections } from "@/hooks/dbData/useCollection";
+import { useGetAllCollections } from "@/features/nftItems/hooks/useCollection";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import {

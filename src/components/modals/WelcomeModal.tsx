@@ -1,7 +1,7 @@
+import ButtonLabel from "@/components/buttons/_ButtonLabel";
+import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
+import ModalLayout from "@/components/modals/_ModalLayout";
 import { CircleCheckBig } from "lucide-react";
-import ModalLayout from "./_ModalLayout";
-import ButtonLabel from "../buttons/_ButtonLabel";
-import ButtonLabelSecondary from "../buttons/_ButtonLabelSecondary";
 import { useRouter } from "next/navigation";
 
 type Props = {

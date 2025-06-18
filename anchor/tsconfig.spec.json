@@ -4,8 +4,16 @@
     "outDir": "../dist/out-tsc",
     "module": "ESNext",
     "moduleResolution": "node",
-    "types": ["jest", "node"],
-    "lib": ["ESNext"]
+    "types": [
+      "jest",
+      "node"
+    ],
+    "lib": [
+      "ESNext"
+    ]
   },
-  "include": ["jest.config.ts", "tests/**/*.ts"]
+  "include": [
+    "jest.config.ts",
+    "tests/**/*.ts"
+  ]
 }

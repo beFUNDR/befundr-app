@@ -1,8 +1,8 @@
 "use client";
-import CommunityCard from "../cards/CommunityCard";
-import PartnerCard from "../cards/PartnerCard";
-import { AnimatedBlock } from "../displayElements/AnimatedBlock";
-import { useGetAllCollections } from "@/hooks/dbData/useCollection";
+import CommunityCard from "@/components/cards/CommunityCard";
+import PartnerCard from "@/components/cards/PartnerCard";
+import { AnimatedBlock } from "@/components/displayElements/AnimatedBlock";
+import { useGetAllCollections } from "@/features/nftItems/hooks/useCollection";
 import { useGetAllPartners } from "@/hooks/dbData/usePartner";
 
 const PartnerSection = () => {

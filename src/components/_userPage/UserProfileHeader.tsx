@@ -1,11 +1,12 @@
+import DiscordButton from "@/components/buttons/DiscordButton";
+import InternetButton from "@/components/buttons/InternetButton";
+import TelegramButton from "@/components/buttons/TelegramButton";
+import XButton from "@/components/buttons/XButton";
+import PointCard from "@/components/cards/PointCard";
+import DefaultAvatar from "@/components/displayElements/DefaultAvatar";
+import SkillTag from "@/components/tags/SkillTag";
+import { User } from "@/features/users/types";
 import Image from "next/image";
-import SkillTag from "../tags/SkillTag";
-import XButton from "../buttons/XButton";
-import DiscordButton from "../buttons/DiscordButton";
-import TelegramButton from "../buttons/TelegramButton";
-import InternetButton from "../buttons/InternetButton";
-import PointCard from "../cards/PointCard";
-import DefaultAvatar from "../displayElements/DefaultAvatar";
 
 interface UserProfileHeaderProps {
   user: User;

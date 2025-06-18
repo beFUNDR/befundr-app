@@ -1,4 +1,4 @@
-import { getDocumentsWithQuery } from "@/utils/firebaseClient";
+import { getDocumentsWithQuery } from "@/shared/utils/firebaseClient";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { collection, query, where, getFirestore } from "firebase/firestore";
 import firebase_app from "@/lib/firebase/firebaseInit";
