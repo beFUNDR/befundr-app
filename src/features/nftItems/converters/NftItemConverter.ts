@@ -1,22 +1,19 @@
-import {
-  NftItemDocumentSchema,
-  NftItemSchema,
-} from "@/features/nftItems/schemas/nftItem.schema";
+import { MinimalNFTSchema } from "@/features/nftItems/schemas/nftItem.schema";
 import {
   NftItemDocument,
   NftItem,
 } from "@/features/nftItems/types/nftItem.types";
 
 export const convertNftItemFromDocument = (doc: NftItemDocument): NftItem => {
-  const parsedNftItemDocument = NftItemDocumentSchema.array().parse(doc);
+  const parsedNftItemDocument = MinimalNFTSchema.parse(doc);
 
-  return NftItemSchema.parse(parsedNftItemDocument);
+  return MinimalNFTSchema.parse(parsedNftItemDocument);
 };
 
 export const convertNftItemsFromDocuments = (
   docs: NftItemDocument[]
 ): NftItem[] => {
-  const parsedNftItemDocument = NftItemDocumentSchema.array().parse(docs);
+  const parsedNftItemDocument = MinimalNFTSchema.array().parse(docs);
 
-  return NftItemSchema.array().parse(parsedNftItemDocument);
+  return MinimalNFTSchema.array().parse(parsedNftItemDocument);
 };

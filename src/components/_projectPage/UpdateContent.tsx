@@ -13,7 +13,6 @@ type Props = {
 const UpdateContent = (props: Props) => {
   const { useGetUpdatesByProjectId } = useUpdate();
   const { data: updates, error } = useGetUpdatesByProjectId(props.projectId);
-
   const [isShowModal, setIsShowModal] = useState(false);
 
   if (error) return <div>Error: {error.message}</div>;
@@ -28,7 +27,8 @@ const UpdateContent = (props: Props) => {
       {updates
         ?.sort(
           (a, b) =>
-            new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+            new Date(b.data.createdAt).getTime() -
+            new Date(a.data.createdAt).getTime()
         )
         .map((update, index) => (
           <UpdateCard
