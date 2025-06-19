@@ -3,8 +3,8 @@ import admin from "@/lib/firebase/firebaseAdmin";
 
 export async function POST(request: NextRequest) {
   try {
-    const update = await request.json();
-
+    const { update } = await request.json();
+    console.log("BACKEND UPDATe = ", update);
     // Create the update in Firestore
     const docRef = await admin
       .firestore()

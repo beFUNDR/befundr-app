@@ -78,10 +78,17 @@ type Update = {
   projectId: string;
   title: string;
   authorId: string;
-  date: string; // format: YYYY-MM-DD
+  createdAt: string; // format: YYYY-MM-DD
   message: string;
   likesCount: string[]; // array of userIds
   edited?: string; // format: YYYY-MM-DD
+};
+
+type CreateProjectUpdateDto = {
+  projectId: string;
+  title: string;
+  authorId: string;
+  message: string;
 };
 
 type Mission = {

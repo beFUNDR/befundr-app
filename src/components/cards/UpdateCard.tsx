@@ -9,6 +9,7 @@ import { formatDate } from "@/shared/utils/utilsFunctions";
 import { useGetUser } from "@/features/users/hooks/useUser";
 import DeleteUpdateModal from "@/components/modals/DeleteUpdateModal";
 import EditUpdateModal from "@/components/modals/EditUpdateModal";
+import DefaultAvatar from "@/components/displayElements/DefaultAvatar";
 
 interface Props {
   update: Update;
@@ -22,7 +23,6 @@ const UpdateCard = ({ update, updateId, isOwner, onClick }: Props) => {
   const { publicKey } = useWallet();
   const { useLikeUpdate } = useUpdate();
   const { mutateAsync: likeUpdate, isPending: isLiking } = useLikeUpdate;
-
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -53,7 +53,7 @@ const UpdateCard = ({ update, updateId, isOwner, onClick }: Props) => {
       onClick={onClick}
     >
       <div className="flex items-center gap-4 mb-1">
-        {user && (
+        {user && user.avatar ? (
           <Image
             src={user?.avatar}
             alt={user?.name}
@@ -61,6 +61,8 @@ const UpdateCard = ({ update, updateId, isOwner, onClick }: Props) => {
             height={48}
             className="rounded-full border border-gray-700"
           />
+        ) : (
+          <DefaultAvatar size={10} publicKey={user!.wallet} />
         )}
         <div className="flex flex-col w-full">
           <div className="flex items-center justify-between gap-2 w-full">
@@ -88,7 +90,7 @@ const UpdateCard = ({ update, updateId, isOwner, onClick }: Props) => {
             <span className="font-semibold text-white">{user?.name}</span>
             <span>•</span>
             <span>
-              {formatDate(update.date).toLocaleDateString(undefined, {
+              {formatDate(update.createdAt).toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
                 day: "numeric",

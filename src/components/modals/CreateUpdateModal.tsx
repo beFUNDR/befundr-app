@@ -28,11 +28,9 @@ const CreateUpdateModal = ({ onClose, projectId }: CreateMissionModalProps) => {
     try {
       await createUpdate({
         projectId,
-        authorId: publicKey?.toString() || "",
+        authorId: publicKey!.toString(),
         title,
-        date: new Date().toISOString(),
         message: description,
-        likesCount: [],
       });
       setTitle("");
       setDescription("");

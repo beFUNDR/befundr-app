@@ -1,3 +1,4 @@
+import { fetcher } from "@/shared/api/fetcher";
 import { getAllDocumentsFromCollection } from "@/shared/utils/firebaseClient";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -27,16 +28,14 @@ export function useUpdate() {
 
   //* MUTATIONS
   // Create an update
-  const createUpdate = async (update: Update) => {
-    const response = await fetch("/api/update", {
+  const createUpdate = async (update: CreateProjectUpdateDto) => {
+    const response = await fetcher("/api/update", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(update),
+      bodyParams: { update },
     });
-    if (!response.ok) {
-      throw new Error("Error while creating an update");
-    }
-    return response.json();
+
+    return response;
   };
 
   const useCreateUpdate = useMutation({
@@ -58,15 +57,13 @@ export function useUpdate() {
     projectId: string;
     userId: string;
   }) => {
-    const response = await fetch(`/api/update/${updateId}/like`, {
+    const response = await fetcher(`/api/update/${updateId}/like`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId }),
+      bodyParams: { userId },
     });
-    if (!response.ok) {
-      throw new Error("Error while liking an update");
-    }
-    return response.json();
+
+    return response;
   };
 
   const useLikeUpdate = useMutation({
