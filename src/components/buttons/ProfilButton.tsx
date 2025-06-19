@@ -49,7 +49,7 @@ const ProfilButton = () => {
           />
         ) : (
           publicKey && (
-            <DefaultAvatar size={10} publicKey={publicKey?.toString()} />
+            <DefaultAvatar size={40} publicKey={publicKey?.toString()} />
           )
         )}
         <span className="whitespace-nowrap">
@@ -81,7 +81,7 @@ const ProfilButton = () => {
                 ) : (
                   publicKey && (
                     <DefaultAvatar
-                      size={10}
+                      size={40}
                       publicKey={publicKey?.toString()}
                     />
                   )

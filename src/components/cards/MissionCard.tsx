@@ -144,7 +144,7 @@ const MissionCard = ({ mission, isOwner, missionId, projectId }: Props) => {
               className="rounded-full"
             />
           ) : (
-            <DefaultAvatar size={12} publicKey={doneBy?.wallet ?? ""} />
+            <DefaultAvatar size={40} publicKey={doneBy?.wallet ?? ""} />
           )}
           <div>
             <div className="text-xs text-gray-400">Done by</div>

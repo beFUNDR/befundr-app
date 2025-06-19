@@ -53,17 +53,19 @@ const UpdateCard = ({ update, updateId, isOwner, onClick }: Props) => {
       onClick={onClick}
     >
       <div className="flex items-center gap-4 mb-1">
-        {user && user.avatar ? (
-          <Image
-            src={user?.avatar}
-            alt={user?.name}
-            width={48}
-            height={48}
-            className="rounded-full border border-gray-700"
-          />
-        ) : (
-          <DefaultAvatar size={10} publicKey={user!.wallet} />
-        )}
+        <div>
+          {user && user.avatar ? (
+            <Image
+              src={user?.avatar}
+              alt={user?.name}
+              width={48}
+              height={48}
+              className="rounded-full border border-gray-700"
+            />
+          ) : (
+            <DefaultAvatar size={48} publicKey={user!.wallet} />
+          )}
+        </div>
         <div className="flex flex-col w-full">
           <div className="flex items-center justify-between gap-2 w-full">
             <span className="text-2xl font-bold text-white leading-tight">

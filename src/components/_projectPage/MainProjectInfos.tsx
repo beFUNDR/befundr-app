@@ -36,7 +36,7 @@ const MainProjectInfos = (props: Props) => {
               className="rounded-full"
             />
           ) : (
-            <DefaultAvatar size={10} publicKey={props.owner.wallet} />
+            <DefaultAvatar size={40} publicKey={props.owner.wallet} />
           )}
           <div>
             <div className="font-bold text-white">{props.owner.name}</div>
