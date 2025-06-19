@@ -5,7 +5,7 @@ import {
   SolanaSignInOutput,
 } from "@solana/wallet-standard-features";
 import { verifySignIn } from "@solana/wallet-standard-util";
-import admin from "@/lib/firebase/firebaseAdmin";
+import admin from "@/lib/firebase/firebase-admin";
 import { PublicKey } from "@solana/web3.js";
 
 export async function POST(req: NextRequest) {

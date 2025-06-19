@@ -3,13 +3,13 @@ import {
   getUserApi,
   getUsersApi,
   updateUserApi,
-} from "@/features/users/api/UserApi";
+} from "@/features/users/api/user-api";
 import {
   convertPartialUserToDocument,
   convertUserFromDocument,
   convertUsersFromDocuments,
   convertUserToDocument,
-} from "@/features/users/converters/UserConverter";
+} from "@/features/users/converters/user-converter";
 import { User } from "@/features/users/types/user.types";
 
 export const getUser = async (userId: string): Promise<User> => {

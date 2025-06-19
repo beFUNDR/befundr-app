@@ -16,7 +16,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useProject } from "@/features/projects/hooks/useProject";
 import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
 import AdminModal from "@/components/modals/AdminModal";
-import { ProjectStatus } from "@/features/projects/constants/projectStatus";
+import { ProjectStatus } from "@/features/projects/constants/project-status";
 import PublishedPhase from "@/components/_projectPage/PublishedPhase";
 import NftMintRoundPhase from "@/components/_projectPage/NftMintRoundPhase";
 import ImageCarousel from "@/components/displayElements/ImageCarousel";

@@ -4,7 +4,7 @@ import {
   getAllDocumentsFromCollection,
   getDocument,
   getDocumentsWithQuery,
-} from "@/shared/utils/firebaseClient";
+} from "@/shared/utils/firebase-client";
 import {
   collection,
   CollectionReference,

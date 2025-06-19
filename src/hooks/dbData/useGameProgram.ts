@@ -1,4 +1,4 @@
-import { getDocument } from "@/shared/utils/firebaseClient";
+import { getDocument } from "@/shared/utils/firebase-client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const getGameProgramByUserId = async (userId: string) => {

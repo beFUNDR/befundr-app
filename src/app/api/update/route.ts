@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import admin from "@/lib/firebase/firebaseAdmin";
+import admin from "@/lib/firebase/firebase-admin";
 
 export async function POST(request: NextRequest) {
   try {
     const { update } = await request.json();
-    console.log("BACKEND UPDATe = ", update);
     // Create the update in Firestore
     const docRef = await admin
       .firestore()

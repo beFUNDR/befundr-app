@@ -5,7 +5,7 @@ import {
 import { signInWithCustomToken } from "firebase/auth";
 import { SignInMessageSignerWalletAdapterProps } from "@solana/wallet-adapter-base";
 import { PublicKey } from "@solana/web3.js";
-import { auth } from "@/shared/utils/firebaseClient";
+import { auth } from "@/shared/utils/firebase-client";
 
 /**
  * Initiates a Sign-In With Solana (SIWS) authentication flow,

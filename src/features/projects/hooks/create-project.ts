@@ -1,5 +1,5 @@
 import { CreateProjectParams } from "@/features/projects/types";
-import { fileToBase64 } from "@/shared/utils/firebaseClient";
+import { fileToBase64 } from "@/shared/utils/firebase-client";
 
 export const createProject = async ({
   project,

@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useUpdate } from "@/hooks/dbData/useUpdate";
 import { useMemo, useState } from "react";
-import { formatDate } from "@/shared/utils/utilsFunctions";
+import { formatDate } from "@/shared/utils/utils-functions";
 import { useGetUser } from "@/features/users/hooks/useUser";
 import DeleteUpdateModal from "@/components/modals/DeleteUpdateModal";
 import EditUpdateModal from "@/components/modals/EditUpdateModal";

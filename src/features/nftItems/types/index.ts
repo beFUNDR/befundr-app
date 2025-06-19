@@ -1,1 +1,1 @@
-export * from "@/features/nftItems/types/nftItem.types";
+export * from "@/features/nftItems/types/nft-item.types";

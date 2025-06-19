@@ -1,4 +1,4 @@
-import { NftItemDocument } from "@/features/nftItems/types/nftItem.types";
+import { NftItemDocument } from "@/features/nftItems/types/nft-item.types";
 import { fetcher } from "@/shared/api/fetcher";
 
 export const getUserNftItemsApi = async (wallet: string): Promise<any> => {

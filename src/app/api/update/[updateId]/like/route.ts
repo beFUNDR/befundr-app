@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import admin from "@/lib/firebase/firebaseAdmin";
+import admin from "@/lib/firebase/firebase-admin";
 
 export async function POST(
   request: NextRequest,

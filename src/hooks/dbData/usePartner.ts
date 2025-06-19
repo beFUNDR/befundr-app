@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllDocumentsFromCollection } from "@/shared/utils/firebaseClient";
+import { getAllDocumentsFromCollection } from "@/shared/utils/firebase-client";
 
 // Fonction utilitaire pure pour récupérer tous les documents de la collection "partners"
 export const getAllPartners = async () => {

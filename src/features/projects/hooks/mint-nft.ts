@@ -1,8 +1,8 @@
-import { confirmTransaction } from "@/shared/utils/solanaUtils";
+import { confirmTransaction } from "@/shared/utils/solana-utils";
 import { Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
 import { BEFUNDR_PROGRAM_ID } from "@befundr/anchor";
 import * as token from "@solana/spl-token";
-import { getOrCreateATA, USDC_MINT_ADDRESS } from "@/shared/utils/AtaUtils";
+import { getOrCreateATA, USDC_MINT_ADDRESS } from "@/shared/utils/ata-utils";
 import { MintNftParams } from "@/features/projects/types";
 
 export const mintNft = async ({

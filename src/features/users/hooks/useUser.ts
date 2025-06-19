@@ -5,7 +5,7 @@ import {
   getUser,
   getUsers,
   updateUser,
-} from "@/features/users/services/UserService";
+} from "@/features/users/services/user-service";
 
 //* QUERIES
 // Get all users

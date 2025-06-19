@@ -1,4 +1,4 @@
-import { ProjectStatus } from "@/features/projects/constants/projectStatus";
+import { ProjectStatus } from "@/features/projects/constants/project-status";
 import { StartIncubationProjectParams } from "@/features/projects/types";
 
 export const startIncubation = async ({

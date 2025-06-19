@@ -1,5 +1,5 @@
 import { UpdateProjectParams } from "@/features/projects/types";
-import { ProjectStatus } from "@/features/projects/constants/projectStatus";
+import { ProjectStatus } from "@/features/projects/constants/project-status";
 
 export const approveProject = async ({
   project,

@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getAllDocumentsFromCollection,
   getDocument,
-} from "@/shared/utils/firebaseClient";
+} from "@/shared/utils/firebase-client";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useAnchorProvider } from "@/providers/SolanaProvider";
 import { getBefundrProgram } from "@befundr/anchor";

@@ -1,5 +1,5 @@
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import admin from "@/lib/firebase/firebaseAdmin";
+import admin from "@/lib/firebase/firebase-admin";
 
 export const uploadImage = async (
   file: File,

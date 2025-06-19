@@ -1,8 +1,8 @@
-import { MinimalNFTSchema } from "@/features/nftItems/schemas/nftItem.schema";
+import { MinimalNFTSchema } from "@/features/nftItems/schemas/nft-item.schema";
 import {
   NftItemDocument,
   NftItem,
-} from "@/features/nftItems/types/nftItem.types";
+} from "@/features/nftItems/types/nft-item.types";
 
 export const convertNftItemFromDocument = (doc: NftItemDocument): NftItem => {
   const parsedNftItemDocument = MinimalNFTSchema.parse(doc);

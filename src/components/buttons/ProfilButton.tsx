@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { User, FileText, Users, LogOut, DollarSign } from "lucide-react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Image from "next/image";
-import { concatAddress } from "@/shared/utils/utilsFunctions";
+import { concatAddress } from "@/shared/utils/utils-functions";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGetUser } from "@/features/users/hooks/useUser";

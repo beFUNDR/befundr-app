@@ -1,4 +1,4 @@
-/*import { fileToBase64 } from "@/shared/utils/firebaseClient";
+/*import { fileToBase64 } from "@/shared/utils/firebase-client";
 import { UpdateProjectParams } from "@/features/projects/type";
 
 export const updateProject = async ({

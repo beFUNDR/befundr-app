@@ -1,5 +1,5 @@
 import { User, UserDocument } from "@/features/users/types/user.types";
-import admin from "@/lib/firebase/firebaseAdmin";
+import admin from "@/lib/firebase/firebase-admin";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import admin from "@/lib/firebase/firebaseAdmin";
-import { uploadImageServer } from "@/shared/utils/firebaseFunctions";
+import admin from "@/lib/firebase/firebase-admin";
+import { uploadImageServer } from "@/shared/utils/firebase-functions";
 
 /**
  * Create a new project

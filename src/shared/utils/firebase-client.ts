@@ -9,7 +9,7 @@ import {
   getFirestore,
   Query,
 } from "firebase/firestore";
-import firebase_app from "@/lib/firebase/firebaseInit";
+import firebase_app from "@/lib/firebase/firebase-init";
 import { connectAuthEmulator, getAuth } from "firebase/auth";
 
 const db = getFirestore(firebase_app);

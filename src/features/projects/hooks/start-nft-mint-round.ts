@@ -1,7 +1,7 @@
-import { confirmTransaction } from "@/shared/utils/solanaUtils";
+import { confirmTransaction } from "@/shared/utils/solana-utils";
 import { Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
 import { BEFUNDR_PROGRAM_ID } from "@befundr/anchor";
-import { ProjectStatus } from "@/features/projects/constants/projectStatus";
+import { ProjectStatus } from "@/features/projects/constants/project-status";
 import { BN } from "@coral-xyz/anchor";
 import { StartNftMintRoundProjectParams } from "@/features/projects/types";
 

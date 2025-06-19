@@ -1,7 +1,7 @@
 import {
   ProjectStatus,
   projectSteps,
-} from "@/features/projects/constants/projectStatus";
+} from "@/features/projects/constants/project-status";
 import { useProject } from "@/features/projects/hooks/useProject";
 import { useState } from "react";
 import { handleProjectStepAction } from "@/hooks/dbData/project/utils/handleProjectStepAction";

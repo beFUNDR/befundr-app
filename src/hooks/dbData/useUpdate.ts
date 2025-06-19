@@ -1,5 +1,5 @@
 import { fetcher } from "@/shared/api/fetcher";
-import { getAllDocumentsFromCollection } from "@/shared/utils/firebaseClient";
+import { getAllDocumentsFromCollection } from "@/shared/utils/firebase-client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
