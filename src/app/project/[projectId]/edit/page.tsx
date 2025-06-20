@@ -40,7 +40,7 @@ export default function EditProjectPage() {
   const [imagesFiles, setImagesFiles] = useState<(File | string)[]>([]);
   const [error, setError] = useState<string | null>(null);
   const totalSteps = 3;
-
+  //TODO clean this file
   useEffect(() => {
     if (projectData) {
       setProject({
@@ -59,6 +59,7 @@ export default function EditProjectPage() {
         discord: projectData.data.discord,
         telegram: projectData.data.telegram,
         userId: projectData.data.userId,
+        owner: projectData.data.owner,
         status: projectData.data.status,
         id: projectData.id,
       });
@@ -93,7 +94,7 @@ export default function EditProjectPage() {
     updatedProject: ProjectToCreate | Project
   ) => {
     if (project) {
-      setProject({ ...project, ...updatedProject });
+      setProject({ ...project, ...updatedProject } as any);
     }
   };
 

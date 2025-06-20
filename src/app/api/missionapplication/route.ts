@@ -1,9 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import admin from "@/lib/firebase/firebase-admin";
+import { checkUserIdAuthorization } from "@/shared/api/auth";
+import { verifyFirebaseAuth } from "@/shared/api/verify-firebase-auth";
 
 export async function POST(request: NextRequest) {
   try {
+    const uid = await verifyFirebaseAuth(request);
+
     const application = await request.json();
+
+    checkUserIdAuthorization(uid, application.userId);
 
     // Create the application in Firestore
     const docRef = await admin

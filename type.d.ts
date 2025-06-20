@@ -1,24 +1,4 @@
 //TODO Remove this file once all the types are fully declared in their respective folders
-type Project = {
-  userId: string;
-  name: string;
-  category: string;
-  mainImage: string;
-  logo: string;
-  images: string[];
-  headLine: string;
-  description: string;
-  pitchLink?: string;
-  videoLink?: string;
-  otherLink?: string;
-  website?: string;
-  twitter?: string;
-  discord?: string;
-  telegram?: string;
-  status: string;
-  supportedBy?: string[];
-  id: PublicKey;
-};
 
 type ProjectToCreate = {
   userId: string;

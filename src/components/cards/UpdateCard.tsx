@@ -35,7 +35,6 @@ const UpdateCard = ({ update, updateId, isOwner, onClick }: Props) => {
       await likeUpdate({
         updateId: updateId,
         projectId: update.projectId,
-        userId: publicKey?.toString() || "",
       });
     } catch (err: any) {
       toast.error("Error liking update");

@@ -5,6 +5,7 @@ import AlertMessage from "@/components/displayElements/AlertMessage";
 import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
 import ModalLayout from "@/components/modals/_ModalLayout";
 import NftBuySuccess from "@/components/modals/NftBuySuccess";
+import { Project } from "@/features/projects/types";
 
 // À adapter selon la structure de Project
 const maxQty = 4; // À remplacer par props.project.maxQty si dispo

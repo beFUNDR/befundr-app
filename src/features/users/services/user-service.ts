@@ -8,7 +8,6 @@ import {
   convertPartialUserToDocument,
   convertUserFromDocument,
   convertUsersFromDocuments,
-  convertUserToDocument,
 } from "@/features/users/converters/user-converter";
 import { User } from "@/features/users/types/user.types";
 

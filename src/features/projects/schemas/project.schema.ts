@@ -1,9 +1,9 @@
+import { ProjectStatus } from "@/features/projects/constants/project-status";
 import { z } from "zod";
-import { BN } from "@coral-xyz/anchor";
-import { bnSchema } from "@/shared/schemas/common.schema";
 
 export const ProjectSchema = z.object({
   userId: z.string(),
+  owner: z.string(),
   name: z.string(),
   category: z.string(),
   mainImage: z.string(),
@@ -18,13 +18,14 @@ export const ProjectSchema = z.object({
   twitter: z.string().optional(),
   discord: z.string().optional(),
   telegram: z.string().optional(),
-  status: z.string(),
+  status: z.nativeEnum(ProjectStatus),
   supportedBy: z.array(z.string()).optional(),
   id: z.string(),
 });
 
 export const ProjectDocumentSchema = z.object({
   userId: z.string(),
+  owner: z.string(),
   name: z.string(),
   category: z.string(),
   mainImage: z.string(),

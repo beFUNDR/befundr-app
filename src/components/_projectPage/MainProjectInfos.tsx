@@ -8,6 +8,7 @@ import XButton from "@/components/buttons/XButton";
 import CommunityLogo from "@/components/displayElements/CommunityLogo";
 import DefaultAvatar from "@/components/displayElements/DefaultAvatar";
 import Divider from "@/components/displayElements/Divider";
+import { Project } from "@/features/projects/types";
 import { User } from "@/features/users/types";
 import Image from "next/image";
 import Link from "next/link";

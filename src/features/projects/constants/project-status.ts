@@ -7,6 +7,7 @@ export enum ProjectStatus {
   CommuPresale = "CommuPresale",
   PublicSale = "PublicSale",
   Live = "Live",
+  Abandoned = "Abandoned",
 }
 
 export type ProjectStep = {

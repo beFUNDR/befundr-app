@@ -51,16 +51,14 @@ export function useUpdate() {
   const likeUpdate = async ({
     updateId,
     projectId, // use only for invalidating the query
-    userId,
   }: {
     updateId: string;
     projectId: string;
-    userId: string;
   }) => {
     const response = await fetcher(`/api/update/${updateId}/like`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      bodyParams: { userId },
+      bodyParams: {},
     });
 
     return response;

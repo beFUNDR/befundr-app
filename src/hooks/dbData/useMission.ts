@@ -1,3 +1,4 @@
+import { fetcher } from "@/shared/api/fetcher";
 import {
   getAllDocumentsFromCollection,
   getDocument,
@@ -45,15 +46,12 @@ export function useMission() {
   //* MUTATIONS
   // Create a mission
   const createMission = async (mission: MissionToCreate) => {
-    const response = await fetch("/api/mission", {
+    const response = await fetcher("/api/mission", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(mission),
+      bodyParams: { mission },
     });
-    if (!response.ok) {
-      throw new Error("Error while creating a mission");
-    }
-    return response.json();
+    return response;
   };
 
   const useCreateMission = useMutation({

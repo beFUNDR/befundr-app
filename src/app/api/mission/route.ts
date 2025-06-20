@@ -1,9 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import admin from "@/lib/firebase/firebase-admin";
+import { verifyFirebaseAuth } from "@/shared/api/verify-firebase-auth";
+import { checkUserIdAuthorization } from "@/shared/api/auth";
+import { getProjectById } from "@/features/projects/services/project-service.server";
 
 export async function POST(request: NextRequest) {
   try {
-    const mission = await request.json();
+    const uid = await verifyFirebaseAuth(request);
+
+    const { mission } = await request.json();
+    const project = await getProjectById(mission.projectId);
+
+    if (!project) {
+      return NextResponse.json({ error: "Project not found" }, { status: 404 });
+    }
+    const ownerId = project.owner;
+
+    checkUserIdAuthorization(uid, ownerId);
 
     // Create the mission in Firestore
     const docRef = await admin
@@ -16,7 +29,10 @@ export async function POST(request: NextRequest) {
         applicants: [],
       });
 
-    return NextResponse.json({ missionId: docRef.id });
+    return NextResponse.json({
+      missionId: docRef.id,
+      projectId: mission.projectId,
+    });
   } catch (error) {
     console.error("Error creating mission:", error);
     return NextResponse.json(

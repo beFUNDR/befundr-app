@@ -4,12 +4,14 @@ import { Program } from "@coral-xyz/anchor";
 import { WalletAdapterProps } from "@solana/wallet-adapter-base";
 import z from "zod";
 import {
+  ProjectDocumentSchema,
   ProjectSchema,
   ProjectToCreateSchema,
 } from "@/features/projects/schemas/project.schema";
 
 export type Project = z.infer<typeof ProjectSchema>;
 export type ProjectToCreate = z.infer<typeof ProjectToCreateSchema>;
+export type ProjectDocument = z.infer<typeof ProjectDocumentSchema>;
 
 export interface CreateProjectParams {
   project: ProjectToCreate;

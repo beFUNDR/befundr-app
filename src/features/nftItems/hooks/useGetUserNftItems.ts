@@ -1,4 +1,4 @@
-import { getNftItems } from "@/features/nftItems/services/NftItemService";
+import { getNftItems } from "@/features/nftItems/services/nft-item-service";
 import { useQuery as rqUseQuery } from "@tanstack/react-query";
 
 export const useGetUserNftItems = (wallet?: string) => {

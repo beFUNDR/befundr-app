@@ -1,5 +1,6 @@
 import MainProjectInfos from "@/components/_projectPage/MainProjectInfos";
 import StatusTag from "@/components/tags/StatusTag";
+import { Project } from "@/features/projects/types";
 import { User } from "@/features/users/types";
 
 type Props = { project: Project; owner: User };

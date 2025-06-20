@@ -2,6 +2,7 @@
 import MainProjectInfos from "@/components/_projectPage/MainProjectInfos";
 import BuyNftModal from "@/components/modals/BuyNftModal";
 import StatusTag from "@/components/tags/StatusTag";
+import { Project } from "@/features/projects/types";
 import { User } from "@/features/users/types";
 import { useState } from "react";
 

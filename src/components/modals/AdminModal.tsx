@@ -8,6 +8,7 @@ import { handleProjectStepAction } from "@/hooks/dbData/project/utils/handleProj
 import ButtonLabel from "@/components/buttons/_ButtonLabel";
 import InputField from "@/components/displayElements/InputField";
 import ModalLayout from "@/components/modals/_ModalLayout";
+import { Project } from "@/features/projects/types";
 
 type Props = {
   project: Project;

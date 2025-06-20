@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import admin from "@/lib/firebase/firebase-admin";
 import { uploadImageServer } from "@/shared/utils/firebase-functions";
+import { verifyFirebaseAuth } from "@/shared/api/verify-firebase-auth";
+import { checkUserIdAuthorization } from "@/shared/api/auth";
+import { hasOngoingProject } from "@/features/projects/services/project-service.server";
 
 /**
  * Create a new project
@@ -9,9 +12,19 @@ import { uploadImageServer } from "@/shared/utils/firebase-functions";
  */
 export async function POST(request: NextRequest) {
   try {
+    const uid = await verifyFirebaseAuth(request);
+
     const { project, mainImageBase64, logoBase64, additionalImagesBase64 } =
       await request.json();
 
+    checkUserIdAuthorization(uid, project.userId);
+
+    if (await hasOngoingProject(project.userId)) {
+      return NextResponse.json(
+        { error: "User already has a project" },
+        { status: 409 }
+      );
+    }
     let mainImageUrl = project.mainImage || "";
     let logoUrl = project.logo || "";
     let additionalImagesUrls: string[] = [];
