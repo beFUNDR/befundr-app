@@ -14,17 +14,26 @@ type Props = {
 };
 
 /**
- * Generates a deterministic RGB color from a given string seed and an offset.
+ * Generates a deterministic RGB color from a given string seed and an optional offset.
  *
- * @param seed - A string used to seed the hash (typically a public key).
- * @param offset - A numeric offset to vary the output color.
- * @returns A CSS RGB color string, e.g., `rgb(120, 80, 240)`
+ * This function creates a numeric hash from the `seed` string using a simple bitwise operation.
+ * To ensure the hash remains positive (since JavaScript bitwise operations operate on signed 32-bit integers),
+ * it is converted to an unsigned 32-bit integer using `>>> 0`.
+ *
+ * The resulting RGB values are derived from the hash with offsets to produce variation.
+ *
+ * @param seed - A string used to seed the color generation (e.g., a public key).
+ * @param offset - An optional numeric offset to vary the output color (default is 0).
+ * @returns A CSS RGB color string in the format `rgb(R, G, B)` (e.g., `rgb(120, 80, 240)`).
  */
 const generateColor = (seed: string, offset = 0): string => {
   let hash = 0;
   for (let i = 0; i < seed.length; i++) {
     hash = seed.charCodeAt(i) + ((hash << 5) - hash);
   }
+
+  hash = hash >>> 0;
+
   const r = (hash + offset) % 256;
   const g = (hash + offset * 2) % 256;
   const b = (hash + offset * 3) % 256;
