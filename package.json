@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "generate-feature": "bash scripts/generate_feature.sh"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
