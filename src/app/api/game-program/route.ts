@@ -1,11 +1,14 @@
 import admin from "@/lib/firebase/firebase-admin";
+import { verifyFirebaseAuth } from "@/shared/api/verify-firebase-auth";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
+    const uid = await verifyFirebaseAuth(request);
+
     //* GET THE DATA FROM THE REQUEST
-    const userId = req.nextUrl.searchParams.get("userId");
+    const userId = request.nextUrl.searchParams.get("userId");
 
     //* CHECK IF THE USER ID IS VALID
     if (!userId) {

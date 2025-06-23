@@ -2,6 +2,7 @@ import { getDocumentsWithQuery } from "@/shared/utils/firebase-client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { collection, query, where, getFirestore } from "firebase/firestore";
 import firebase_app from "@/lib/firebase/firebase-init";
+import { fetcher } from "@/shared/api/fetcher";
 
 const db = getFirestore(firebase_app);
 
@@ -64,15 +65,12 @@ export function useMissionApplication() {
     application: Omit<MissionApplication, "status" | "createdAt">;
     projectId: string;
   }) => {
-    const response = await fetch("/api/missionapplication", {
+    const response = await fetcher("/api/mission-application", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(application),
+      bodyParams: { ...application },
     });
-    if (!response.ok) {
-      throw new Error("Error while creating an application");
-    }
-    return response.json();
+    return response;
   };
 
   const useCreateApplication = useMutation({
@@ -102,15 +100,13 @@ export function useMissionApplication() {
     userId: string;
     status: "accepted" | "rejected";
   }) => {
-    const response = await fetch(`/api/missionapplication/`, {
+    const response = await fetcher(`/api/mission-application/`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ applicationId, status }),
+      bodyParams: { applicationId, status },
     });
-    if (!response.ok) {
-      throw new Error("Error while updating application status");
-    }
-    return response.json();
+
+    return response;
   };
 
   const useUpdateApplicationStatus = useMutation({
@@ -135,15 +131,13 @@ export function useMissionApplication() {
     missionId: string;
     userId: string;
   }) => {
-    const response = await fetch(`/api/missionapplication/`, {
+    const response = await fetcher(`/api/mission-application/`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ applicationId, missionId, userId }),
+      bodyParams: { applicationId, missionId, userId },
     });
-    if (!response.ok) {
-      throw new Error("Error while deleting an application");
-    }
-    return response.json();
+
+    return response;
   };
 
   const useDeleteApplication = useMutation({

@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     const uid = await verifyFirebaseAuth(request);
 
     const application = await request.json();
-
+    console.log("Application = ", application);
     checkUserIdAuthorization(uid, application.userId);
 
     // Create the application in Firestore

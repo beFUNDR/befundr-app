@@ -1,6 +1,7 @@
 "use client";
 import { useGetUser } from "@/features/users/hooks/useUser";
 import { User } from "@/features/users/types/user.types";
+import { fetcher } from "@/shared/api/fetcher";
 /**
  * LOCAL CONTEXT PROVIDER
  *
@@ -55,27 +56,22 @@ export const LocalContextProvider = ({
 
   const createUser = async (publicKey: PublicKey): Promise<boolean> => {
     try {
-      const res = await fetch("/api/user", {
+      const res = await fetcher("/api/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ wallet: publicKey.toString() }),
+        bodyParams: { wallet: publicKey.toString() },
       });
-
-      if (!res.ok) throw new Error("Error while creating user");
 
       //TODO this should be done in the /api/user route for better performance
-      const resGameProgram = await fetch("/api/gameprogram", {
+      const resGameProgram = await fetcher("/api/game-program", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId: publicKey.toString() }),
+        bodyParams: { userId: publicKey.toString() },
       });
-
-      if (!resGameProgram.ok)
-        throw new Error("Error while creating game program");
 
       // Invalidate the user and game queries
       queryClient.invalidateQueries({
