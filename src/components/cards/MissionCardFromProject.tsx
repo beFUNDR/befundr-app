@@ -10,6 +10,7 @@ import DeleteMissionModal from "@/components/modals/DeleteMissionModal";
 import EditMissionModal from "@/components/modals/EditMissionModal";
 import MissionApplicationModal from "@/components/modals/MissionApplicationModal";
 import ViewApplicantsModal from "@/components/modals/ViewApplicantsModal";
+import { Mission } from "@/features/missions";
 
 type Props = {
   mission: Mission;
@@ -24,7 +25,7 @@ const MissionCardFromProject = ({
   missionId,
   projectId,
 }: Props) => {
-  const { data: doneBy } = useGetUser(mission.doneBy);
+  const { data: assignee } = useGetUser(mission.assignee);
   const { publicKey } = useWallet();
   const { data: user } = useGetUser(publicKey?.toString());
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -129,7 +130,7 @@ const MissionCardFromProject = ({
           </button>
         )}
       {/* on going mission */}
-      {mission.status === "onGoing" && (
+      {mission.status === "ongoing" && (
         <div className="flex flex-col justify-center items-center gap-2">
           <RefreshCcw className="text-custom-gray-400" size={40} />
           <span className="bodyStyle">On going</span>
@@ -137,23 +138,23 @@ const MissionCardFromProject = ({
       )}
       {mission.status === "done" && (
         <Link
-          href={`/skillshub/${doneBy?.wallet}`}
+          href={`/skillshub/${assignee?.wallet}`}
           className="flex justify-start items-center gap-4 "
         >
-          {doneBy?.avatar ? (
+          {assignee?.avatar ? (
             <Image
-              src={doneBy.avatar}
-              alt={doneBy.name}
+              src={assignee.avatar}
+              alt={assignee.name}
               width={40}
               height={40}
               className="rounded-full"
             />
           ) : (
-            <DefaultAvatar size={40} publicKey={doneBy?.wallet ?? ""} />
+            <DefaultAvatar size={40} publicKey={assignee?.wallet ?? ""} />
           )}
           <div>
             <div className="text-xs text-gray-400">Done by</div>
-            <div className="font-bold text-white">{doneBy?.name}</div>
+            <div className="font-bold text-white">{assignee?.name}</div>
           </div>
         </Link>
       )}

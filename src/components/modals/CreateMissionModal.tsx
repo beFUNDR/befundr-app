@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { skills } from "@/shared/constants/skills";
-import { useMission } from "@/hooks/dbData/useMission";
+import { useMission } from "@/features/missions";
 import toast from "react-hot-toast";
 import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
 import InputField from "@/components/displayElements/InputField";

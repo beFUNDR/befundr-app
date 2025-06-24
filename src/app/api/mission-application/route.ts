@@ -75,7 +75,7 @@ export async function PATCH(request: NextRequest) {
         status,
       });
 
-    // If the application is accepted, update the mission status and doneBy
+    // If the application is accepted, update the mission status and assignee
     if (status === "accepted") {
       await admin
         .firestore()
@@ -83,7 +83,7 @@ export async function PATCH(request: NextRequest) {
         .doc(applicationData.missionId)
         .update({
           status: "onGoing",
-          doneBy: applicationData.userId,
+          assignee: applicationData.userId,
         });
     }
 
