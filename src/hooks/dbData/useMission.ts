@@ -10,6 +10,20 @@ export function useMission() {
   const queryClient = useQueryClient();
 
   //* QUERIES
+  // Get all missions
+  const getAllMissions = async () => {
+    const { results, error } =
+      await getAllDocumentsFromCollection<Mission>("missions");
+    if (error) throw error;
+    return results;
+  };
+
+  const useGetAllMissions = () =>
+    useQuery({
+      queryKey: ["missions"],
+      queryFn: getAllMissions,
+    });
+
   // Get a mission by id
   const getMissionById = async (missionId: string) => {
     const { result, error } = await getDocument<Mission>("missions", missionId);
@@ -156,6 +170,7 @@ export function useMission() {
   });
 
   return {
+    useGetAllMissions,
     useGetMissionById,
     useGetMissionsByProjectId,
     useMissionsByDoneByUserId,

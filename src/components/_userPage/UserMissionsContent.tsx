@@ -1,4 +1,4 @@
-import MissionCard from "@/components/cards/MissionCard";
+import MissionCardFromProject from "@/components/cards/MissionCardFromProject";
 import LoaderSmall from "@/components/displayElements/LoaderSmall";
 import { useMission } from "@/hooks/dbData/useMission";
 
@@ -34,7 +34,7 @@ const UserMissionsContent = ({ userId }: { userId: string }) => {
   return (
     <div className="flex flex-col gap-6 mt-4">
       {missions?.map((mission, idx) => (
-        <MissionCard
+        <MissionCardFromProject
           key={idx}
           mission={mission.data}
           isOwner={false}

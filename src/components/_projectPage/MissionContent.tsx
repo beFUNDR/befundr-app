@@ -1,6 +1,6 @@
 "use client";
 import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
-import MissionCard from "@/components/cards/MissionCard";
+import MissionCardFromProject from "@/components/cards/MissionCardFromProject";
 import CreateMissionModal from "@/components/modals/CreateMissionModal";
 import { useMission } from "@/hooks/dbData/useMission";
 import { useState } from "react";
@@ -30,7 +30,7 @@ const MissionContent = (props: Props) => {
         </button>
       )}
       {missions?.map((mission, index) => (
-        <MissionCard
+        <MissionCardFromProject
           key={index}
           mission={mission.data}
           isOwner={props.isOwner}

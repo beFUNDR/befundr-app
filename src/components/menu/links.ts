@@ -15,6 +15,10 @@ const links: { label: string; href: string }[] = [
     href: "/skillshub",
   },
   {
+    label: "Missions Hub",
+    href: "/missionshub",
+  },
+  {
     label: "Communities",
     href: "/communities",
   },

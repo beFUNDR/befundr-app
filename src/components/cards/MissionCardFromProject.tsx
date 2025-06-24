@@ -18,7 +18,12 @@ type Props = {
   projectId: string;
 };
 
-const MissionCard = ({ mission, isOwner, missionId, projectId }: Props) => {
+const MissionCardFromProject = ({
+  mission,
+  isOwner,
+  missionId,
+  projectId,
+}: Props) => {
   const { data: doneBy } = useGetUser(mission.doneBy);
   const { publicKey } = useWallet();
   const { data: user } = useGetUser(publicKey?.toString());
@@ -190,4 +195,4 @@ const MissionCard = ({ mission, isOwner, missionId, projectId }: Props) => {
   );
 };
 
-export default MissionCard;
+export default MissionCardFromProject;
