@@ -71,23 +71,13 @@ type CreateProjectUpdateDto = {
   message: string;
 };
 
-type Mission = {
-  title: string;
-  skill: string;
-  projectId: string;
-  description: string;
-  isPaid: boolean;
-  status: "open" | "onGoing" | "done" | "cancelled";
-  createdAt: Date;
-  doneBy?: string;
-  applicants: string[]; // array of userIds
-};
+type MissionApplicationStatus = "pending" | "accepted" | "rejected";
 
 type MissionApplication = {
   missionId: string;
   userId: string;
   text: string;
-  status: "pending" | "accepted" | "rejected";
+  status: MissionApplicationStatus;
   createdAt: Date;
 };
 
@@ -97,7 +87,6 @@ interface MissionToCreate {
   skill: string;
   description: string;
   isPaid: boolean;
-  doneByUserId?: string;
 }
 
 type GameProgram = {

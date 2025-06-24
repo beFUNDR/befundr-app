@@ -21,6 +21,9 @@ export const getProjectById = async (
 ): Promise<Project | undefined> => {
   try {
     const rawProject = await getProjectDocumentById(projectId);
+    if (!rawProject) {
+      return undefined;
+    }
     return convertProjectFromDocument(rawProject);
   } catch (error) {
     console.error(`Error while getting project: ${projectId}`, error);

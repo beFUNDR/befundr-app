@@ -1,6 +1,6 @@
 import MissionCard from "@/components/cards/MissionCard";
 import LoaderSmall from "@/components/displayElements/LoaderSmall";
-import { useMission } from "@/hooks/dbData/useMission";
+import { useMission } from "@/features/missions";
 
 const mockContributions = [
   {
@@ -36,10 +36,10 @@ const UserMissionsContent = ({ userId }: { userId: string }) => {
       {missions?.map((mission, idx) => (
         <MissionCard
           key={idx}
-          mission={mission.data}
+          mission={mission}
           isOwner={false}
           missionId={mission.id}
-          projectId={mission.data.projectId}
+          projectId={mission.projectId}
         />
       ))}
     </div>

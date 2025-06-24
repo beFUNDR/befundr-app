@@ -2,7 +2,7 @@
 import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
 import MissionCard from "@/components/cards/MissionCard";
 import CreateMissionModal from "@/components/modals/CreateMissionModal";
-import { useMission } from "@/hooks/dbData/useMission";
+import { useMission } from "@/features/missions";
 import { useState } from "react";
 
 type Props = {
@@ -32,7 +32,7 @@ const MissionContent = (props: Props) => {
       {missions?.map((mission, index) => (
         <MissionCard
           key={index}
-          mission={mission.data}
+          mission={mission}
           isOwner={props.isOwner}
           missionId={mission.id}
           projectId={props.projectId}
