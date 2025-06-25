@@ -52,6 +52,12 @@ type Partner = {
   name: string;
   logo: string;
   description: string;
+  incubationRole: string;
+  skills: string[];
+  website?: string;
+  twitter?: string;
+  discord?: string;
+  telegram?: string;
 };
 
 type Update = {
