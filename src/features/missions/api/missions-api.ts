@@ -1,4 +1,4 @@
-import { Mission, MissionDocument } from "@/features/missions";
+import { MissionDocument } from "@/features/missions";
 import { fetcher } from "@/shared/api/fetcher";
 import {
   db,
@@ -10,7 +10,7 @@ import {
   CollectionReference,
   query,
   where,
-} from "@firebase/firestore";
+} from "firebase/firestore";
 
 export const getMissionDocumentById = async (missionId: string) => {
   const { result, error } = await getDocument<MissionDocument>(

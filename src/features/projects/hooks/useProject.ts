@@ -21,6 +21,7 @@ import {
   startNftMintRound,
   updateProject,
 } from "@/features/projects/hooks";
+import { likeProject } from "@/features/projects/hooks/like-project";
 
 //* QUERIES
 // Get a project by id
@@ -216,6 +217,15 @@ export const useProject = () => {
     },
   });
 
+  const useLikeProject = useMutation({
+    mutationFn: (projectId: string) => likeProject(projectId),
+    onSuccess: (_, projectId) => {
+      queryClient.invalidateQueries({
+        queryKey: ["project", projectId],
+      });
+    },
+  });
+
   return {
     useGetProjectById,
     createProject: createProjectMutation.mutateAsync,
@@ -231,5 +241,6 @@ export const useProject = () => {
     isLoadingProjects: projectsQuery.isLoading,
     projectsError: projectsQuery.error,
     getProject: useProjectQuery,
+    useLikeProject,
   };
 };

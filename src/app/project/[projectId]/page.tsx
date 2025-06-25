@@ -21,6 +21,8 @@ import PublishedPhase from "@/components/_projectPage/PublishedPhase";
 import NftMintRoundPhase from "@/components/_projectPage/NftMintRoundPhase";
 import ImageCarousel from "@/components/displayElements/ImageCarousel";
 import { useGetUser } from "@/features/users/hooks/useUser";
+import toast from "react-hot-toast";
+import { Heart } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
 const ProjectPage = () => {
@@ -38,10 +40,29 @@ const ProjectPage = () => {
     error: ownerError,
   } = useGetUser(project?.data.userId ?? "");
   const [isShowManageModal, setIsShowManageModal] = useState(false);
+  const { useLikeProject } = useProject();
+  const { mutateAsync: likeProject } = useLikeProject;
 
   const isOwner = useMemo(() => {
     return publicKey?.toString() === project?.data.userId;
   }, [project, publicKey]);
+
+  const isLiked = useMemo(
+    () => project?.data.likesCount.includes(publicKey?.toString() || ""),
+    [project?.data.likesCount, publicKey]
+  );
+
+  const handleLikeProject = async () => {
+    if (!publicKey) {
+      toast.error("Please connect your wallet to like a project");
+      return;
+    }
+    try {
+      await likeProject(projectId);
+    } catch (error) {
+      toast.error("Error liking project");
+    }
+  };
 
   const isAdmin = useMemo(() => {
     return (
@@ -116,11 +137,20 @@ const ProjectPage = () => {
         <CategoryTagBig category={project.data.category} />
         {/* Ajouter d'autres tags si besoin */}
         <div className="flex-grow" />
-        {isAdmin && (
-          <button onClick={() => setIsShowManageModal(true)}>
-            <ButtonLabelSecondary label="Manage" />
+        <div className="flex items-center gap-2">
+          {isAdmin && (
+            <button onClick={() => setIsShowManageModal(true)}>
+              <ButtonLabelSecondary label="Manage" />
+            </button>
+          )}
+          <button
+            onClick={handleLikeProject}
+            className="flex items-center gap-1"
+          >
+            <Heart size={25} color="white" fill={isLiked ? "red" : ""} />
+            <span>{project.data.likesCount.length}</span>
           </button>
-        )}
+        </div>
       </div>
       <p className="text-lg text-gray-300 mb-6">
         {project.data.headLine || project.data.description}
