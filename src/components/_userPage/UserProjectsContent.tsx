@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useProjectsByUserId } from "@/features/projects/hooks/useProject";
-import ProjectCard from "@/components/cards/ProjectCard";
+import ProjectCard from "@/features/projects/components/ProjectCard";
 import LoaderSmall from "@/components/displayElements/LoaderSmall";
 
 const UserProjectsContent = ({ userId }: { userId: string }) => {

@@ -62,6 +62,7 @@ export default function EditProjectPage() {
         owner: projectData.data.owner,
         status: projectData.data.status,
         id: projectData.id,
+        likesCount: projectData.data.likesCount,
       });
     }
   }, [projectData]);

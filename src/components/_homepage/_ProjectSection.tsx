@@ -4,7 +4,7 @@ import "@/app/customStyles.css";
 import Link from "next/link";
 import { useProject } from "@/features/projects/hooks/useProject";
 import ExploreProjectButton from "@/components/buttons/ExploreProjectButton";
-import ProjectCard from "@/components/cards/ProjectCard";
+import ProjectCard from "@/features/projects/components/ProjectCard";
 import { AnimatedBlock } from "@/components/displayElements/AnimatedBlock";
 
 const ProjectSection = () => {

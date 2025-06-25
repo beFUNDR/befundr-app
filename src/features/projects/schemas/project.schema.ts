@@ -21,6 +21,7 @@ export const ProjectSchema = z.object({
   status: z.nativeEnum(ProjectStatus),
   supportedBy: z.array(z.string()).optional(),
   id: z.string(),
+  likesCount: z.array(z.string()),
 });
 
 export const ProjectDocumentSchema = z.object({
@@ -43,6 +44,7 @@ export const ProjectDocumentSchema = z.object({
   status: z.string(),
   supportedBy: z.array(z.string()).optional(),
   id: z.string(),
+  likesCount: z.array(z.string()),
 });
 
 export const ProjectToCreateSchema = z.object({

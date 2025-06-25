@@ -74,6 +74,7 @@ export async function POST(request: NextRequest) {
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
         owner: project.userId,
         id: projectId,
+        likesCount: [],
       });
     console.log("Project created");
 
