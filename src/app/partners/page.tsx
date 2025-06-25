@@ -2,6 +2,7 @@
 import PartnerCard from "@/components/cards/PartnerCard";
 import Loader from "@/components/displayElements/Loader";
 import { useGetAllPartners } from "@/hooks/dbData/usePartner";
+import Link from "next/link";
 
 const PartnersPage = () => {
   const {
@@ -34,7 +35,9 @@ const PartnersPage = () => {
           }}
         >
           {partners?.map((partner: any, idx: number) => (
-            <PartnerCard key={idx} partner={partner.data} />
+            <Link href={`/partners/${partner.id}`} key={idx}>
+              <PartnerCard partner={partner.data} />
+            </Link>
           ))}
         </div>
       )}
