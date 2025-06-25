@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SolanaSignInInput } from "@solana/wallet-standard-features";
-import admin from "@/lib/firebase/firebaseAdmin";
+import admin from "@/lib/firebase/firebase-admin";
 import { randomBytes } from "crypto";
 import bs58 from "bs58";
 export async function POST(req: NextRequest) {

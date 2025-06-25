@@ -1,10 +1,11 @@
-import ModalLayout from "./_ModalLayout";
 import { useState } from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import ButtonLabelAsync from "../buttons/_ButtonLabelAsync";
-import AlertMessage from "../displayElements/AlertMessage";
-import NftBuySuccess from "./NftBuySuccess";
+import AlertMessage from "@/components/displayElements/AlertMessage";
+import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
+import ModalLayout from "@/components/modals/_ModalLayout";
+import NftBuySuccess from "@/components/modals/NftBuySuccess";
+import { Project } from "@/features/projects/types";
 
 // À adapter selon la structure de Project
 const maxQty = 4; // À remplacer par props.project.maxQty si dispo

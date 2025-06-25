@@ -1,5 +1,5 @@
 "use client";
-import { useGetAllCollections } from "@/hooks/dbData/useCollection";
+import { useGetAllCollections } from "@/features/nftItems/hooks/useCollection";
 import Image from "next/image";
 
 type Props = {

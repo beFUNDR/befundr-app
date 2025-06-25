@@ -1,15 +1,17 @@
+import DiscordButton from "@/components/buttons/DiscordButton";
+import InternetButton from "@/components/buttons/InternetButton";
+import OtherButton from "@/components/buttons/OtherButton";
+import PitchButton from "@/components/buttons/PitchButton";
+import TelegramButton from "@/components/buttons/TelegramButton";
+import VideoButton from "@/components/buttons/VideoButton";
+import XButton from "@/components/buttons/XButton";
+import CommunityLogo from "@/components/displayElements/CommunityLogo";
+import DefaultAvatar from "@/components/displayElements/DefaultAvatar";
+import Divider from "@/components/displayElements/Divider";
+import { Project } from "@/features/projects/types";
+import { User } from "@/features/users/types";
 import Image from "next/image";
 import Link from "next/link";
-import DefaultAvatar from "../displayElements/DefaultAvatar";
-import CommunityLogo from "../displayElements/CommunityLogo";
-import Divider from "../displayElements/Divider";
-import InternetButton from "../buttons/InternetButton";
-import XButton from "../buttons/XButton";
-import DiscordButton from "../buttons/DiscordButton";
-import TelegramButton from "../buttons/TelegramButton";
-import PitchButton from "../buttons/PitchButton";
-import VideoButton from "../buttons/VideoButton";
-import OtherButton from "../buttons/OtherButton";
 
 type Props = {
   project: Project;
@@ -35,7 +37,7 @@ const MainProjectInfos = (props: Props) => {
               className="rounded-full"
             />
           ) : (
-            <DefaultAvatar size={10} publicKey={props.owner.wallet} />
+            <DefaultAvatar size={40} publicKey={props.owner.wallet} />
           )}
           <div>
             <div className="font-bold text-white">{props.owner.name}</div>

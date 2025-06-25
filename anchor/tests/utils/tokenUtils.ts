@@ -1,7 +1,7 @@
 import { LiteSVM } from "litesvm";
 import { PublicKey } from "@solana/web3.js";
 import * as token from "@solana/spl-token";
-import { LAMPORTS_INIT_BALANCE } from "./testUtils";
+import { LAMPORTS_INIT_BALANCE } from "@/testUtils";
 import { BN, getProvider } from "@coral-xyz/anchor";
 import {
   ACCOUNT_SIZE,

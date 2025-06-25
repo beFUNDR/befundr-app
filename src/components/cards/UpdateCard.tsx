@@ -5,10 +5,11 @@ import toast from "react-hot-toast";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useUpdate } from "@/hooks/dbData/useUpdate";
 import { useMemo, useState } from "react";
-import DeleteUpdateModal from "../modals/DeleteUpdateModal";
-import EditUpdateModal from "../modals/EditUpdateModal";
-import { formatDate } from "@/utils/utilsFunctions";
-import { useGetUser } from "@/hooks/dbData/useUser";
+import { formatDate } from "@/shared/utils/utils-functions";
+import { useGetUser } from "@/features/users/hooks/useUser";
+import DeleteUpdateModal from "@/components/modals/DeleteUpdateModal";
+import EditUpdateModal from "@/components/modals/EditUpdateModal";
+import DefaultAvatar from "@/components/displayElements/DefaultAvatar";
 
 interface Props {
   update: Update;
@@ -22,7 +23,6 @@ const UpdateCard = ({ update, updateId, isOwner, onClick }: Props) => {
   const { publicKey } = useWallet();
   const { useLikeUpdate } = useUpdate();
   const { mutateAsync: likeUpdate, isPending: isLiking } = useLikeUpdate;
-
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -35,7 +35,6 @@ const UpdateCard = ({ update, updateId, isOwner, onClick }: Props) => {
       await likeUpdate({
         updateId: updateId,
         projectId: update.projectId,
-        userId: publicKey?.toString() || "",
       });
     } catch (err: any) {
       toast.error("Error liking update");
@@ -53,15 +52,19 @@ const UpdateCard = ({ update, updateId, isOwner, onClick }: Props) => {
       onClick={onClick}
     >
       <div className="flex items-center gap-4 mb-1">
-        {user && (
-          <Image
-            src={user?.data.avatar}
-            alt={user?.data.name}
-            width={48}
-            height={48}
-            className="rounded-full border border-gray-700"
-          />
-        )}
+        <div>
+          {user && user.avatar ? (
+            <Image
+              src={user?.avatar}
+              alt={user?.name}
+              width={48}
+              height={48}
+              className="rounded-full border border-gray-700"
+            />
+          ) : (
+            <DefaultAvatar size={48} publicKey={user!.wallet} />
+          )}
+        </div>
         <div className="flex flex-col w-full">
           <div className="flex items-center justify-between gap-2 w-full">
             <span className="text-2xl font-bold text-white leading-tight">
@@ -85,10 +88,10 @@ const UpdateCard = ({ update, updateId, isOwner, onClick }: Props) => {
             )}
           </div>
           <div className="flex items-center gap-2 text-gray-400 text-sm">
-            <span className="font-semibold text-white">{user?.data.name}</span>
+            <span className="font-semibold text-white">{user?.name}</span>
             <span>•</span>
             <span>
-              {formatDate(update.date).toLocaleDateString(undefined, {
+              {formatDate(update.createdAt).toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
                 day: "numeric",

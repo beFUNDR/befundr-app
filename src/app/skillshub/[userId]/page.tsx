@@ -9,7 +9,7 @@ import UserMissionsContent from "@/components/_userPage/UserMissionsContent";
 import UserProjectsContent from "@/components/_userPage/UserProjectsContent";
 import { useGameProgramByUserId } from "@/hooks/dbData/useGameProgram";
 import BackButton from "@/components/buttons/BackButton";
-import { useGetUser } from "@/hooks/dbData/useUser";
+import { useGetUser } from "@/features/users/hooks/useUser";
 
 const UserPage = () => {
   const params = useParams();
@@ -48,10 +48,7 @@ const UserPage = () => {
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-12">
       <BackButton />
-      <UserProfileHeader
-        user={user.data}
-        gameProgramData={gameProgramData.data}
-      />
+      <UserProfileHeader user={user} gameProgramData={gameProgramData.data} />
       <UserTabs activeTab={activeTab} onTabChange={setActiveTab} />
       {renderTabContent()}
     </div>

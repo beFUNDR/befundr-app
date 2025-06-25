@@ -1,5 +1,5 @@
+import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
 import Link from "next/link";
-import ButtonLabelSecondary from "./_ButtonLabelSecondary";
 
 const ApplyButton = () => {
   return (

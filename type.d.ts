@@ -1,24 +1,4 @@
-// Type Project (mocké pour les besoins de la démo)
-type Project = {
-  userId: string;
-  name: string;
-  category: string;
-  mainImage: string;
-  logo: string;
-  images: string[];
-  headLine: string;
-  description: string;
-  pitchLink?: string;
-  videoLink?: string;
-  otherLink?: string;
-  website?: string;
-  twitter?: string;
-  discord?: string;
-  telegram?: string;
-  status: string;
-  supportedBy?: string[];
-  id: PublicKey;
-};
+//TODO Remove this file once all the types are fully declared in their respective folders
 
 type ProjectToCreate = {
   userId: string;
@@ -74,46 +54,30 @@ type Partner = {
   description: string;
 };
 
-type User = {
-  wallet: string;
-  name: string;
-  avatar: string;
-  bio: string;
-  telegram: string;
-  twitter: string;
-  website: string;
-  discord: string;
-  skills: string[];
-  isCompleteProfil: boolean;
-};
-
 type Update = {
   projectId: string;
   title: string;
   authorId: string;
-  date: string; // format: YYYY-MM-DD
+  createdAt: string; // format: YYYY-MM-DD
   message: string;
   likesCount: string[]; // array of userIds
   edited?: string; // format: YYYY-MM-DD
 };
 
-type Mission = {
-  title: string;
-  skill: string;
+type CreateProjectUpdateDto = {
   projectId: string;
-  description: string;
-  isPaid: boolean;
-  status: "open" | "onGoing" | "done" | "cancelled";
-  createdAt: Date;
-  doneBy?: string;
-  applicants: string[]; // array of userIds
+  title: string;
+  authorId: string;
+  message: string;
 };
+
+type MissionApplicationStatus = "pending" | "accepted" | "rejected";
 
 type MissionApplication = {
   missionId: string;
   userId: string;
   text: string;
-  status: "pending" | "accepted" | "rejected";
+  status: MissionApplicationStatus;
   createdAt: Date;
 };
 
@@ -123,7 +87,6 @@ interface MissionToCreate {
   skill: string;
   description: string;
   isPaid: boolean;
-  doneByUserId?: string;
 }
 
 type GameProgram = {

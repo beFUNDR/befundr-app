@@ -1,9 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
-import admin from "@/lib/firebase/firebaseAdmin";
+import admin from "@/lib/firebase/firebase-admin";
+import { verifyFirebaseAuth } from "@/shared/api/verify-firebase-auth";
+import { checkUserIdAuthorization } from "@/shared/api/auth";
+import { getProjectById } from "@/features/projects/services/project-service.server";
+import { Mission } from "@/features/missions";
 
 export async function POST(request: NextRequest) {
   try {
-    const mission = await request.json();
+    const uid = await verifyFirebaseAuth(request);
+
+    const { mission } = await request.json();
+    const project = await getProjectById(mission.projectId);
+
+    if (!project) {
+      return NextResponse.json({ error: "Project not found" }, { status: 404 });
+    }
+    const ownerId = project.owner;
+
+    checkUserIdAuthorization(uid, ownerId);
 
     // Create the mission in Firestore
     const docRef = await admin
@@ -16,7 +30,9 @@ export async function POST(request: NextRequest) {
         applicants: [],
       });
 
-    return NextResponse.json({ missionId: docRef.id });
+    const createdMission = await docRef.get();
+
+    return NextResponse.json(createdMission);
   } catch (error) {
     console.error("Error creating mission:", error);
     return NextResponse.json(
@@ -28,18 +44,17 @@ export async function POST(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   try {
-    const { missionId, projectId, title, description, skill, isPaid } =
-      await request.json();
+    const { mission }: { mission: Mission } = await request.json();
 
     //TODO: check if the user is the owner of the mission
-
-    await admin.firestore().collection("missions").doc(missionId).update({
-      title,
-      description,
-      skill,
-      isPaid,
-      edited: admin.firestore.FieldValue.serverTimestamp(),
-    });
+    await admin
+      .firestore()
+      .collection("missions")
+      .doc(mission.id)
+      .update({
+        ...mission,
+        edited: admin.firestore.FieldValue.serverTimestamp(),
+      });
 
     return NextResponse.json({ message: "Mission updated successfully" });
   } catch (error) {

@@ -3,11 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import { User, FileText, Users, LogOut, DollarSign } from "lucide-react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Image from "next/image";
-import { concatAddress } from "@/utils/utilsFunctions";
+import { concatAddress } from "@/shared/utils/utils-functions";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import DefaultAvatar from "../displayElements/DefaultAvatar";
-import { useGetUser } from "@/hooks/dbData/useUser";
+import { useGetUser } from "@/features/users/hooks/useUser";
+import DefaultAvatar from "@/components/displayElements/DefaultAvatar";
 
 const ProfilButton = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,9 +39,9 @@ const ProfilButton = () => {
   return (
     <div className="relative" ref={menuRef} onClick={toggleMenu}>
       <button className="flex items-center space-x-2">
-        {userData?.data.avatar ? (
+        {userData?.avatar ? (
           <Image
-            src={userData?.data.avatar}
+            src={userData?.avatar}
             alt="Avatar"
             className="rounded-full"
             width={40}
@@ -49,12 +49,12 @@ const ProfilButton = () => {
           />
         ) : (
           publicKey && (
-            <DefaultAvatar size={10} publicKey={publicKey?.toString()} />
+            <DefaultAvatar size={40} publicKey={publicKey?.toString()} />
           )
         )}
         <span className="whitespace-nowrap">
-          {userData?.data.name
-            ? userData?.data.name
+          {userData?.name
+            ? userData?.name
             : concatAddress(publicKey?.toString())}
         </span>
       </button>
@@ -70,9 +70,9 @@ const ProfilButton = () => {
           >
             <div className="p-4 border-b border-gray-700">
               <div className="flex items-center space-x-2">
-                {userData?.data.avatar ? (
+                {userData?.avatar ? (
                   <Image
-                    src={userData?.data.avatar}
+                    src={userData?.avatar}
                     alt="Avatar"
                     className="rounded-full"
                     width={40}
@@ -81,13 +81,13 @@ const ProfilButton = () => {
                 ) : (
                   publicKey && (
                     <DefaultAvatar
-                      size={10}
+                      size={40}
                       publicKey={publicKey?.toString()}
                     />
                   )
                 )}
                 <div>
-                  <div className="whitespace-nowrap">{userData?.data.name}</div>
+                  <div className="whitespace-nowrap">{userData?.name}</div>
                   <div className=" text-gray-400">
                     {concatAddress(publicKey?.toString())}
                   </div>

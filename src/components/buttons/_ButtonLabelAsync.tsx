@@ -1,4 +1,4 @@
-import LoaderSmall from "../displayElements/LoaderSmall";
+import LoaderSmall from "@/components/displayElements/LoaderSmall";
 import React from "react";
 
 // On reprend la structure et le style de ButtonLabel

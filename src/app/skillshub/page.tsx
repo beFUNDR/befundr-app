@@ -2,7 +2,7 @@
 
 import UserSkillCard from "@/components/cards/UserSkillsCard";
 import Loader from "@/components/displayElements/Loader";
-import { useGetAllUsers } from "@/hooks/dbData/useUser";
+import { useGetAllUsers } from "@/features/users/hooks/useUser";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -19,8 +19,8 @@ const SkillHubPage = () => {
     ? Array.from(
         new Set(
           users
-            .filter((user) => user.data.isCompleteProfil)
-            .flatMap((user) => user.data.skills || [])
+            .filter((user) => user.isCompleteProfile)
+            .flatMap((user) => user.skills || [])
         )
       )
     : [];
@@ -29,9 +29,8 @@ const SkillHubPage = () => {
   const filteredUsers = users
     ? users.filter((user) =>
         selectedSkill
-          ? user.data.isCompleteProfil &&
-            user.data.skills?.includes(selectedSkill)
-          : user.data.isCompleteProfil
+          ? user.isCompleteProfile && user.skills?.includes(selectedSkill)
+          : user.isCompleteProfile
       )
     : [];
 
@@ -89,7 +88,7 @@ const SkillHubPage = () => {
         >
           {filteredUsers.map((user, idx) => (
             <Link key={idx} href={`/skillshub/${user.id}`}>
-              <UserSkillCard user={user.data} />
+              <UserSkillCard user={user} />
             </Link>
           ))}
         </div>

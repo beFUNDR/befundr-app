@@ -1,14 +1,15 @@
 "use client";
 import { useGameProgramByUserId } from "@/hooks/dbData/useGameProgram";
-import UserProfileHeader from "../_userPage/UserProfileHeader";
-import ModalLayout from "./_ModalLayout";
-import Divider from "../displayElements/Divider";
-import ButtonLabelAsync from "../buttons/_ButtonLabelAsync";
-import ButtonLabelSecondaryAsync from "../buttons/_ButtonLabelSecondaryAsync";
 import Link from "next/link";
 import { useMissionApplication } from "@/hooks/dbData/useMissionApplication";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { User } from "@/features/users/types";
+import UserProfileHeader from "@/components/_userPage/UserProfileHeader";
+import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
+import ButtonLabelSecondaryAsync from "@/components/buttons/_ButtonLabelSecondaryAsync";
+import Divider from "@/components/displayElements/Divider";
+import ModalLayout from "@/components/modals/_ModalLayout";
 
 type Props = {
   onClose: () => void;

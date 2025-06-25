@@ -4,7 +4,7 @@ import "./globals.css";
 import { Providers } from "@/providers/_providers";
 import Footer from "@/components/Footer";
 import Image from "next/image";
-import background from "../../public/images/gridBackground.svg";
+import background from "@public/images/gridBackground.svg";
 import MenuComponent from "@/components/menu/MenuComponent";
 
 export const metadata: Metadata = {

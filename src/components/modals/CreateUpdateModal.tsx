@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
-import ModalLayout from "./_ModalLayout";
-import ButtonLabelAsync from "../buttons/_ButtonLabelAsync";
 import toast from "react-hot-toast";
-import InputField from "../displayElements/InputField";
 import { useUpdate } from "@/hooks/dbData/useUpdate";
 import { useWallet } from "@solana/wallet-adapter-react";
+import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
+import InputField from "@/components/displayElements/InputField";
+import ModalLayout from "@/components/modals/_ModalLayout";
 
 interface CreateMissionModalProps {
   onClose: () => void;
@@ -28,11 +28,9 @@ const CreateUpdateModal = ({ onClose, projectId }: CreateMissionModalProps) => {
     try {
       await createUpdate({
         projectId,
-        authorId: publicKey?.toString() || "",
+        authorId: publicKey!.toString(),
         title,
-        date: new Date().toISOString(),
         message: description,
-        likesCount: [],
       });
       setTitle("");
       setDescription("");

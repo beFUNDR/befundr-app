@@ -1,6 +1,7 @@
+import DefaultAvatar from "@/components/displayElements/DefaultAvatar";
+import SkillTag from "@/components/tags/SkillTag";
+import { User } from "@/features/users/types";
 import Image from "next/image";
-import SkillTag from "../tags/SkillTag";
-import DefaultAvatar from "../displayElements/DefaultAvatar";
 
 type Props = {
   user: User;
@@ -25,7 +26,7 @@ const UserApplicationCard = ({ user, application, applicationId }: Props) => {
             className="object-cover"
           />
         ) : (
-          <DefaultAvatar size={24} publicKey={user.wallet} />
+          <DefaultAvatar size={96} publicKey={user.wallet} />
         )}
       </div>
       <div className="h4Style md:h2Style font-bold text-white mb-1">

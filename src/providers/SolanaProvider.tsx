@@ -12,7 +12,7 @@ import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import dynamic from "next/dynamic";
 import { ReactNode, useCallback } from "react";
 import "@solana/wallet-adapter-react-ui/styles.css";
-import { solanaClient } from "@/utils/solanaClient";
+import { solanaClient } from "@/shared/utils/solanaClient";
 import { AnchorProvider } from "@coral-xyz/anchor";
 
 export const WalletButton = dynamic(

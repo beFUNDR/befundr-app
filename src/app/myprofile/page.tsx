@@ -4,13 +4,13 @@ import ProfileMenu from "@/components/_profile/ProfileMenu";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Loader from "@/components/displayElements/Loader";
 import { useRouter, useSearchParams } from "next/navigation";
-import { skills as allSkills } from "@/data/localData";
+import { skills as allSkills } from "@/shared/constants/skills";
 import ProfilContent from "@/components/_myProfile.tsx/ProfilContent";
 import UserProjectsContent from "@/components/_userPage/UserProjectsContent";
 import UserMissionsContent from "@/components/_userPage/UserMissionsContent";
 import UserCommunitiesContent from "@/components/_userPage/UserCommunitiesContent";
 import UserApplicationsContent from "@/components/_userPage/UserApplicationsContent";
-import { useGetUser, useUpdateUser } from "@/hooks/dbData/useUser";
+import { useGetUser, useUpdateUser } from "@/features/users/hooks/useUser";
 
 function MyProfilePage() {
   //* GLOBAL STATE
@@ -38,14 +38,14 @@ function MyProfilePage() {
 
   useEffect(() => {
     if (user) {
-      setPseudo(user.data.name || "");
-      setBio(user.data.bio || "");
-      setTelegram(user.data.telegram || "");
-      setTwitter(user.data.twitter || "");
-      setWebsite(user.data.website || "");
-      setDiscord(user.data.discord || "");
-      if (user.data.avatar) setProfilePic(user.data.avatar);
-      setSelectedSkills(user.data.skills || []);
+      setPseudo(user.name || "");
+      setBio(user.bio || "");
+      setTelegram(user.telegram || "");
+      setTwitter(user.twitter || "");
+      setWebsite(user.website || "");
+      setDiscord(user.discord || "");
+      if (user.avatar) setProfilePic(user.avatar);
+      setSelectedSkills(user.skills || []);
     }
   }, [user]);
 
@@ -62,7 +62,7 @@ function MyProfilePage() {
   };
 
   // check if the profile is complete
-  const isCompleteProfil = () => {
+  const isCompleteProfile = () => {
     // required field
     const hasRequiredFields = pseudo.trim() !== "" && bio.trim() !== "";
 
@@ -91,7 +91,7 @@ function MyProfilePage() {
       discord,
       avatar: profilePic,
       skills: selectedSkills,
-      isCompleteProfil: isCompleteProfil(),
+      isCompleteProfile: isCompleteProfile(),
     });
   };
 
@@ -121,7 +121,7 @@ function MyProfilePage() {
     setDiscord,
     handleSave,
     isUpdating,
-    isCompleteProfil: isCompleteProfil(),
+    isCompleteProfile: isCompleteProfile(),
   };
 
   if (isLoading || !user) {
@@ -134,7 +134,7 @@ function MyProfilePage() {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
-      <h1 className="h1Style my-6 text-white">Welcome, {user?.data.name} 👋</h1>
+      <h1 className="h1Style my-6 text-white">Welcome, {user?.name} 👋</h1>
       <ProfileMenu active={activeSection} onSelect={setActiveSection} />
 
       {activeSection === "My profile" && (

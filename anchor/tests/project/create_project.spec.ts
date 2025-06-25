@@ -3,15 +3,15 @@ import {
   createProject,
   createUserWalletWithSol,
   getPda,
-} from "../utils/testUtils";
+} from "@/utils/testUtils";
 import { PublicKey } from "@solana/web3.js";
 import { Provider, Program } from "@coral-xyz/anchor";
 import { fromWorkspace, LiteSVMProvider } from "anchor-litesvm";
 import { LiteSVM } from "litesvm";
-import { Befundr } from "../../target/types/befundr";
-import BefundrIDL from "../../target/idl/befundr.json";
+import { Befundr } from "@/target/types/befundr";
+import BefundrIDL from "@/target/idl/befundr.json";
 import { GLOBALS_SEED } from "tests/utils/constants";
-import { ProjectStatus } from "./project_status";
+import { ProjectStatus } from "@/project_status";
 
 describe("create_project", () => {
   let provider: Provider;

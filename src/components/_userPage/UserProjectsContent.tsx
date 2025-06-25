@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import ProjectCard from "../cards/ProjectCard";
-import LoaderSmall from "../displayElements/LoaderSmall";
-import { useProjectsByUserId } from "@/hooks/dbData/project/useProject";
+import { useProjectsByUserId } from "@/features/projects/hooks/useProject";
+import ProjectCard from "@/components/cards/ProjectCard";
+import LoaderSmall from "@/components/displayElements/LoaderSmall";
 
 const UserProjectsContent = ({ userId }: { userId: string }) => {
   const { data: projects, isLoading, error } = useProjectsByUserId(userId);

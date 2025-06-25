@@ -1,13 +1,14 @@
+import DiscordButton from "@/components/buttons/DiscordButton";
+import InternetButton from "@/components/buttons/InternetButton";
+import OtherButton from "@/components/buttons/OtherButton";
+import PitchButton from "@/components/buttons/PitchButton";
+import TelegramButton from "@/components/buttons/TelegramButton";
+import VideoButton from "@/components/buttons/VideoButton";
+import XButton from "@/components/buttons/XButton";
+import Divider from "@/components/displayElements/Divider";
+import CategoryTag from "@/components/tags/CategoryTag";
+import { User } from "@/features/users/types";
 import Image from "next/image";
-import CategoryTag from "../tags/CategoryTag";
-import Divider from "../displayElements/Divider";
-import XButton from "../buttons/XButton";
-import DiscordButton from "../buttons/DiscordButton";
-import TelegramButton from "../buttons/TelegramButton";
-import InternetButton from "../buttons/InternetButton";
-import VideoButton from "../buttons/VideoButton";
-import PitchButton from "../buttons/PitchButton";
-import OtherButton from "../buttons/OtherButton";
 
 type Props = {
   project: ProjectToCreate;

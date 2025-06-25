@@ -1,8 +1,8 @@
 import { CircleCheckBig } from "lucide-react";
-import ModalLayout from "./_ModalLayout";
-import ButtonLabel from "../buttons/_ButtonLabel";
 import Link from "next/link";
 import Image from "next/image";
+import ButtonLabel from "@/components/buttons/_ButtonLabel";
+import ModalLayout from "@/components/modals/_ModalLayout";
 
 type Props = {
   onClose: () => void;

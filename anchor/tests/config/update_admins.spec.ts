@@ -1,10 +1,10 @@
 import { BN } from "bn.js";
-import { createUserWalletWithSol, updateAdmins } from "../utils/testUtils";
+import { createUserWalletWithSol, updateAdmins } from "@/utils/testUtils";
 import { Provider, Program } from "@coral-xyz/anchor";
 import { fromWorkspace, LiteSVMProvider } from "anchor-litesvm";
 import { LiteSVM } from "litesvm";
-import { Befundr } from "../../target/types/befundr";
-import BefundrIDL from "../../target/idl/befundr.json";
+import { Befundr } from "@/target/types/befundr";
+import BefundrIDL from "@/target/idl/befundr.json";
 
 describe("update_admins", () => {
   let provider: Provider;

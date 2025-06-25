@@ -1,6 +1,6 @@
-import { AnimatedBlock } from "../displayElements/AnimatedBlock";
-import ExploreProjectButton from "../buttons/ExploreProjectButton";
-import ApplyButton from "../buttons/ApplyButton";
+import ApplyButton from "@/components/buttons/ApplyButton";
+import ExploreProjectButton from "@/components/buttons/ExploreProjectButton";
+import { AnimatedBlock } from "@/components/displayElements/AnimatedBlock";
 
 const BottomLabel = () => {
   return (

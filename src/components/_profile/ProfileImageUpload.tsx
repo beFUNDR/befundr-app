@@ -2,9 +2,9 @@
 import { Camera } from "lucide-react";
 import Image from "next/image";
 import React, { useRef, useState } from "react";
-import AvatarModal from "../modals/AvatarModal";
-import DefaultAvatar from "../displayElements/DefaultAvatar";
 import { useWallet } from "@solana/wallet-adapter-react";
+import DefaultAvatar from "@/components/displayElements/DefaultAvatar";
+import AvatarModal from "@/components/modals/AvatarModal";
 
 type Props = {
   imageUrl: string;
@@ -25,7 +25,7 @@ export default function ProfileImageUpload({ imageUrl, onImageChange }: Props) {
   return (
     <div className="flex flex-col items-center mb-6">
       <div
-        className="relative w-24 h-24 rounded-full overflow-hidden cursor-pointer mb-2 bg-[#232323] border border-[#444]"
+        className="relative w-24 h-24 rounded-full overflow-hidden cursor-pointer mb-2 bg-[#232323] border border-[#444] group"
         onClick={() => setIsShowPopup(true)}
       >
         {imageUrl ? (
@@ -33,14 +33,17 @@ export default function ProfileImageUpload({ imageUrl, onImageChange }: Props) {
             src={imageUrl}
             alt="Profile"
             fill
-            className="object-cover w-full h-full opacity-50"
+            className="object-cover opacity-100 group-hover:opacity-50 transition-opacity duration-300"
           />
         ) : (
           publicKey && (
-            <DefaultAvatar size={24} publicKey={publicKey?.toString()} />
+            <div className="w-full h-full">
+              <DefaultAvatar size={96} publicKey={publicKey.toString()} />
+            </div>
           )
         )}
-        <span className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-50">
+
+        <span className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20 group-hover:opacity-100 transition-opacity duration-100 text-white">
           <Camera size={40} />
         </span>
       </div>

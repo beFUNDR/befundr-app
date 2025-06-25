@@ -1,9 +1,16 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "types": ["jest", "node"],
-    "typeRoots": ["./node_modules/@types"],
-    "lib": ["ESNext"],
+    "types": [
+      "jest",
+      "node"
+    ],
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "lib": [
+      "ESNext"
+    ],
     "module": "ESNext",
     "target": "ESNext",
     "esModuleInterop": true,
@@ -16,7 +23,6 @@
     "importHelpers": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": ".",
     "resolveJsonModule": true
   },
   "files": [],

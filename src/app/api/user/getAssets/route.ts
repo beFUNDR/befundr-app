@@ -1,15 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import admin from "@/lib/firebase/firebaseAdmin";
+import admin from "@/lib/firebase/firebase-admin";
+import { verifyFirebaseAuth } from "@/shared/api/verify-firebase-auth";
+import { checkUserIdAuthorization } from "@/shared/api/auth";
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
   try {
-    const { wallet } = await req.json();
+    const uid = await verifyFirebaseAuth(req);
+    const wallet = req.nextUrl.searchParams.get("wallet");
     if (!wallet) {
       return NextResponse.json(
         { error: "Wallet is required" },
         { status: 400 }
       );
     }
+    checkUserIdAuthorization(uid, wallet);
+
     const apiKey = process.env.HELIUS_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
@@ -45,17 +50,13 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify(body),
     });
     const data = await heliusRes.json();
-
     // Récupérer les collections autorisées depuis Firestore
     const allowedSnap = await admin.firestore().collection("collections").get();
     const allowedCollections = allowedSnap.docs.map((doc) => doc.id);
-    console.log(allowedCollections);
 
     const filteredItems = data.result.items.filter((item: any) => {
       return allowedCollections.includes(item.grouping?.[0]?.group_value);
     });
-
-    console.log("filteredItems", filteredItems);
 
     return NextResponse.json(
       { ...data, result: { ...data.result, items: filteredItems } },

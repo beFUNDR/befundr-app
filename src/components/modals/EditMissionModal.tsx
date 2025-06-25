@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
-import ModalLayout from "./_ModalLayout";
-import ButtonLabelAsync from "../buttons/_ButtonLabelAsync";
 import toast from "react-hot-toast";
-import InputField from "../displayElements/InputField";
-import { useMission } from "@/hooks/dbData/useMission";
+import { Mission, useMission } from "@/features/missions";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { skills } from "@/data/localData";
-import Selector from "../displayElements/Selector";
+import { skills } from "@/shared/constants/skills";
+import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
+import InputField from "@/components/displayElements/InputField";
+import Selector from "@/components/displayElements/Selector";
+import ModalLayout from "@/components/modals/_ModalLayout";
 
 interface EditMissionModalProps {
   missionId: string;
@@ -22,32 +22,37 @@ const EditMissionModal = ({
   projectId,
   mission,
 }: EditMissionModalProps) => {
-  const { publicKey } = useWallet();
   const { useEditMission } = useMission();
   const { mutateAsync: editMission, isPending: isEditing } = useEditMission;
 
-  const [title, setTitle] = useState(mission.title);
-  const [description, setDescription] = useState(mission.description);
-  const [skill, setSkill] = useState(mission.skill);
-  const [isPaid, setIsPaid] = useState(mission.isPaid);
+  const [formState, setFormState] = useState<Mission>({ ...mission });
+
   const [error, setError] = useState<string | null>(null);
+
+  /**
+   * Returns an event handler function that updates the form state for a specific field of a `Mission` object.
+   *
+   * This is a higher-order function commonly used in forms to reduce repetition.
+   * It supports both standard inputs and checkbox inputs by detecting the input type.
+   *
+   * @param field - The key of the `Mission` object to update (e.g., 'title', 'description', 'isPaid').
+   * @returns A function that handles the change event from an input element and updates the form state accordingly.
+   *
+   * @example
+   * <input onChange={handleChange("title")} />
+   * <input type="checkbox" onChange={handleChange("isPaid")} />
+   */
+  const handleChange = (field: keyof Mission) => (e: any) => {
+    const value =
+      e.target?.type === "checkbox" ? e.target.checked : e.target.value;
+    setFormState((prev) => ({ ...prev, [field]: value }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     try {
-      await editMission({
-        projectId,
-        missionId,
-        title,
-        description,
-        skill,
-        isPaid,
-      });
-      setTitle("");
-      setDescription("");
-      setSkill("");
-      setIsPaid(false);
+      await editMission({ ...formState });
       onClose();
       toast.success("Mission edited successfully");
     } catch (err: any) {
@@ -63,21 +68,21 @@ const EditMissionModal = ({
 
         <InputField
           label="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={formState.title}
+          onChange={handleChange("title")}
           required
         />
         <InputField
           label="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={formState.description}
+          onChange={handleChange("description")}
           textarea
           required
         />
         <Selector
           label="Category"
-          value={skill}
-          onChange={(e) => setSkill(e.target.value)}
+          value={formState.skill}
+          onChange={handleChange("skill")}
           options={skills}
           required
         />
@@ -85,14 +90,15 @@ const EditMissionModal = ({
           <input
             type="checkbox"
             id="isPaid"
-            checked={isPaid}
-            onChange={(e) => setIsPaid(e.target.checked)}
+            checked={formState.isPaid}
+            onChange={handleChange("isPaid")}
             className="rounded border-gray-300"
           />
           <label htmlFor="isPaid" className="text-sm text-gray-400">
             This is a paid mission
           </label>
         </div>
+
         {error && <div className="text-red-500 text-sm">{error}</div>}
 
         <button type="submit" className="w-full md:w-auto" disabled={isEditing}>

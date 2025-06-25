@@ -1,10 +1,14 @@
-import { ProjectStatus, projectSteps } from "@/data/ProjectStatus";
-import { useProject } from "@/hooks/dbData/project/useProject";
+import {
+  ProjectStatus,
+  projectSteps,
+} from "@/features/projects/constants/project-status";
+import { useProject } from "@/features/projects/hooks/useProject";
 import { useState } from "react";
-import ModalLayout from "./_ModalLayout";
-import ButtonLabel from "../buttons/_ButtonLabel";
-import InputField from "../displayElements/InputField";
 import { handleProjectStepAction } from "@/hooks/dbData/project/utils/handleProjectStepAction";
+import ButtonLabel from "@/components/buttons/_ButtonLabel";
+import InputField from "@/components/displayElements/InputField";
+import ModalLayout from "@/components/modals/_ModalLayout";
+import { Project } from "@/features/projects/types";
 
 type Props = {
   project: Project;

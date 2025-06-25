@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import ButtonLabelSecondary from "../buttons/_ButtonLabelSecondary";
-import UpdateCard from "../cards/UpdateCard";
-import CreateUpdateModal from "../modals/CreateUpdateModal";
 import { useUpdate } from "@/hooks/dbData/useUpdate";
+import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
+import UpdateCard from "@/components/cards/UpdateCard";
+import CreateUpdateModal from "@/components/modals/CreateUpdateModal";
 
 type Props = {
   isOwner: boolean;
@@ -13,7 +13,6 @@ type Props = {
 const UpdateContent = (props: Props) => {
   const { useGetUpdatesByProjectId } = useUpdate();
   const { data: updates, error } = useGetUpdatesByProjectId(props.projectId);
-
   const [isShowModal, setIsShowModal] = useState(false);
 
   if (error) return <div>Error: {error.message}</div>;
@@ -28,7 +27,8 @@ const UpdateContent = (props: Props) => {
       {updates
         ?.sort(
           (a, b) =>
-            new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+            new Date(b.data.createdAt).getTime() -
+            new Date(a.data.createdAt).getTime()
         )
         .map((update, index) => (
           <UpdateCard

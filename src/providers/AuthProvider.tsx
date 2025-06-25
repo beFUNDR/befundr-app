@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { onAuthStateChanged, User, signOut } from "firebase/auth";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { auth } from "@/utils/firebaseClient";
-import { signInWithSolana } from "@/utils/SignInWithSolana";
+import { auth } from "@/shared/utils/firebase-client";
+import { signInWithSolana } from "@/shared/utils/sign-in-with-solana";
 
 /**
  * Defines the shape of the authentication context value

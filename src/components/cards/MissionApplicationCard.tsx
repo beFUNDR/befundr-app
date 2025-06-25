@@ -1,15 +1,15 @@
 "use client";
 
-import { useMission } from "@/hooks/dbData/useMission";
-import LoaderSmall from "../displayElements/LoaderSmall";
-import { useProject } from "@/hooks/dbData/project/useProject";
+import { useMission } from "@/features/missions";
+import { useProject } from "@/features/projects/hooks/useProject";
 import Image from "next/image";
-import MissionStatusTag from "../tags/MissionStatusTag";
 import Link from "next/link";
-import ButtonLabelSecondarySmall from "../buttons/_ButtonLabelSecondarySmall";
-import ButtonLabelAlertSmall from "../buttons/_ButtonLabelAlertSmall";
 import { useState } from "react";
-import CancelMissionApplicationModal from "../modals/CancelMissionApplicationModal";
+import ButtonLabelAlertSmall from "@/components/buttons/_ButtonLabelAlertSmall";
+import ButtonLabelSecondarySmall from "@/components/buttons/_ButtonLabelSecondarySmall";
+import LoaderSmall from "@/components/displayElements/LoaderSmall";
+import CancelMissionApplicationModal from "@/components/modals/CancelMissionApplicationModal";
+import MissionStatusTag from "@/components/tags/MissionStatusTag";
 
 type Props = {
   application: MissionApplication;
@@ -23,7 +23,7 @@ const MissionApplicationCard = ({ application, applicationId }: Props) => {
     application.missionId
   );
   const { data: project, isLoading: isProjectLoading } = useGetProjectById(
-    mission?.data.projectId || ""
+    mission?.projectId || ""
   );
 
   const [isShowCancelModal, setIsShowCancelModal] = useState(false);
@@ -50,9 +50,9 @@ const MissionApplicationCard = ({ application, applicationId }: Props) => {
           />
           <p className="h4Style ">{project?.data.name}</p>
         </div>
-        <p className="bodyStyle">{mission?.data.title}</p>
+        <p className="bodyStyle">{mission?.title}</p>
         <MissionStatusTag status={application.status} />
-        <Link href={`/project/${mission?.data.projectId}`}>
+        <Link href={`/project/${mission?.projectId}`}>
           <ButtonLabelSecondarySmall label="See project" />
         </Link>
         <button className="w-full" onClick={() => setIsShowCancelModal(true)}>

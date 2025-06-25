@@ -1,9 +1,9 @@
 "use client";
-import { useMission } from "@/hooks/dbData/useMission";
-import ButtonLabelSecondary from "../buttons/_ButtonLabelSecondary";
-import MissionCard from "../cards/MissionCard";
+import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
+import MissionCard from "@/components/cards/MissionCard";
+import CreateMissionModal from "@/components/modals/CreateMissionModal";
+import { useMission } from "@/features/missions";
 import { useState } from "react";
-import CreateMissionModal from "../modals/CreateMissionModal";
 
 type Props = {
   isOwner: boolean;
@@ -32,7 +32,7 @@ const MissionContent = (props: Props) => {
       {missions?.map((mission, index) => (
         <MissionCard
           key={index}
-          mission={mission.data}
+          mission={mission}
           isOwner={props.isOwner}
           missionId={mission.id}
           projectId={props.projectId}

@@ -12,8 +12,9 @@ import { WalletButton } from "@/providers/SolanaProvider";
 import toast from "react-hot-toast";
 import MissionApplicationValidationModal from "@/components/modals/MissionApplicationValidationModal";
 import Loader from "@/components/displayElements/Loader";
-import { useProject } from "@/hooks/dbData/project/useProject";
-import { useGetUser } from "@/hooks/dbData/useUser";
+import { useProject } from "@/features/projects/hooks/useProject";
+import { useGetUser } from "@/features/users/hooks/useUser";
+import { ProjectToCreate } from "@/features/projects/types";
 
 export default function ApplyPage() {
   const { publicKey } = useWallet();
@@ -121,7 +122,7 @@ export default function ApplyPage() {
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12 ">
       <h1 className="h1Style my-6 ">Apply for your project 🚀</h1>
-      {!user.data.isCompleteProfil && (
+      {!user.isCompleteProfile && (
         <p className="bodyStyle !text-red-600 mb-6">
           Your profile is not set. Please set it before applying.
         </p>
@@ -140,7 +141,7 @@ export default function ApplyPage() {
       {currentStep === 2 && (
         <Application2 project={project} setProject={setProject} />
       )}
-      {currentStep === 3 && <Application3 project={project} user={user.data} />}
+      {currentStep === 3 && <Application3 project={project} user={user} />}
       <div className="flex flex-col md:flex-row justify-start mt-4 gap-4">
         {currentStep > 1 && (
           <button

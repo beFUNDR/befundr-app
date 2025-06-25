@@ -1,9 +1,9 @@
 "use client";
+import MissionApplicationCard from "@/components/cards/MissionApplicationCard";
 // type Props = {};
 
 import { useMissionApplication } from "@/hooks/dbData/useMissionApplication";
 import { useWallet } from "@solana/wallet-adapter-react";
-import MissionApplicationCard from "../cards/MissionApplicationCard";
 
 const UserApplicationsContent = () => {
   const { useGetMissionApplicationsByUser } = useMissionApplication();

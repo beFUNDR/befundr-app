@@ -6,11 +6,11 @@ import {
   SystemProgram,
 } from "@solana/web3.js";
 import { BN, Program } from "@coral-xyz/anchor";
-import { MINT_ADDRESS } from "./tokenUtils";
+import { MINT_ADDRESS } from "@/tokenUtils";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
-import { Befundr } from "../../target/types/befundr";
+import { Befundr } from "@/target/types/befundr";
 import { MPL_CORE_PROGRAM_ID } from "@metaplex-foundation/mpl-core";
-import { GLOBALS_SEED, NFT_ALLOCATION_SEED, PROJECT_SEED } from "./constants";
+import { GLOBALS_SEED, NFT_ALLOCATION_SEED, PROJECT_SEED } from "@/constants";
 
 export const LAMPORTS_INIT_BALANCE = 1000 * LAMPORTS_PER_SOL; // 1000 SOL per wallet
 

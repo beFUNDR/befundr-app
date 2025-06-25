@@ -1,11 +1,12 @@
 "use client";
 import { useMissionApplication } from "@/hooks/dbData/useMissionApplication";
-import ModalLayout from "./_ModalLayout";
-import LoaderSmall from "../displayElements/LoaderSmall";
-import UserApplicationCard from "../cards/UserApplicationCard";
 import { useState } from "react";
-import ViewApplicationModal from "./ViewApplicationModal";
-import { useGetUsers } from "@/hooks/dbData/useUser";
+import { useGetUsers } from "@/features/users/hooks/useUser";
+import { User } from "@/features/users/types";
+import UserApplicationCard from "@/components/cards/UserApplicationCard";
+import LoaderSmall from "@/components/displayElements/LoaderSmall";
+import ModalLayout from "@/components/modals/_ModalLayout";
+import ViewApplicationModal from "@/components/modals/ViewApplicationModal";
 
 type Props = {
   onClose: () => void;

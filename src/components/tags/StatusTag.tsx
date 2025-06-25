@@ -1,4 +1,4 @@
-import { projectSteps } from "@/data/ProjectStatus";
+import { projectSteps } from "@/features/projects/constants/project-status";
 
 type Props = {
   status: string;

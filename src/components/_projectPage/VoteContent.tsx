@@ -1,4 +1,4 @@
-import ButtonLabelSecondary from "../buttons/_ButtonLabelSecondary";
+import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
 
 type Props = {
   isOwner: boolean;

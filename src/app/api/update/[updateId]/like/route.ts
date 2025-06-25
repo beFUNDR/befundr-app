@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import admin from "@/lib/firebase/firebaseAdmin";
+import admin from "@/lib/firebase/firebase-admin";
+import { verifyFirebaseAuth } from "@/shared/api/verify-firebase-auth";
 
 export async function POST(
   request: NextRequest,
   context: { params: Promise<{ updateId: string }> }
 ) {
   try {
-    const { userId } = await request.json();
+    const uid = await verifyFirebaseAuth(request);
+
     const { updateId } = await context.params;
 
     const updateRef = admin.firestore().collection("updates").doc(updateId);
@@ -20,9 +22,9 @@ export async function POST(
     const likesCount = update?.likesCount || [];
 
     // If the user has already liked, remove the like, otherwise add it
-    const newLikesCount = likesCount.includes(userId)
-      ? likesCount.filter((id: string) => id !== userId)
-      : [...likesCount, userId];
+    const newLikesCount = likesCount.includes(uid)
+      ? likesCount.filter((id: string) => id !== uid)
+      : [...likesCount, uid];
 
     await updateRef.update({
       likesCount: newLikesCount,

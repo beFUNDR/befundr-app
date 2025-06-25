@@ -1,15 +1,16 @@
 import { Ban, Pencil, RefreshCcw, Trash } from "lucide-react";
-import ButtonLabelSecondarySmall from "../buttons/_ButtonLabelSecondarySmall";
 import Image from "next/image";
 import Link from "next/link";
-import DefaultAvatar from "../displayElements/DefaultAvatar";
 import { useMemo, useState } from "react";
-import EditMissionModal from "../modals/EditMissionModal";
-import DeleteMissionModal from "../modals/DeleteMissionModal";
-import MissionApplicationModal from "../modals/MissionApplicationModal";
 import { useWallet } from "@solana/wallet-adapter-react";
-import ViewApplicantsModal from "../modals/ViewApplicantsModal";
-import { useGetUser } from "@/hooks/dbData/useUser";
+import { useGetUser } from "@/features/users/hooks/useUser";
+import ButtonLabelSecondarySmall from "@/components/buttons/_ButtonLabelSecondarySmall";
+import DefaultAvatar from "@/components/displayElements/DefaultAvatar";
+import DeleteMissionModal from "@/components/modals/DeleteMissionModal";
+import EditMissionModal from "@/components/modals/EditMissionModal";
+import MissionApplicationModal from "@/components/modals/MissionApplicationModal";
+import ViewApplicantsModal from "@/components/modals/ViewApplicantsModal";
+import { Mission } from "@/features/missions";
 
 type Props = {
   mission: Mission;
@@ -19,7 +20,7 @@ type Props = {
 };
 
 const MissionCard = ({ mission, isOwner, missionId, projectId }: Props) => {
-  const { data: doneBy } = useGetUser(mission.doneBy);
+  const { data: assignee } = useGetUser(mission.assignee);
   const { publicKey } = useWallet();
   const { data: user } = useGetUser(publicKey?.toString());
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -86,7 +87,7 @@ const MissionCard = ({ mission, isOwner, missionId, projectId }: Props) => {
       {mission.status === "open" &&
         !isOwner &&
         user &&
-        user.data.isCompleteProfil && (
+        user.isCompleteProfile && (
           <button
             className="w-full md:w-1/3"
             onClick={() => setIsApplyModalOpen(true)}
@@ -101,7 +102,7 @@ const MissionCard = ({ mission, isOwner, missionId, projectId }: Props) => {
       {mission.status === "open" &&
         !isOwner &&
         user &&
-        !user.data.isCompleteProfil && (
+        !user.isCompleteProfile && (
           <Link
             className="w-full md:w-1/3 flex flex-col items-center gap-2"
             href={`/myprofile?tab=My profile`}
@@ -124,7 +125,7 @@ const MissionCard = ({ mission, isOwner, missionId, projectId }: Props) => {
           </button>
         )}
       {/* on going mission */}
-      {mission.status === "onGoing" && (
+      {mission.status === "ongoing" && (
         <div className="flex flex-col justify-center items-center gap-2">
           <RefreshCcw className="text-custom-gray-400" size={40} />
           <span className="bodyStyle">On going</span>
@@ -132,23 +133,23 @@ const MissionCard = ({ mission, isOwner, missionId, projectId }: Props) => {
       )}
       {mission.status === "done" && (
         <Link
-          href={`/skillshub/${doneBy?.data.wallet}`}
+          href={`/skillshub/${assignee?.wallet}`}
           className="flex justify-start items-center gap-4 "
         >
-          {doneBy?.data.avatar ? (
+          {assignee?.avatar ? (
             <Image
-              src={doneBy.data.avatar}
-              alt={doneBy.data.name}
+              src={assignee.avatar}
+              alt={assignee.name}
               width={40}
               height={40}
               className="rounded-full"
             />
           ) : (
-            <DefaultAvatar size={12} publicKey={doneBy?.data.wallet ?? ""} />
+            <DefaultAvatar size={40} publicKey={assignee?.wallet ?? ""} />
           )}
           <div>
             <div className="text-xs text-gray-400">Done by</div>
-            <div className="font-bold text-white">{doneBy?.data.name}</div>
+            <div className="font-bold text-white">{assignee?.name}</div>
           </div>
         </Link>
       )}

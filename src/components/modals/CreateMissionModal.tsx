@@ -1,11 +1,11 @@
 import { useState } from "react";
-import ModalLayout from "./_ModalLayout";
-import { skills } from "@/data/localData";
-import { useMission } from "@/hooks/dbData/useMission";
-import ButtonLabelAsync from "../buttons/_ButtonLabelAsync";
+import { skills } from "@/shared/constants/skills";
+import { useMission } from "@/features/missions";
 import toast from "react-hot-toast";
-import InputField from "../displayElements/InputField";
-import Selector from "../displayElements/Selector";
+import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
+import InputField from "@/components/displayElements/InputField";
+import Selector from "@/components/displayElements/Selector";
+import ModalLayout from "@/components/modals/_ModalLayout";
 
 interface CreateMissionModalProps {
   open: boolean;
