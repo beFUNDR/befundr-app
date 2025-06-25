@@ -21,9 +21,12 @@ import PublishedPhase from "@/components/_projectPage/PublishedPhase";
 import NftMintRoundPhase from "@/components/_projectPage/NftMintRoundPhase";
 import ImageCarousel from "@/components/displayElements/ImageCarousel";
 import { useGetUser } from "@/features/users/hooks/useUser";
+import { useSearchParams } from "next/navigation";
 
 const ProjectPage = () => {
-  const [activeTab, setActiveTab] = useState("about");
+  const searchParams = useSearchParams();
+  const tab = searchParams.get("tab") || "about";
+  const [activeTab, setActiveTab] = useState(tab);
   const { publicKey } = useWallet();
   const params = useParams();
   const projectId = params.projectId as string;
