@@ -11,7 +11,6 @@ import { useLocalContext } from "@/providers/LocalContextProvider";
 import { Menu as MenuIcon, X } from "lucide-react";
 import { useAuth } from "@/providers/AuthProvider";
 import { useGetUser } from "@/features/users/hooks/useUser";
-import ButtonLabelSecondarySmall from "@/components/buttons/_ButtonLabelSecondarySmall";
 import ProfilButton from "@/components/buttons/ProfilButton";
 import PointCardSmall from "@/components/cards/PointCardSmall";
 import links from "@/components/menu/links";
@@ -93,12 +92,6 @@ const MenuComponent = () => {
             </Link>
           ))}
         </div>
-        {isAdmin && (
-          <button className="flex gap-2">
-            <ButtonLabelSecondarySmall label="Admin action 1" />
-            <ButtonLabelSecondarySmall label="Admin action 2" />
-          </button>
-        )}
         {gameProgramData && (
           <PointCardSmall points={gameProgramData.data.points} />
         )}

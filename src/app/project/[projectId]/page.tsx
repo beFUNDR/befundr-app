@@ -23,9 +23,12 @@ import ImageCarousel from "@/components/displayElements/ImageCarousel";
 import { useGetUser } from "@/features/users/hooks/useUser";
 import toast from "react-hot-toast";
 import { Heart } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 const ProjectPage = () => {
-  const [activeTab, setActiveTab] = useState("about");
+  const searchParams = useSearchParams();
+  const tab = searchParams.get("tab") || "about";
+  const [activeTab, setActiveTab] = useState(tab);
   const { publicKey } = useWallet();
   const params = useParams();
   const projectId = params.projectId as string;

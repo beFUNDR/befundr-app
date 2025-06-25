@@ -3,6 +3,7 @@
 import UserSkillCard from "@/components/cards/UserSkillsCard";
 import Loader from "@/components/displayElements/Loader";
 import { useGetAllUsers } from "@/features/users/hooks/useUser";
+import SkillsFilter from "@/shared/components/SkillsFilter";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -14,18 +15,7 @@ const SkillHubPage = () => {
   } = useGetAllUsers();
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
 
-  // Récupérer toutes les compétences uniques
-  const skills = users
-    ? Array.from(
-        new Set(
-          users
-            .filter((user) => user.isCompleteProfile)
-            .flatMap((user) => user.skills || [])
-        )
-      )
-    : [];
-
-  // Filtrer les utilisateurs selon la compétence sélectionnée
+  // Filter users by selected skill
   const filteredUsers = users
     ? users.filter((user) =>
         selectedSkill
@@ -42,34 +32,11 @@ const SkillHubPage = () => {
         believe in the power of collaboration and the importance of building
         strong relationships.
       </p>
-
-      {/* Filtres compétences */}
-      <div className="flex gap-2 mb-8 overflow-x-auto pb-4">
-        <button
-          className={`min-w-20 py-2 rounded-full border text-sm font-semibold transition ${
-            !selectedSkill
-              ? "text-accent border-accent"
-              : " text-custom-gray-400 border-custom-gray-400 hover:text-custom-gray-200 hover:border-custom-gray-200 "
-          }`}
-          onClick={() => setSelectedSkill(null)}
-        >
-          All
-        </button>
-        {skills.map((skill) => (
-          <button
-            key={skill}
-            className={`px-4 py-2 rounded-full border text-sm font-semibold transition whitespace-nowrap ${
-              selectedSkill === skill
-                ? "text-accent border-accent"
-                : " text-custom-gray-400 border-custom-gray-400 hover:text-custom-gray-200 hover:border-custom-gray-200 "
-            }`}
-            onClick={() => setSelectedSkill(skill)}
-          >
-            {skill}
-          </button>
-        ))}
-      </div>
-
+      {/* Skills filter */}
+      <SkillsFilter
+        selectedSkill={selectedSkill}
+        setSelectedSkill={setSelectedSkill}
+      />
       {isLoadingUsers ? (
         <div className="flex justify-center items-center h-[500px]">
           <Loader />
