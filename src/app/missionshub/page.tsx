@@ -1,7 +1,7 @@
 "use client";
 import MissionCardFromHub from "@/components/cards/MissionCardFromHub";
 import Loader from "@/components/displayElements/Loader";
-import { useMission } from "@/hooks/dbData/useMission";
+import { useMission } from "@/features/missions";
 import SkillsFilter from "@/shared/components/SkillsFilter";
 import { useMemo, useState } from "react";
 

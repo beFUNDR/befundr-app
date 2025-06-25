@@ -4,8 +4,10 @@ import {
   getMissionById,
   getMissionsByAssignee,
   getMissionsByProjectId,
+  Mission,
   updateMission,
 } from "@/features/missions";
+import { getAllDocumentsFromCollection } from "@/shared/utils/firebase-client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
@@ -20,6 +22,20 @@ export function useMission() {
       queryKey: ["mission", missionId],
       queryFn: () => getMissionById(missionId),
       enabled: !!missionId,
+    });
+
+  // Get all missions
+  const getAllMissions = async () => {
+    const { results, error } =
+      await getAllDocumentsFromCollection<Mission>("missions");
+    if (error) throw error;
+    return results;
+  };
+
+  const useGetAllMissions = () =>
+    useQuery({
+      queryKey: ["missions"],
+      queryFn: getAllMissions,
     });
 
   // Get all missions by projectId
@@ -75,6 +91,7 @@ export function useMission() {
   });
 
   return {
+    useGetAllMissions,
     useGetMissionById,
     useGetMissionsByProjectId,
     useMissionsByDoneByUserId,

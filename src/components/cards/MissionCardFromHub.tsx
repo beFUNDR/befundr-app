@@ -1,6 +1,7 @@
 import ButtonLabelSecondarySmall from "@/components/buttons/_ButtonLabelSecondarySmall";
 import Divider from "@/components/displayElements/Divider";
 import CategoryTag from "@/components/tags/CategoryTag";
+import { Mission } from "@/features/missions";
 import { useProject } from "@/features/projects/hooks";
 import Image from "next/image";
 
