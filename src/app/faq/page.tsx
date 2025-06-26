@@ -11,22 +11,27 @@ const FaqPage = () => {
       <h2 className="h2Style mb-6">Builders</h2>
       <FaqQuestionCard question="How does funding work on beFUNDR?">
         <p>
-          Funding on beFUNDR happens in two key phases. First, selected projects
-          receive up to <strong>$100k in kickstart funding</strong>, sourced
-          from early adopters during an NFT sale. This gives builders the runway
-          to prototype and engage their community.
+          First, projects raise Kickstart funding through an open kickstart NFT
+          sale, giving them early validation, initial funds (up to $100k), and a
+          first engaged community.
         </p>
         <p>
-          Then comes the <strong>incubation phase</strong>, supported by our
-          Community Skills Hub — a curated network of mentors and contributors.
-          After proving traction, projects move into a{" "}
-          <strong>token or tokenized-equity sale</strong> conducted in 3 rounds:
-          first to NFT holders, then to OG communities, and finally to the
-          public.
+          Then, during the incubation phase, projects can secure additional
+          backing from VCs, while also receiving support from the Community
+          Skills Hub — a network of contributors, mentors, and expert partners.
         </p>
+        <p>
+          Finally, the token (or tokenized equity) sale is conducted in three
+          sequenced rounds:
+        </p>
+        <ul className="list-decimal list-inside">
+          <li>Kickstart NFT holders (via airdrop or preferential access)</li>
+          <li>OG Solana communities</li>
+          <li>General public</li>
+        </ul>
 
         <Image
-          src="/images/funding_process.png"
+          src="/images/incubation-process/incubation-fundraising.png"
           alt="befundr funding process"
           width={500}
           height={500}
@@ -35,14 +40,14 @@ const FaqPage = () => {
       </FaqQuestionCard>
       <FaqQuestionCard question="How can I apply to be incubated by beFUNDR?">
         <p>
-          You can apply by submitting a short form on our website with your
-          project description, team details, and current status. A selection
-          phase will be done by beFUNDR and our partners
+          You can apply directly on our website by filling out a short form with
+          your project overview, your team, and your current progress.
         </p>
         <p>
-          Selected projects receive up to $100k in initial kickstart capital,
-          access to a trusted community skills hub, and strategic support to
-          prepare for a token or equity round.
+          After a quick pre-selection by beFUNDR and its partners, projects
+          enter the Kickstart phase, where an NFT sale validates real community
+          demand. The best-performing projects (those that raise the most)
+          secure their spot in the next incubation batch.
         </p>
       </FaqQuestionCard>
 
@@ -58,13 +63,16 @@ const FaqPage = () => {
           launch prematurely.
         </p>
       </FaqQuestionCard>
+      <FaqQuestionCard question="How many projects are selected for incubation?">
+        <p>We select 4 projects per batch, and we have 2 batches per year.</p>
+      </FaqQuestionCard>
       <h2 className="h2Style mb-6 mt-12">Investors</h2>
       <FaqQuestionCard question="How do I invest in early projects on beFUNDR?">
         <p>
-          Early access is granted via NFT drops representing your commitment to
-          supporting promising projects. As a holder, you gain guaranteed
-          allocation with any additional cost and exclusive access to extra
-          early rounds of token or equity sales from incubated teams.
+          Early access is granted via kickstart NFT purchase, representing your
+          commitment to supporting promising projects. As a holder, you gain
+          guaranteed allocation with any additional cost and exclusive access to
+          extra early rounds of token or equity sales from incubated teams.
         </p>
         <p>
           These projects are selected and supported by trusted OG communities
@@ -82,6 +90,13 @@ const FaqPage = () => {
           However, our community-focus approach and validation process reduce
           the risk by ensuring only credible builders with long-term vision
           receive funding.
+        </p>
+      </FaqQuestionCard>
+      <FaqQuestionCard question="What if i bought a kickstart NFT of a project that didn't get selected?">
+        <p>
+          If you bought a kickstart NFT of a project that didn&apos;t get
+          selected, you will be automatically refunded. And you will have access
+          to a dedicated sale to invest in the selected projects.
         </p>
       </FaqQuestionCard>
       <h2 className="h2Style mb-6 mt-12">Communities</h2>

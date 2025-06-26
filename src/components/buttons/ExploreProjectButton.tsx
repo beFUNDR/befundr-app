@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const ExploreProjectButton = () => {
   return (
-    <Link href="/projects">
+    <Link href="/projects" className="w-full">
       <ButtonLabel label="Explore Projects" />
     </Link>
   );

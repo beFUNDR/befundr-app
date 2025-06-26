@@ -6,6 +6,7 @@ import { useProject } from "@/features/projects/hooks/useProject";
 import ExploreProjectButton from "@/components/buttons/ExploreProjectButton";
 import ProjectCard from "@/features/projects/components/ProjectCard";
 import { AnimatedBlock } from "@/components/displayElements/AnimatedBlock";
+import ApplyButton from "@/components/buttons/ApplyButton";
 
 const ProjectSection = () => {
   const { projects, isLoadingProjects, projectsError } = useProject();
@@ -33,8 +34,11 @@ const ProjectSection = () => {
                 </Link>
               ))}
           </div>
-          <div className="w-full md:w-48 ">
-            <ExploreProjectButton />
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex w-full md:w-48">
+              <ExploreProjectButton />
+            </div>
+            <ApplyButton />
           </div>
         </div>
       </div>
