@@ -18,7 +18,6 @@ import toast from "react-hot-toast";
 type LocalContextProviderType = {
   user: User | null;
   setUser: (user: User) => void;
-  createUser: (publicKey: PublicKey) => Promise<boolean>;
   isAdmin: boolean;
 };
 
@@ -26,7 +25,6 @@ type LocalContextProviderType = {
 const LocalContext = createContext<LocalContextProviderType>({
   user: null,
   setUser: () => {},
-  createUser: async () => false,
   isAdmin: false,
 });
 
@@ -54,43 +52,8 @@ export const LocalContextProvider = ({
     );
   }, [userData]);
 
-  const createUser = async (publicKey: PublicKey): Promise<boolean> => {
-    try {
-      const res = await fetcher("/api/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        bodyParams: { wallet: publicKey.toString() },
-      });
-
-      //TODO this should be done in the /api/user route for better performance
-      const resGameProgram = await fetcher("/api/game-program", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        bodyParams: { userId: publicKey.toString() },
-      });
-
-      // Invalidate the user and game queries
-      queryClient.invalidateQueries({
-        queryKey: ["user", publicKey.toString()],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["gameProgram", publicKey.toString()],
-      });
-
-      return true;
-    } catch (error) {
-      console.error("Error creating user", error);
-      toast.error("Error creating user");
-      return false;
-    }
-  };
-
   return (
-    <LocalContext.Provider value={{ user, setUser, createUser, isAdmin }}>
+    <LocalContext.Provider value={{ user, setUser, isAdmin }}>
       {children}
     </LocalContext.Provider>
   );

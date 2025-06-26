@@ -2,8 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import admin from "@/lib/firebase/firebase-admin";
 import { uploadImageServer } from "@/shared/utils/firebase-functions";
 import { verifyFirebaseAuth } from "@/shared/api/verify-firebase-auth";
+import {
+  getProjectById,
+  hasOngoingProject,
+} from "@/features/projects/services/project-service.server";
+import { COLLECTIONS } from "@/lib/firebase/firebase-constants";
+import { Project } from "@/features/projects/types";
 import { checkUserIdAuthorization } from "@/shared/api/auth";
-import { hasOngoingProject } from "@/features/projects/services/project-service.server";
 
 /**
  * Create a new project
@@ -14,12 +19,9 @@ export async function POST(request: NextRequest) {
   try {
     const uid = await verifyFirebaseAuth(request);
 
-    const { project, mainImageBase64, logoBase64, additionalImagesBase64 } =
-      await request.json();
+    const { project } = await request.json();
 
-    checkUserIdAuthorization(uid, project.userId);
-
-    if (await hasOngoingProject(project.userId)) {
+    if (await hasOngoingProject(uid)) {
       return NextResponse.json(
         { error: "User already has a project" },
         { status: 409 }
@@ -30,37 +32,40 @@ export async function POST(request: NextRequest) {
     let additionalImagesUrls: string[] = [];
     const timestamp = Date.now();
 
-    if (mainImageBase64) {
-      const image = Buffer.from(mainImageBase64, "base64");
+    const projectId = admin
+      .firestore()
+      .collection(COLLECTIONS.PROJECTS)
+      .doc().id;
+
+    if (project.mainImage) {
+      const image = Buffer.from(project.mainImage, "base64");
       mainImageUrl = await uploadImageServer(
         image,
-        `projects/${project.userId}/${project.name}/mainImage_v=${timestamp}.png`
+        `projects/${projectId}/mainImage_v=${timestamp}.png`
       );
     }
 
-    if (logoBase64) {
-      const image = Buffer.from(logoBase64, "base64");
+    if (project.logo) {
+      const image = Buffer.from(project.logo, "base64");
       logoUrl = await uploadImageServer(
         image,
-        `projects/${project.userId}/${project.name}/logo_v=${timestamp}.png`
+        `projects/${projectId}/logo_v=${timestamp}.png`
       );
     }
 
-    if (additionalImagesBase64 && additionalImagesBase64.length > 0) {
+    if (project.images && project.images.length > 0) {
       additionalImagesUrls = await Promise.all(
-        additionalImagesBase64.map(async (base64: string, index: number) => {
+        project.images.map(async (base64: string, index: number) => {
           const image = Buffer.from(base64, "base64");
           return (
             (await uploadImageServer(
               image,
-              `projects/${project.userId}/${project.name}/additional_${index}_v=${timestamp}.png`
+              `projects/${projectId}/additional_${index}_v=${timestamp}.png`
             )) || ""
           );
         })
       );
     }
-
-    const projectId = admin.firestore().collection("projects").doc().id;
 
     await admin
       .firestore()
@@ -72,9 +77,11 @@ export async function POST(request: NextRequest) {
         logo: logoUrl,
         images: additionalImagesUrls,
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
-        owner: project.userId,
+        owner: uid,
+        userId: uid,
         id: projectId,
         likesCount: [],
+        status: "WaitingForApproval",
       });
     console.log("Project created");
 
@@ -95,14 +102,27 @@ export async function POST(request: NextRequest) {
  */
 export const PATCH = async (request: NextRequest) => {
   try {
+    const uid = await verifyFirebaseAuth(request);
+
     const {
       project,
-      dataToUpdate,
-      mainImageBase64,
-      logoBase64,
-      additionalImagesBase64,
-      userPublicKey,
+      mainImage,
+      logo,
+      images,
+    }: {
+      project: Partial<Project>;
+      mainImage: string;
+      logo: string;
+      images: string[];
     } = await request.json();
+    const storedProject = await getProjectById(project.id!);
+
+    if (!storedProject) {
+      throw new Error("Project not found");
+    }
+
+    //Ensure the user is the owner of the project to update
+    checkUserIdAuthorization(uid, storedProject.owner);
 
     let mainImageUrl = project.mainImage;
     let logoUrl = project.logo;
@@ -110,7 +130,7 @@ export const PATCH = async (request: NextRequest) => {
     const timestamp = Date.now();
 
     // Handle main image update
-    if (mainImageBase64) {
+    if (mainImage) {
       // Delete old main image
       if (project.mainImage) {
         const oldImagePath = project.mainImage.split("/projects/")[1];
@@ -121,35 +141,33 @@ export const PATCH = async (request: NextRequest) => {
           .delete();
       }
       // Upload new main image
-      const image = Buffer.from(mainImageBase64, "base64");
+      const image = Buffer.from(mainImage, "base64");
       mainImageUrl = await uploadImageServer(
         image,
-        `projects/${project.userId}/${project.name}/mainImage_v=${timestamp}.png`
+        `projects/${project.id}/mainImage_v=${timestamp}.png`
       );
     }
 
     // Handle logo update
-    if (logoBase64) {
+    if (logo) {
       // Delete old logo
       if (project.logo) {
         const oldLogoPath = project.logo.split("/projects/")[1];
         await admin.storage().bucket().file(`projects/${oldLogoPath}`).delete();
       }
       // Upload new logo
-      const image = Buffer.from(logoBase64, "base64");
+      const image = Buffer.from(logo, "base64");
       logoUrl = await uploadImageServer(
         image,
-        `projects/${project.userId}/${project.name}/logo_v=${timestamp}.png`
+        `projects/${project.id}/logo_v=${timestamp}.png`
       );
     }
 
     // Handle additional images update
-    if (additionalImagesBase64 && additionalImagesBase64.length > 0) {
+    if (images && images.length > 0) {
       // Delete old images
       const oldImages = project.images || [];
-      const newImageUrls = additionalImagesBase64.filter(
-        (url: any) => typeof url === "string"
-      );
+      const newImageUrls = images.filter((url: any) => typeof url === "string");
       const imagesToDelete = oldImages.filter(
         (url: any) => !newImageUrls.includes(url)
       );
@@ -169,19 +187,22 @@ export const PATCH = async (request: NextRequest) => {
 
       // Upload new images
       additionalImagesUrls = await Promise.all(
-        additionalImagesBase64.map(async (base64: string, index: number) => {
+        images.map(async (base64: string, index: number) => {
           const image = Buffer.from(base64, "base64");
           return await uploadImageServer(
             image,
-            `projects/${project.userId}/${project.name}/additional_${index}_v=${timestamp}.png`
+            `projects/${project.id}/additional_${index}_v=${timestamp}.png`
           );
         })
       );
     }
 
-    const projectRef = admin.firestore().collection("projects").doc(project.id);
+    const projectRef = admin
+      .firestore()
+      .collection("projects")
+      .doc(project.id!);
     await projectRef.update({
-      ...dataToUpdate,
+      ...project,
       mainImage: mainImageUrl,
       logo: logoUrl,
       images: additionalImagesUrls,

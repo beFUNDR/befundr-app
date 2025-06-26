@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import {
+  createUser,
   getAllUsers,
   getUser,
   getUsers,
@@ -30,6 +31,27 @@ export const useGetUsers = (userIds: string[]) =>
     queryFn: () => getUsers(userIds),
     enabled: userIds.length > 0,
   });
+
+export const useCreateUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: createUser,
+    onSuccess: (_, user) => {
+      queryClient.invalidateQueries({
+        queryKey: ["user", user.wallet],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["gameProgram", user.wallet],
+      });
+      toast.success("User created successfully");
+    },
+    onError: (error) => {
+      console.error("Error while creating user:", error);
+      toast.error("Error while creating user");
+    },
+  });
+};
 
 //* MUTATIONS
 // Update user

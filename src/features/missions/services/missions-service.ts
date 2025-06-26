@@ -21,7 +21,7 @@ export const getMissionById = async (
     if (!rawMission) {
       return undefined;
     }
-    return convertMissionFromDocument(rawMission);
+    return convertMissionFromDocument({ ...rawMission.data });
   } catch (error) {
     console.error(`Failed to get mission with id ${missionId}`, error);
     throw error;

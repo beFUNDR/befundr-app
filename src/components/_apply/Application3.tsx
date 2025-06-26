@@ -7,11 +7,12 @@ import VideoButton from "@/components/buttons/VideoButton";
 import XButton from "@/components/buttons/XButton";
 import Divider from "@/components/displayElements/Divider";
 import CategoryTag from "@/components/tags/CategoryTag";
+import { Project } from "@/features/projects/types";
 import { User } from "@/features/users/types";
 import Image from "next/image";
 
 type Props = {
-  project: ProjectToCreate;
+  project: Partial<Project>;
   user: User;
 };
 
@@ -46,7 +47,7 @@ export default function Application3({ project, user }: Props) {
 
             {/* Tags */}
             <div className="flex gap-2 mb-4">
-              <CategoryTag category={project.category} />
+              <CategoryTag category={project.category!} />
             </div>
             <p className="text-white mb-6 whitespace-pre-line">
               {project.description || "Missing description"}

@@ -1,4 +1,5 @@
 import InputField from "@/components/displayElements/InputField";
+import { ProjectToCreate } from "@/features/projects/types";
 
 type Props = {
   project: ProjectToCreate;

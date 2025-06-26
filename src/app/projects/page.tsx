@@ -4,16 +4,16 @@ import { useState } from "react";
 import ProjectCard from "@/features/projects/components/ProjectCard";
 import Loader from "@/components/displayElements/Loader";
 import Link from "next/link";
-import { useProject } from "@/features/projects/hooks/useProject";
 import ApplyButton from "@/components/buttons/ApplyButton";
+import { useGetProjects } from "@/features/projects/hooks";
 
 const ProjectsPage = () => {
-  const { projects, isLoadingProjects, projectsError } = useProject();
+  const { data: projects, isLoading, error } = useGetProjects();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   // Get all unique categories
   const categories = projects
-    ? Array.from(new Set(projects.map((p: any) => p.data.category)))
+    ? Array.from(new Set(projects.map((p: any) => p.category)))
     : [];
 
   // Filter projects by selected category
@@ -62,11 +62,11 @@ const ProjectsPage = () => {
         ))}
       </div>
       {/* Grille de projets */}
-      {isLoadingProjects ? (
+      {isLoading ? (
         <div className="flex justify-center items-center h-[500px]">
           <Loader />
         </div>
-      ) : projectsError ? (
+      ) : error ? (
         <div className="text-red-500">Error loading projects</div>
       ) : (
         <div
@@ -82,7 +82,7 @@ const ProjectsPage = () => {
               href={`/project/${project.id}`}
               className="min-w-[300px] max-w-xs flex-shrink-0"
             >
-              <ProjectCard project={project.data} />
+              <ProjectCard project={project} />
             </Link>
           ))}
         </div>

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { useProject } from "@/features/projects/hooks/useProject";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Application1 from "@/components/_apply/Application1";
 import Application2 from "@/components/_apply/Application2";
@@ -16,6 +15,8 @@ import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
 import toast from "react-hot-toast";
 import { useGetUser } from "@/features/users/hooks/useUser";
 import { Project, ProjectToCreate } from "@/features/projects/types";
+import { useGetProjectById, useUpdateProject } from "@/features/projects/hooks";
+import { fileToBase64 } from "@/shared/utils/firebase-client";
 
 export default function EditProjectPage() {
   //* GLOBAL STATE
@@ -23,11 +24,10 @@ export default function EditProjectPage() {
   const router = useRouter();
   const { publicKey } = useWallet();
   const projectId = params.projectId as string;
-  const { getProject, updateProject, isUpdatingProject } = useProject();
   const { data: projectData, isLoading: isProjectLoading } =
-    getProject(projectId);
+    useGetProjectById(projectId);
   const { data: user, isLoading: isUserLoading } = useGetUser(
-    projectData?.data.userId ?? ""
+    projectData?.userId ?? ""
   );
 
   //* LOCAL STATE
@@ -36,6 +36,8 @@ export default function EditProjectPage() {
   const [mainImageFile, setMainImageFile] = useState<File | undefined>(
     undefined
   );
+  const { mutateAsync: updateProject, isPending: isUpdating } =
+    useUpdateProject();
   const [logoFile, setLogoFile] = useState<File | undefined>(undefined);
   const [imagesFiles, setImagesFiles] = useState<(File | string)[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -44,25 +46,25 @@ export default function EditProjectPage() {
   useEffect(() => {
     if (projectData) {
       setProject({
-        name: projectData.data.name,
-        category: projectData.data.category,
-        mainImage: projectData.data.mainImage,
-        logo: projectData.data.logo,
-        images: projectData.data.images || [],
-        headLine: projectData.data.headLine,
-        description: projectData.data.description,
-        pitchLink: projectData.data.pitchLink,
-        videoLink: projectData.data.videoLink,
-        otherLink: projectData.data.otherLink,
-        website: projectData.data.website,
-        twitter: projectData.data.twitter,
-        discord: projectData.data.discord,
-        telegram: projectData.data.telegram,
-        userId: projectData.data.userId,
-        owner: projectData.data.owner,
-        status: projectData.data.status,
+        name: projectData.name,
+        category: projectData.category,
+        mainImage: projectData.mainImage,
+        logo: projectData.logo,
+        images: projectData.images || [],
+        headLine: projectData.headLine,
+        description: projectData.description,
+        pitchLink: projectData.pitchLink,
+        videoLink: projectData.videoLink,
+        otherLink: projectData.otherLink,
+        website: projectData.website,
+        twitter: projectData.twitter,
+        discord: projectData.discord,
+        telegram: projectData.telegram,
+        userId: projectData.userId,
+        owner: projectData.owner,
+        status: projectData.status,
         id: projectData.id,
-        likesCount: projectData.data.likesCount,
+        likesCount: projectData.likesCount,
       });
     }
   }, [projectData]);
@@ -85,7 +87,7 @@ export default function EditProjectPage() {
     ] as const;
 
     fieldsToCheck.forEach((field) => {
-      if (project[field] !== projectData.data[field]) {
+      if (project[field] !== projectData[field]) {
         dataToUpdate[field] = project[field];
       }
     });
@@ -102,14 +104,18 @@ export default function EditProjectPage() {
   const handleProjectUpdate = async () => {
     if (!project || !publicKey) return;
 
+    const mainImage =
+      (mainImageFile && (await fileToBase64(mainImageFile))) || "";
+    const logo = (logoFile && (await fileToBase64(logoFile))) || "";
+    const images = await Promise.all(
+      imagesFiles.map((file) => fileToBase64(file as File))
+    );
     try {
       await updateProject({
-        project: project,
-        dataToUpdate: dataToUpdate,
-        mainImageFile: mainImageFile,
-        logoFile: logoFile,
-        imagesFiles: imagesFiles,
-        userPublicKey: publicKey,
+        project: { ...project, ...dataToUpdate },
+        mainImage,
+        logo,
+        images,
       });
 
       toast.success("Project updated successfully");
@@ -128,7 +134,7 @@ export default function EditProjectPage() {
     );
   }
 
-  if (!publicKey || publicKey.toString() !== projectData?.data.userId) {
+  if (!publicKey || publicKey.toString() !== projectData?.userId) {
     return (
       <div className="flex justify-center items-center h-screen">
         <p className="text-white">
@@ -192,9 +198,9 @@ export default function EditProjectPage() {
           <button
             type="button"
             onClick={handleProjectUpdate}
-            disabled={isUpdatingProject}
+            disabled={isUpdating}
           >
-            <ButtonLabelAsync label="Update" isLoading={isUpdatingProject} />
+            <ButtonLabelAsync label="Update" isLoading={isUpdating} />
           </button>
         )}
       </div>

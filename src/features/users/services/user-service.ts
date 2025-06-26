@@ -1,4 +1,5 @@
 import {
+  createUserDocument,
   getAllUsersApi,
   getUserApi,
   getUsersApi,
@@ -40,6 +41,20 @@ export const getUsers = async (userIds: string[]): Promise<User[]> => {
     return users;
   } catch (error) {
     console.error("Error while getting users:", error);
+    throw error;
+  }
+};
+
+export const createUser = async (
+  user: Partial<User>
+): Promise<Partial<User>> => {
+  try {
+    const userDocument = convertPartialUserToDocument(user);
+    await createUserDocument(userDocument);
+
+    return user;
+  } catch (error) {
+    console.error(`Error while creating user with id: ${user.wallet}`, error);
     throw error;
   }
 };

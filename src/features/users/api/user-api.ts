@@ -1,4 +1,5 @@
 import { User, UserDocument } from "@/features/users/types/user.types";
+import { fetcher } from "@/shared/api/fetcher";
 import {
   db,
   getAllDocumentsFromCollection,
@@ -37,17 +38,36 @@ export const getUsersApi = async (
   return results;
 };
 
-export const updateUserApi = async (user: Partial<User>): Promise<User> => {
-  const response = await fetch("/api/user", {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user),
+export const createUserDocument = async (
+  user: Partial<User>
+): Promise<User> => {
+  const response = await fetcher("/api/user", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    bodyParams: { user },
   });
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Update failed: ${errorText}`);
-  }
+  //TODO this should be done in the /api/user route for better performance
 
-  return response.json();
+  const resGameProgram = await fetcher("/api/game-program", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    bodyParams: {},
+  });
+
+  return response;
+};
+
+export const updateUserApi = async (user: Partial<User>): Promise<User> => {
+  const response = await fetcher("/api/user", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    bodyParams: { user },
+  });
+
+  return response;
 };

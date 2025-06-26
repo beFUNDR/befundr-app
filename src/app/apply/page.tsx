@@ -12,30 +12,18 @@ import { WalletButton } from "@/providers/SolanaProvider";
 import toast from "react-hot-toast";
 import MissionApplicationValidationModal from "@/components/modals/MissionApplicationValidationModal";
 import Loader from "@/components/displayElements/Loader";
-import { useProject } from "@/features/projects/hooks/useProject";
 import { useGetUser } from "@/features/users/hooks/useUser";
 import { ProjectToCreate } from "@/features/projects/types";
+import { useCreateProject } from "@/features/projects/hooks";
+import { fileToBase64 } from "@/shared/utils/firebase-client";
 
 export default function ApplyPage() {
   const { publicKey } = useWallet();
-  const { createProject, isCreating } = useProject();
+  const { mutateAsync: createProject, isPending: isCreating } =
+    useCreateProject();
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 3;
-  const [project, setProject] = useState<ProjectToCreate>({
-    userId: publicKey?.toString() || "",
-    name: "",
-    category: "Community",
-    mainImage: "",
-    logo: "",
-    images: [],
-    headLine: "",
-    description: "",
-    website: "",
-    twitter: "",
-    discord: "",
-    telegram: "",
-    status: "WaitingForApproval",
-  });
+  const [project, setProject] = useState<Partial<ProjectToCreate>>({});
   const [mainImageFile, setMainImageFile] = useState<File | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [imagesFiles, setImagesFiles] = useState<(File | string)[]>([]);
@@ -79,12 +67,13 @@ export default function ApplyPage() {
       if (!project.description) {
         throw new Error("Enter a description");
       }
-
+      const mainImage = await fileToBase64(mainImageFile);
+      const logo = await fileToBase64(logoFile);
+      const additionalImages = await Promise.all(
+        imagesFiles.map((file) => fileToBase64(file as File))
+      );
       await createProject({
-        project,
-        mainImageFile,
-        logoFile,
-        imagesFiles,
+        project: { ...project, mainImage, logo, images: additionalImages },
       });
 
       setIsApplicationValidated(true);
