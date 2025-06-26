@@ -24,6 +24,13 @@ import toast from "react-hot-toast";
  */
 const QueryProvider = ({ children }: { children: React.ReactNode }) => {
   const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 1000 * 60 * 5,
+        retry: 1,
+        refetchOnWindowFocus: false,
+      },
+    },
     queryCache: new QueryCache({
       onError: (error, query) => {
         console.error("[React Query]Error in query", query.queryKey, error);
