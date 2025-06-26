@@ -19,7 +19,7 @@ const ProjectsPage = () => {
   // Filter projects by selected category
   const filteredProjects = projects
     ? projects.filter((p: any) =>
-        selectedCategory ? p.data.category === selectedCategory : true
+        selectedCategory ? p.category === selectedCategory : true
       )
     : [];
 
