@@ -47,21 +47,5 @@ export const ProjectDocumentSchema = z.object({
   likesCount: z.array(z.string()),
 });
 
-export const ProjectToCreateSchema = z.object({
-  userId: z.string(),
-  name: z.string(),
-  category: z.string(),
-  mainImage: z.string(),
-  logo: z.string(),
-  images: z.array(z.string()),
-  headLine: z.string(),
-  description: z.string(),
-  pitchLink: z.string().optional(),
-  videoLink: z.string().optional(),
-  otherLink: z.string().optional(),
-  website: z.string().optional(),
-  twitter: z.string().optional(),
-  discord: z.string().optional(),
-  telegram: z.string().optional(),
-  status: z.string(),
-});
+export const PartialProjectSchema = ProjectSchema.partial();
+export const PartialProjectDocumentSchema = ProjectDocumentSchema.partial();

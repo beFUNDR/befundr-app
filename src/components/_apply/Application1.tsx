@@ -84,7 +84,7 @@ export default function Application1({
         ) : (
           <InputField
             label="Project name"
-            value={project.name}
+            value={project.name || ""}
             onChange={(e) => setProject({ ...project, name: e.target.value })}
             required
           />

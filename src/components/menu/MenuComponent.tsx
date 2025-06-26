@@ -7,10 +7,9 @@ import "@/app/customStyles.css";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
 import { useGameProgramByUserId } from "@/hooks/dbData/useGameProgram";
-import { useLocalContext } from "@/providers/LocalContextProvider";
 import { Menu as MenuIcon, X } from "lucide-react";
 import { useAuth } from "@/providers/AuthProvider";
-import { useGetUser } from "@/features/users/hooks/useUser";
+import { useCreateUser, useGetUser } from "@/features/users/hooks/useUser";
 import ProfilButton from "@/components/buttons/ProfilButton";
 import PointCardSmall from "@/components/cards/PointCardSmall";
 import links from "@/components/menu/links";
@@ -18,7 +17,6 @@ import WelcomeModal from "@/components/modals/WelcomeModal";
 
 const MenuComponent = () => {
   //* GLOBAL STATE
-  const { createUser, isAdmin } = useLocalContext();
   const { user } = useAuth();
   const currentPathname = usePathname();
   const { connected, publicKey, signMessage } = useWallet();
@@ -28,6 +26,7 @@ const MenuComponent = () => {
   const { data: gameProgramData } = useGameProgramByUserId(
     publicKey?.toString() || ""
   );
+  const { mutateAsync: createUser } = useCreateUser();
 
   //* LOCAL STATE
   const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(false);
@@ -53,7 +52,7 @@ const MenuComponent = () => {
 
     const handleCreateUser = async () => {
       if (!publicKey) return;
-      const isSuccess = await createUser(publicKey);
+      const isSuccess = await createUser({});
       if (isSuccess) {
         setIsWelcomeModalOpen(true);
       }

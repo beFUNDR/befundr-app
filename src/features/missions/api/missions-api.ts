@@ -1,4 +1,5 @@
 import { MissionDocument } from "@/features/missions";
+import { COLLECTIONS } from "@/lib/firebase/firebase-constants";
 import { fetcher } from "@/shared/api/fetcher";
 import {
   db,
@@ -14,17 +15,17 @@ import {
 
 export const getMissionDocumentById = async (missionId: string) => {
   const { result, error } = await getDocument<MissionDocument>(
-    "missions",
+    COLLECTIONS.MISSIONS,
     missionId
   );
   if (error) throw error;
-  return result?.data;
+  return result;
 };
 
 export const getMissionsDocumentsByProjectId = async (projectId: string) => {
   const missionsRef = collection(
     db,
-    "missions"
+    COLLECTIONS.MISSIONS
   ) as CollectionReference<MissionDocument>;
   const q = query(missionsRef, where("projectId", "==", projectId));
   const { results, error } = await getDocumentsWithQuery<MissionDocument>(q);
@@ -45,7 +46,7 @@ export const createMissionDocument = async (mission: MissionToCreate) => {
 export const getMissionsDocumentsByAssignee = async (assigneeId: string) => {
   const missionsRef = collection(
     db,
-    "missions"
+    COLLECTIONS.MISSIONS
   ) as CollectionReference<MissionDocument>;
   const q = query(missionsRef, where("assignee", "==", assigneeId));
   const { results, error } = await getDocumentsWithQuery<MissionDocument>(q);

@@ -2,7 +2,7 @@ import ButtonLabelSecondarySmall from "@/components/buttons/_ButtonLabelSecondar
 import Divider from "@/components/displayElements/Divider";
 import CategoryTag from "@/components/tags/CategoryTag";
 import { Mission } from "@/features/missions";
-import { useProject } from "@/features/projects/hooks";
+import { useGetProjectById } from "@/features/projects/hooks";
 import Image from "next/image";
 
 type Props = {
@@ -12,7 +12,6 @@ type Props = {
 };
 
 const MissionCardFromHub = ({ mission, missionId, projectId }: Props) => {
-  const { useGetProjectById } = useProject();
   const { data: project, isLoading: isProjectLoading } =
     useGetProjectById(projectId);
 
@@ -41,20 +40,18 @@ const MissionCardFromHub = ({ mission, missionId, projectId }: Props) => {
         {/* project info */}
         <div className="flex flex-col items-start gap-2 w-full ">
           <div className="flex items-center gap-2">
-            {project?.data.logo && (
+            {project?.logo && (
               <Image
-                src={project?.data.logo}
-                alt={project?.data.name}
+                src={project?.logo}
+                alt={project?.name}
                 width={40}
                 height={40}
                 className="rounded-full"
               />
             )}
-            <span className="h4Style  w-full">{project?.data.name}</span>
+            <span className="h4Style  w-full">{project?.name}</span>
           </div>
-          {project?.data.category && (
-            <CategoryTag category={project?.data.category} />
-          )}
+          {project?.category && <CategoryTag category={project?.category} />}
         </div>
         <Divider />
         {/* button */}

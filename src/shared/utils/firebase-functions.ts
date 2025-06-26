@@ -26,19 +26,26 @@ export const uploadImage = async (
   }
 };
 
+const isLocalEmulator = process.env.NEXT_PUBLIC_USE_EMULATOR === "true";
+
 export async function uploadImageServer(image: Buffer, path: string) {
-  // const buffer = Buffer.from(imageBase64, "base64");
   const bucket = admin.storage().bucket();
   const file = bucket.file(path);
+
   await file.save(image, {
     metadata: {
       contentType: "image/png",
     },
   });
 
-  await bucket.file(path).makePublic();
-  const publicUrl = `https://storage.googleapis.com/${bucket.name}/${path}`;
-  return publicUrl;
+  if (!isLocalEmulator) {
+    await file.makePublic();
+    return `https://storage.googleapis.com/${bucket.name}/${path}`;
+  } else {
+    // Firebase Emulator local URL format
+    const encodedPath = encodeURIComponent(path);
+    return `http://localhost:9199/v0/b/${bucket.name}/o/${encodedPath}?alt=media`;
+  }
 }
 
 export async function blobToBase64(blob: Blob) {

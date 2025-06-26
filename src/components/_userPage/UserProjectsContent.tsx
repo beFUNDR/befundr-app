@@ -15,7 +15,7 @@ const UserProjectsContent = ({ userId }: { userId: string }) => {
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-4 justify-items-center">
       {projects?.map((project, idx) => (
         <Link href={`/project/${project.id}`} key={idx}>
-          <ProjectCard project={project.data} />
+          <ProjectCard project={project} />
         </Link>
       ))}
     </div>

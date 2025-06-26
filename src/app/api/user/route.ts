@@ -1,5 +1,7 @@
 import { User, UserDocument } from "@/features/users/types/user.types";
 import admin from "@/lib/firebase/firebase-admin";
+import { COLLECTIONS } from "@/lib/firebase/firebase-constants";
+import { verifyFirebaseAuth } from "@/shared/api/verify-firebase-auth";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 
@@ -36,7 +38,7 @@ export async function GET(req: NextRequest) {
     //* GET THE DATA
     const userDoc = await admin
       .firestore()
-      .collection("users")
+      .collection(COLLECTIONS.USERS)
       .doc(userWallet)
       .get();
     if (!userDoc.exists) {
@@ -54,21 +56,22 @@ export async function GET(req: NextRequest) {
   }
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    const { wallet } = await req.json();
+    const uid = await verifyFirebaseAuth(request);
 
-    if (!wallet) {
+    const { user }: { user: User } = await request.json();
+
+    if (!user) {
       return NextResponse.json(
         { error: "Wallet is required" },
         { status: 400 }
       );
     }
 
-    // Créer un nouveau document utilisateur avec des valeurs par défaut
     const newUser: UserDocument = {
-      id: wallet,
-      wallet,
+      id: uid,
+      wallet: uid,
       name: "",
       avatar: "",
       bio: "",
@@ -80,7 +83,7 @@ export async function POST(req: NextRequest) {
       isCompleteProfile: false,
     };
 
-    await admin.firestore().collection("users").doc(wallet).set(newUser);
+    await admin.firestore().collection(COLLECTIONS.USERS).doc(uid).set(newUser);
 
     return NextResponse.json(newUser, { status: 201 });
   } catch (error) {
@@ -92,33 +95,28 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function PATCH(req: NextRequest) {
+export async function PATCH(request: NextRequest) {
   try {
-    const { wallet, ...fields } = await req.json();
-    if (!wallet) {
-      return NextResponse.json(
-        { error: "Wallet is required" },
-        { status: 400 }
-      );
-    }
+    const uid = await verifyFirebaseAuth(request);
 
-    // Récupérer les données actuelles de l'utilisateur
-    const userRef = admin.firestore().collection("users").doc(wallet);
+    const { user } = await request.json();
+
+    const userRef = admin.firestore().collection(COLLECTIONS.USERS).doc(uid);
     const currentUser = await userRef.get();
     const currentData = currentUser.data() as UserDocument;
 
-    // Fusionner les données actuelles avec les nouvelles données
+    //TODO only update the relevant fields (nickname, bio, etc. Not images etc.)
     const updatedUser = {
       ...currentData,
-      ...fields,
+      ...user,
+      id: uid,
+      wallet: uid,
     };
 
-    // Vérifier si le profil est complet
     const isComplete = isCompleteProfile(updatedUser);
 
-    // Mettre à jour avec le statut de complétion
     await userRef.update({
-      ...fields,
+      ...updatedUser,
       isCompleteProfile: isComplete,
     });
 

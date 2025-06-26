@@ -2,13 +2,13 @@
 
 import "@/app/customStyles.css";
 import Link from "next/link";
-import { useProject } from "@/features/projects/hooks/useProject";
 import ExploreProjectButton from "@/components/buttons/ExploreProjectButton";
 import ProjectCard from "@/features/projects/components/ProjectCard";
 import { AnimatedBlock } from "@/components/displayElements/AnimatedBlock";
+import { useGetProjects } from "@/features/projects/hooks";
 
 const ProjectSection = () => {
-  const { projects, isLoadingProjects, projectsError } = useProject();
+  const { data: projects } = useGetProjects();
 
   return (
     <AnimatedBlock className="flex flex-col w-full mt-8">
@@ -29,7 +29,7 @@ const ProjectSection = () => {
                   href={`/project/${project.id}`}
                   className="min-w-[200px] md:min-w-[340px] max-w-xs flex-shrink-0 "
                 >
-                  <ProjectCard project={project.data} />
+                  <ProjectCard project={project} />
                 </Link>
               ))}
           </div>

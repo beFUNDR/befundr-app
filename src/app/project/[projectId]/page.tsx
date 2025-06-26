@@ -13,9 +13,7 @@ import VoteContent from "@/components/_projectPage/VoteContent";
 import FaqContent from "@/components/_projectPage/FaqContent";
 import BackButton from "@/components/buttons/BackButton";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useProject } from "@/features/projects/hooks/useProject";
 import ButtonLabelSecondary from "@/components/buttons/_ButtonLabelSecondary";
-import AdminModal from "@/components/modals/AdminModal";
 import { ProjectStatus } from "@/features/projects/constants/project-status";
 import PublishedPhase from "@/components/_projectPage/PublishedPhase";
 import NftMintRoundPhase from "@/components/_projectPage/NftMintRoundPhase";
@@ -24,6 +22,7 @@ import { useGetUser } from "@/features/users/hooks/useUser";
 import toast from "react-hot-toast";
 import { Heart } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import { useGetProjectById, useLikeProject } from "@/features/projects/hooks";
 
 const ProjectPage = () => {
   const searchParams = useSearchParams();
@@ -32,24 +31,22 @@ const ProjectPage = () => {
   const { publicKey } = useWallet();
   const params = useParams();
   const projectId = params.projectId as string;
-  const { getProject } = useProject();
-  const { data: project, isLoading, error } = getProject(projectId);
+  const { data: project, isLoading, error } = useGetProjectById(projectId);
   const {
     data: owner,
     isLoading: isOwnerLoading,
     error: ownerError,
-  } = useGetUser(project?.data.userId ?? "");
+  } = useGetUser(project?.owner ?? "");
   const [isShowManageModal, setIsShowManageModal] = useState(false);
-  const { useLikeProject } = useProject();
-  const { mutateAsync: likeProject } = useLikeProject;
+  const { mutateAsync: likeProject } = useLikeProject();
 
   const isOwner = useMemo(() => {
-    return publicKey?.toString() === project?.data.userId;
+    return publicKey?.toString() === project?.owner;
   }, [project, publicKey]);
 
   const isLiked = useMemo(
-    () => project?.data.likesCount.includes(publicKey?.toString() || ""),
-    [project?.data.likesCount, publicKey]
+    () => project?.likesCount.includes(publicKey?.toString() || ""),
+    [project?.likesCount, publicKey]
   );
 
   const handleLikeProject = async () => {
@@ -74,9 +71,7 @@ const ProjectPage = () => {
   // Merge mainImage and potentialadditional images
   const allImages = useMemo(() => {
     if (!project) return [];
-    return [project.data.mainImage, ...(project.data.images || [])].filter(
-      Boolean
-    );
+    return [project.mainImage, ...(project.images || [])].filter(Boolean);
   }, [project]);
 
   if (isLoading)
@@ -101,7 +96,7 @@ const ProjectPage = () => {
       case "about":
         return (
           <AboutContent
-            description={project.data.description}
+            description={project.description}
             owner={owner}
             isOwner={isOwner}
             projectId={projectId}
@@ -118,7 +113,7 @@ const ProjectPage = () => {
       default:
         return (
           <AboutContent
-            description={project.data.description}
+            description={project.description}
             owner={owner}
             isOwner={isOwner}
             projectId={projectId}
@@ -132,9 +127,9 @@ const ProjectPage = () => {
       <BackButton link={"/projects"} />
       {/* Header */}
       <div className="flex flex-col md:flex-row gap-2 items-start md:items-center mb-2">
-        <h1 className="text-4xl font-bold text-white">{project.data.name}</h1>
+        <h1 className="text-4xl font-bold text-white">{project.name}</h1>
         {/* Tags */}
-        <CategoryTagBig category={project.data.category} />
+        <CategoryTagBig category={project.category} />
         {/* Ajouter d'autres tags si besoin */}
         <div className="flex-grow" />
         <div className="flex items-center gap-2">
@@ -148,12 +143,12 @@ const ProjectPage = () => {
             className="flex items-center gap-1"
           >
             <Heart size={25} color="white" fill={isLiked ? "red" : ""} />
-            <span>{project.data.likesCount.length}</span>
+            <span>{project.likesCount.length}</span>
           </button>
         </div>
       </div>
       <p className="text-lg text-gray-300 mb-6">
-        {project.data.headLine || project.data.description}
+        {project.headLine || project.description}
       </p>
 
       {/* Main block */}
@@ -161,14 +156,14 @@ const ProjectPage = () => {
         {/* Dashboard image */}
         <ImageCarousel images={allImages} />
         {/* Project info */}
-        {project.data.status === ProjectStatus.WaitingForApproval && (
-          <WaitingForApprovalPhase project={project.data} owner={owner} />
+        {project.status === ProjectStatus.WaitingForApproval && (
+          <WaitingForApprovalPhase project={project} owner={owner} />
         )}
-        {project.data.status === ProjectStatus.Published && (
-          <PublishedPhase project={project.data} owner={owner} />
+        {project.status === ProjectStatus.Published && (
+          <PublishedPhase project={project} owner={owner} />
         )}
-        {project.data.status === ProjectStatus.NftMintRound && (
-          <NftMintRoundPhase project={project.data} owner={owner} />
+        {project.status === ProjectStatus.NftMintRound && (
+          <NftMintRoundPhase project={project} owner={owner} />
         )}
       </div>
 
@@ -178,12 +173,12 @@ const ProjectPage = () => {
       {/* Tab Content */}
       {renderTabContent()}
 
-      {isShowManageModal && (
+      {/*isShowManageModal && (
         <AdminModal
-          project={project.data}
+          project={project}
           onClose={() => setIsShowManageModal(false)}
         />
-      )}
+      )*/}
     </div>
   );
 };

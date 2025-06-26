@@ -1,4 +1,5 @@
 import admin from "@/lib/firebase/firebase-admin";
+import { COLLECTIONS } from "@/lib/firebase/firebase-constants";
 import { verifyFirebaseAuth } from "@/shared/api/verify-firebase-auth";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
@@ -21,7 +22,7 @@ export async function GET(request: NextRequest) {
     //* GET THE DATA
     const gameProgramDoc = await admin
       .firestore()
-      .collection("gamePrograms")
+      .collection(COLLECTIONS.GAME_PROGRAMS)
       .doc(userId)
       .get();
 
@@ -43,16 +44,9 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    const { userId } = await req.json();
-
-    if (!userId) {
-      return NextResponse.json(
-        { error: "User ID is required" },
-        { status: 400 }
-      );
-    }
+    const uid = await verifyFirebaseAuth(request);
 
     // Créer un nouveau game program avec points = 0
     const newGameProgram = {
@@ -64,8 +58,8 @@ export async function POST(req: NextRequest) {
     // Utiliser l'userId comme ID du document
     const gameProgramRef = admin
       .firestore()
-      .collection("gamePrograms")
-      .doc(userId);
+      .collection(COLLECTIONS.GAME_PROGRAMS)
+      .doc(uid);
     await gameProgramRef.set(newGameProgram);
 
     return NextResponse.json(newGameProgram, { status: 201 });

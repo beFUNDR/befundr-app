@@ -1,4 +1,6 @@
 import {
+  PartialProjectDocumentSchema,
+  PartialProjectSchema,
   ProjectDocumentSchema,
   ProjectSchema,
 } from "@/features/projects/schemas/project.schema";
@@ -16,4 +18,12 @@ export const convertProjectsFromDocuments = (
   const parsedProjectsDocuments = ProjectDocumentSchema.array().parse(docs);
 
   return ProjectSchema.array().parse(parsedProjectsDocuments);
+};
+
+export const convertPartialProjectToDocument = (
+  project: Partial<Project>
+): Partial<ProjectDocument> => {
+  const parsed = PartialProjectSchema.parse(project);
+
+  return PartialProjectDocumentSchema.parse(parsed);
 };
