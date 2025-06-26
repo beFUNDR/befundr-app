@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
+import { AnimatedBlock } from "@/components/displayElements/AnimatedBlock";
 
 interface FaqQuestionProps {
   question: string;
@@ -31,13 +32,9 @@ const FaqQuestionCard = ({ question, children }: FaqQuestionProps) => {
           <ChevronRight className="text-accent w-7 h-7 transition-transform duration-300" />
         )}
       </button>
-      <div
-        className={`overflow-hidden transition-all duration-300 px-4 md:px-8 ${
-          open ? "max-h-[1000px] py-2" : "max-h-0 py-0"
-        }`}
-      >
-        {open && <div className="text-body-text text-lg pb-6">{children}</div>}
-      </div>
+      <AnimatedBlock show={open} className="px-4 md:px-8">
+        <div className="text-body-text text-lg py-4 pb-6">{children}</div>
+      </AnimatedBlock>
     </div>
   );
 };
