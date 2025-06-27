@@ -2,7 +2,7 @@
 import FeaturesList from "@/components/_homepage/FeaturesList";
 import StatsGrid from "@/components/_homepage/StatsGrid";
 import ApplyButton from "@/components/buttons/ApplyButton";
-import ExploreProjectButton from "@/components/buttons/ExploreProjectButton";
+import IncubationProcessButton from "@/components/buttons/IncubationProcessButton";
 import { AnimatedBlock } from "@/components/displayElements/AnimatedBlock";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -62,7 +62,7 @@ const HeroSection = () => {
           </p>
           <FeaturesList />
           <div className="flex flex-col md:flex-row gap-4 mt-8">
-            <ExploreProjectButton />
+            <IncubationProcessButton />
             <ApplyButton />
           </div>
         </div>

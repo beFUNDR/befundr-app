@@ -1,5 +1,5 @@
 import ApplyButton from "@/components/buttons/ApplyButton";
-import ExploreProjectButton from "@/components/buttons/ExploreProjectButton";
+import IncubationProcessButton from "@/components/buttons/IncubationProcessButton";
 import { AnimatedBlock } from "@/components/displayElements/AnimatedBlock";
 import { TrendingUp, Users, Shield, Code2 } from "lucide-react";
 
@@ -48,7 +48,7 @@ const ProcessSection = () => {
           ))}
         </div>
         <div className="flex flex-col md:flex-row gap-4">
-          <ExploreProjectButton />
+          <IncubationProcessButton />
           <ApplyButton />
         </div>
       </div>

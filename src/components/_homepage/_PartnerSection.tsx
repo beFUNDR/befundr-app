@@ -4,6 +4,7 @@ import PartnerCard from "@/components/cards/PartnerCard";
 import { AnimatedBlock } from "@/components/displayElements/AnimatedBlock";
 import { useGetAllCollections } from "@/features/nftItems/hooks/useCollection";
 import { useGetAllPartners } from "@/hooks/dbData/usePartner";
+import Link from "next/link";
 
 const PartnerSection = () => {
   const { data: collections } = useGetAllCollections();
@@ -38,7 +39,9 @@ const PartnerSection = () => {
         <h2 className="h2Style mt-6">Partners</h2>
         <div className="flex flex-row gap-4 overflow-x-auto scrollbar-thin scrollbar-thumb-[#222] scrollbar-track-transparent py-2">
           {partners?.map((partner, idx) => (
-            <PartnerCard key={idx} partner={partner.data} />
+            <Link href={`/partners/${partner.id}`} key={idx}>
+              <PartnerCard partner={partner.data} />
+            </Link>
           ))}
         </div>
       </div>
