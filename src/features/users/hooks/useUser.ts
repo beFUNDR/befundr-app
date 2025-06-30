@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import {
   createUser,
+  getAllSkillsHubUsers,
   getAllUsers,
   getUser,
   getUsers,
@@ -14,6 +15,13 @@ export const useGetAllUsers = () =>
   useQuery({
     queryKey: ["users"],
     queryFn: getAllUsers,
+  });
+
+// Get all skills hub users
+export const useGetAllSkillsHubUsers = () =>
+  useQuery({
+    queryKey: ["skillsHubUsers"],
+    queryFn: getAllSkillsHubUsers,
   });
 
 // Get a single user
@@ -59,9 +67,12 @@ export const useUpdateUser = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateUser,
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({
-        queryKey: ["user", variables.wallet],
+    onSuccess: async (_, variables) => {
+      await queryClient.invalidateQueries({
+        queryKey: ["users", variables.wallet],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["skillsHubUsers"],
       });
       toast.success("User updated successfully");
     },

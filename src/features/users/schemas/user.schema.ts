@@ -12,6 +12,7 @@ export const UserDocumentSchema = z.object({
   discord: z.string(),
   skills: z.array(z.string()),
   isCompleteProfile: z.boolean(),
+  displayInSkillsHub: z.boolean(),
 });
 
 export const UserSchema = z.object({
@@ -26,6 +27,7 @@ export const UserSchema = z.object({
   discord: z.string(),
   skills: z.array(z.string()),
   isCompleteProfile: z.boolean(),
+  displayInSkillsHub: z.boolean(),
 });
 
 export const PartialUserSchema = UserSchema.partial();

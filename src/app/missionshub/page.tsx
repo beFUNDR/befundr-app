@@ -1,4 +1,5 @@
 "use client";
+import Checkbox from "@/components/buttons/Checkbox";
 import MissionCardFromHub from "@/components/cards/MissionCardFromHub";
 import Loader from "@/components/displayElements/Loader";
 import { useMission } from "@/features/missions";
@@ -46,15 +47,11 @@ const MissionsHubPage = () => {
         selectedSkill={selectedSkill}
         setSelectedSkill={setSelectedSkill}
       />
-      <div className="flex items-center gap-2 mb-4">
-        <input
-          type="checkbox"
-          checked={onlyPaidMissions}
-          onChange={() => setOnlyPaidMissions(!onlyPaidMissions)}
-          className="w-4 h-4 accent-accent border-custom-gray-800 rounded-full"
-        />
-        <label htmlFor="onlyPaidMissions">Show only paid missions</label>
-      </div>
+      <Checkbox
+        label="Show only paid missions"
+        checked={onlyPaidMissions}
+        onChange={() => setOnlyPaidMissions(!onlyPaidMissions)}
+      />
       {isLoadingMissions ? (
         <div className="flex justify-center items-center h-[500px]">
           <Loader />

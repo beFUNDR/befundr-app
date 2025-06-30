@@ -28,6 +28,14 @@ export const getAllUsersApi = async (): Promise<UserDocument[]> => {
   return results.map((doc) => doc.data);
 };
 
+export const getAllSkillsHubUsersApi = async (): Promise<UserDocument[]> => {
+  const usersRef = collection(db, "users") as CollectionReference<UserDocument>;
+  const q = query(usersRef, where("displayInSkillsHub", "==", true));
+  const { results, error } = await getDocumentsWithQuery<User>(q);
+  if (error) throw error;
+  return results;
+};
+
 export const getUsersApi = async (
   userIds: string[]
 ): Promise<UserDocument[]> => {

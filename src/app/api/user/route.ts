@@ -81,6 +81,7 @@ export async function POST(request: NextRequest) {
       discord: "",
       skills: [],
       isCompleteProfile: false,
+      displayInSkillsHub: false,
     };
 
     await admin.firestore().collection(COLLECTIONS.USERS).doc(uid).set(newUser);

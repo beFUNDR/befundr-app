@@ -9,11 +9,12 @@ type Props = {
   label: string;
   isLoading: boolean;
   children?: React.ReactNode;
+  disabled?: boolean;
 };
 
 const ButtonLabelAsync = (props: Props) => {
   return (
-    <div className={baseClass}>
+    <div className={`${baseClass} ${props.disabled ? "opacity-50" : ""}`}>
       {props.isLoading ? (
         <LoaderSmall />
       ) : (
