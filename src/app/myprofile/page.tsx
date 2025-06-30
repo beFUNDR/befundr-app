@@ -47,6 +47,7 @@ function MyProfilePage() {
       setDiscord(user.discord || "");
       if (user.avatar) setProfilePic(user.avatar);
       setSelectedSkills(user.skills || []);
+      setDisplayInSkillsHub(user.displayInSkillsHub || false);
     }
   }, [user]);
 
