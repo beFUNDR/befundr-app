@@ -1,5 +1,6 @@
 import ProfileImageUpload from "@/components/_profile/ProfileImageUpload";
 import ButtonLabelAsync from "@/components/buttons/_ButtonLabelAsync";
+import Checkbox from "@/components/buttons/Checkbox";
 import InputField from "@/components/displayElements/InputField";
 
 type ProfilContentProps = {
@@ -23,6 +24,8 @@ type ProfilContentProps = {
   handleSave: () => void;
   isUpdating: boolean;
   isCompleteProfile: boolean;
+  displayInSkillsHub: boolean;
+  setDisplayInSkillsHub: (v: boolean) => void;
 };
 
 const ProfilContent = ({
@@ -46,10 +49,12 @@ const ProfilContent = ({
   handleSave,
   isUpdating,
   isCompleteProfile,
+  displayInSkillsHub,
+  setDisplayInSkillsHub,
 }: ProfilContentProps) => {
   return (
     <>
-      <h2 className="h3Style mb-4">Personal details</h2>
+      <h2 className="h2Style mb-4">Personal details</h2>
       <p className="bodyStyle mb-6">
         Information marked with * is required to appear in the Skills Hub or to
         create a project.
@@ -74,7 +79,18 @@ const ProfilContent = ({
       />
 
       {/* Section Skills */}
-      <h2 className="h3Style mb-4 mt-8">Skills *</h2>
+      <h2 className="h2Style mb-4">Skills Hub</h2>
+      <p className="bodyStyle mb-4">
+        The skills hub is where you profile can be seen by project founders who
+        looking for specific skills for theirs projects. To make your profile
+        visible, please activate the option below.
+      </p>
+      <Checkbox
+        label="Display my profile in skills hub"
+        checked={displayInSkillsHub}
+        onChange={() => setDisplayInSkillsHub(!displayInSkillsHub)}
+      />
+      <h3 className="h3Style mb-4 mt-8">Skills *</h3>
       <div className="flex flex-wrap gap-2 mb-6">
         {allSkills.map((skill) => (
           <button
@@ -94,7 +110,7 @@ const ProfilContent = ({
         ))}
       </div>
 
-      <h2 className="h3Style mb-4 mt-8">Social links (* at least one)</h2>
+      <h3 className="h3Style mb-4 mt-8">Social links (* at least one)</h3>
       <InputField
         label="Website"
         value={website}
@@ -121,14 +137,27 @@ const ProfilContent = ({
           onClick={handleSave}
           disabled={isUpdating}
         >
-          <ButtonLabelAsync label="Save" isLoading={isUpdating} />
+          <ButtonLabelAsync
+            label="Save"
+            isLoading={isUpdating}
+            disabled={!isCompleteProfile && displayInSkillsHub}
+          />
         </button>
       </div>
+      {!isCompleteProfile && displayInSkillsHub && (
+        <p className="bodyStyle my-4 !text-red-400 text-center">
+          Your profile is not complete to be diplayed in the skills hub. Please
+          complete it or disable the skills hub option
+        </p>
+      )}
       {isCompleteProfile && (
         <p className="bodyStyle my-4 !text-green-400 text-center">
-          Your profile is complete.
-          <br /> You can now create a project and be displayed on the skills
-          hub.
+          Your profile is complete. You can now create a project
+        </p>
+      )}
+      {isCompleteProfile && displayInSkillsHub && (
+        <p className="bodyStyle my-4 !text-green-400 text-center">
+          Your profile will be displayed in the skills hub
         </p>
       )}
     </>

@@ -1,5 +1,6 @@
 import {
   createUserDocument,
+  getAllSkillsHubUsersApi,
   getAllUsersApi,
   getUserApi,
   getUsersApi,
@@ -30,6 +31,17 @@ export const getAllUsers = async (): Promise<User[]> => {
     return users;
   } catch (error) {
     console.error("Service: Failed to get all users", error);
+    throw error;
+  }
+};
+
+export const getAllSkillsHubUsers = async (): Promise<User[]> => {
+  try {
+    const userDocuments = await getAllSkillsHubUsersApi();
+    const users = convertUsersFromDocuments(userDocuments);
+    return users;
+  } catch (error) {
+    console.error("Service: Failed to get all skills hub users", error);
     throw error;
   }
 };

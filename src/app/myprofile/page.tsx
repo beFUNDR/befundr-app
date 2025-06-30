@@ -35,6 +35,7 @@ function MyProfilePage() {
   const [website, setWebsite] = useState("");
   const [discord, setDiscord] = useState("");
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [displayInSkillsHub, setDisplayInSkillsHub] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -92,6 +93,7 @@ function MyProfilePage() {
       avatar: profilePic,
       skills: selectedSkills,
       isCompleteProfile: isCompleteProfile(),
+      displayInSkillsHub,
     });
   };
 
@@ -122,6 +124,8 @@ function MyProfilePage() {
     handleSave,
     isUpdating,
     isCompleteProfile: isCompleteProfile(),
+    displayInSkillsHub,
+    setDisplayInSkillsHub,
   };
 
   if (isLoading || !user) {
